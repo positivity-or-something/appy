@@ -1,0 +1,18 @@
+.product_container{
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+}
+.sales_card{
+  border: 1px solid slategray;
+  width: 19vw;
+  margin: 2vw;
+}
+.card_image{
+  max-width: 19vw;
+  height: 25vh;
+}
+.sales_card_container{
+  display: flex;
+  flex-wrap: wrap
+}

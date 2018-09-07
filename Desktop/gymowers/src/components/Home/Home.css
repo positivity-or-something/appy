@@ -1,0 +1,87 @@
+.mowers_box{
+  width: 32vw;
+  height: 40vh;
+  font-family: 'Roboto Condensed';
+  font-size: 2em;
+  border: 1px solid black;
+  
+}
+.mowers_box::after {
+  margin-left: 34vw;
+  margin-top: 8vh;
+  width: 32vw;
+  height: 40vh;
+  content: "";
+  background: url('https://www.rurallifestyledealer.com/ext/resources/images/products/2017/spartan-mark-martin-mowercopy.jpg?1484080638');
+  background-size: cover;
+  background-repeat: no-repeat;
+  position: absolute;
+  opacity: 0.5;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  z-index: 1;   
+}
+.blades_box{
+  width: 32vw;
+  height: 40vh;
+  font-family: 'Roboto Condensed';
+  font-size: 2em;
+  border: 1px solid black;
+}
+.blades_box::after{
+  margin-left: 3.5vw;
+  margin-top: 8vh;
+  width: 30vw;
+  height: 40vh;
+  content: "";
+  background: url('https://i.ebayimg.com/images/g/07AAAOSw1HpbdCnb/s-l1600.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  position: absolute;
+  opacity: 0.5;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  z-index: 1;  
+}
+
+.service_box{
+  width: 32vw;
+  height: 40vh;
+  font-family: 'Roboto Condensed';
+  font-size: 2em;
+  border: 1px solid black;
+}
+.service_box::after{
+  margin-left: 66vw;
+  margin-top: 8vh;
+  width: 32vw;
+  height: 40vh;
+  content: "";
+  background: url('http://smallenginerepairsantafe.com/wp-content/uploads/2016/01/Raptor_Flip-_Up.png');
+  background-size: cover;
+  background-repeat: no-repeat;
+  position: absolute;
+  opacity: 0.5;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  z-index: 1;  
+}
+.map{
+  border: solid black 1px;
+  width: 95.8vw;
+  height: 40vh;
+  margin: 0;
+}
+.slide{
+  width: 96vw;
+  height: 50vh;
+}
+.carousel{
+  
+}

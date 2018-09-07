@@ -1,0 +1,29 @@
+.header{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: black;
+  height: 8vh;
+}
+.links{
+  display: flex;
+  margin-right: 1vw;
+  margin-left: 1vw;
+}
+.logo{
+  color: white;
+}
+.navlink{
+  background: transparent;
+  color: white;
+  border: none;
+  margin-left: 1vw;
+  border-left: white solid 2px;
+  padding-left: 1.5vw;
+}
+.navlink:hover{
+  color: #f1c116;
+}
+#home{
+  border: none;
+}

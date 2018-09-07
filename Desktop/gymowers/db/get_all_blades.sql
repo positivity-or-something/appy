@@ -1,0 +1,1 @@
+SELECT * FROM products WHERE product_type = 'blade';

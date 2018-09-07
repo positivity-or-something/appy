@@ -1,0 +1,45 @@
+.details_page{
+
+}
+.details_content{
+display: flex;
+flex-wrap: wrap;
+}
+.left_side{
+width: 40vw;
+border: solid black 1px;
+margin: 5px;
+padding: 5px;
+}
+.right_side{
+text-align: left;
+display: flex;
+flex-direction: column;
+width: 40vw;
+margin-left: 10px;
+}
+.deets_img{
+max-width: 100%;
+max-height: 40vh;
+}
+.price{
+font-size: 2em;
+}
+.desc{
+
+}
+.cart_button{
+height: 7vh;
+width: 13vw;
+}
+.video{
+  display: flex;
+  justify-content: flex-start;
+  width: 50vw;
+  height: 41vh;
+
+}
+iframe{
+  width: 50vw;
+  margin-left: 20vw;
+}
