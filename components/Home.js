@@ -1,6 +1,7 @@
 import React from 'react'
 import {StyleSheet, View, Text, Button} from 'react-native'
 import { connect } from 'react-redux'
+import {getUsers} from '../ducks/reducer'
 import {Actions} from 'react-native-router-flux'
 
 class Home extends React.Component{
@@ -11,6 +12,7 @@ class Home extends React.Component{
         <Text style={styles.text}>Home</Text>
         <Button title="Click Me!!" onPress={() => {
           alert('Clicked Button!!')
+          this.props.getUsers()
           Actions.content()
           }}>Click Me!!</Button>
       </View>
@@ -32,4 +34,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default connect(state => state)(Home);
+export default connect(state => state, {getUsers})(Home);
