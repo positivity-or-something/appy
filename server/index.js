@@ -11,7 +11,7 @@ app.use(cors())
 
 massive(process.env.CONNECTION_STRING)
   .then(db => { app.set('db', db) })
-  .catch(err => console.log(err))
+  .catch(err => console.log("Massive", err))
 
 app.get('/api/users' , getUsers)
 

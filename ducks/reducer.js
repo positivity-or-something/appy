@@ -1,6 +1,7 @@
 import axios from 'axios'
 import moment from 'moment'
 
+
 const initialState = {
   users: []
 }
@@ -8,6 +9,7 @@ const initialState = {
 const GET_USERS = 'GET_USERS'
 
 export default function(state = initialState, action){
+  console.log(action.payload)
   switch (action.type) {
     case `${GET_USERS}_FULFILLED`:
       return{
@@ -20,9 +22,8 @@ export default function(state = initialState, action){
 }
 
 export function getUsers(){
-  console.log('Redux');
   return{
     type: GET_USERS,
-    payload: axios('/api/users')
+    payload: axios(`http://localhost:3001/api/users`)
   }
 }
