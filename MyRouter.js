@@ -14,6 +14,4 @@ const MyRouter = () =>{
   )
 }
 
-export default MyRouter
-
-
+export default MyRouter;
