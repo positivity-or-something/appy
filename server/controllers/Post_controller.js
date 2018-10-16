@@ -5,6 +5,17 @@ function post(req, res){
   .catch(err => console.log(err))
 }
 
+function getPost(req, res){
+  let comments = []
+  const db = req.app.get('db')
+  db.get_comments(parseInt(req.params.id, 10))
+  .then(resp => comments = resp)
+  .then(() => db.get_post(parseInt(req.params.id, 10)))
+  .then(response => res.status(200).send({post: response, comments: comments}))
+  .catch(err => console.log(err) || res.status(500))
+}
+
 module.exports = {
-  post
+  post,
+  getPost
 }

@@ -1,7 +1,7 @@
 import React from 'react'
 import {Stack, Scene, Router} from 'react-native-router-flux'
 import Home from './components/home/Home'
-import Content from './components/Content'
+import Content from './components/content/Content'
 import Register from './components/register/Register'
 import Post from './components/post/Post'
 
