@@ -1,0 +1,1 @@
+UPDATE rep SET upvote = $3, downvote = $4 WHERE user_id = $2 AND content_id = $1

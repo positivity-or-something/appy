@@ -6,7 +6,7 @@ const cors = require('cors')
 const session = require('express-session')
 const app = express()
 const { getUsers, getUser } = require('./controllers/userCtrl')
-const { post, getPost } = require('./controllers/Post_controller')
+const { post, getPost, upVote, downVote } = require('./controllers/Post_controller')
 
 app.use(json())
 app.use(cors())
@@ -32,5 +32,8 @@ app.post(`/api/user`, getUser)
 
 app.post('/api/post', post)
 app.get('/api/post/:id', getPost)
+
+app.post('/api/upvote/:id', upVote)
+app.post('/api/downvote/:id', downVote)
 
 app.listen(process.env.SERVER_PORT, () => console.log(`listening on port ${process.env.SERVER_PORT}`))
