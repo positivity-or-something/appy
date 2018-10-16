@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import {View, TextInput, StyleSheet, Button, Text} from 'react-native'
+import { Actions } from 'react-native-router-flux'
 import { connect } from 'react-redux'
 import axios from 'axios'
 import {setUser} from '../../ducks/reducer'
@@ -34,12 +35,15 @@ class Register extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <TextInput placeholder={this.state.userName} onChangeText={(text) => this.setState({userName: text})}/>
-        <TextInput placeholder={this.state.passWord} onChangeText={(text) => this.setState({passWord: text})}/>
+        <TextInput autoCapitalize='none' placeholder={this.state.userName} onChangeText={(text) => this.setState({userName: text})}/>
+        <TextInput autoCapitalize='none' placeholder={this.state.passWord} onChangeText={(text) => this.setState({passWord: text})}/>
         {
           this.state.currentUser ?
           <View style='none'>
-            <Button title="Login" onPress={() => this.setUser()}></Button>
+            <Button title="Login" onPress={() => {
+              this.setUser()
+              Actions.home()
+              }}></Button>
             <Text>First Time Here?</Text>
             <Button title="Register" onPress={() => this.setState({currentUser: false})}></Button> 
           </View>
@@ -48,7 +52,10 @@ class Register extends Component {
             <TextInput placeholder={this.state.firstName} onChangeText={(text) => this.setState({firstName: text})}/>
             <TextInput placeholder={this.state.email} onChangeText={(text) => this.setState({email: text})}/>
             <TextInput placeholder={this.state.photoUrl}/>
-            <Button title="Submit" onPress={() => this.setUser()}></Button>
+            <Button title="Submit" onPress={() => {
+              this.setUser()
+              Actions.home()}}>
+            </Button>
           </View>
         }
       </View>

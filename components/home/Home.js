@@ -9,6 +9,7 @@ import LoginButton from '../header/LoginButton'
 class Home extends React.Component{
 
   render(){
+    console.log('HOME PROPS:', this.props)
     return (
       <View>
         <Header style={styles.header}
