@@ -29,9 +29,8 @@ class Home extends React.Component{
             borderRadius: 5
           }}
           title="Content Link" onPress={() => {
-            alert('Clicked Button!!')
             this.props.getUsers()
-            Actions.content()
+            Actions.content({postId: 2})
           }}>Content Link</Button>
           <Button 
            buttonStyle={{
