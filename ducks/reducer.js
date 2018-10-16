@@ -3,10 +3,12 @@ import moment from 'moment'
 
 
 const initialState = {
-  users: []
+  users: [],
+  userId: ''
 }
 
 const GET_USERS = 'GET_USERS'
+const SET_USER = 'SET_USER'
 
 export default function(state = initialState, action){
   console.log(action.payload)
@@ -16,8 +18,20 @@ export default function(state = initialState, action){
         ...state,
         users: action.payload
       }
+      case SET_USER:
+      return{
+        ...state,
+        userId: action.payload
+      }
     default:
       return state
+  }
+}
+
+export function setUser(id){
+  return{
+    type: SET_USER,
+    payload: id
   }
 }
 

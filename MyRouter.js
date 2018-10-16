@@ -1,14 +1,19 @@
 import React from 'react'
 import {Stack, Scene, Router} from 'react-native-router-flux'
-import Home from './components/Home'
+import Home from './components/home/Home'
 import Content from './components/Content'
+import Register from './components/register/Register'
+import Post from './components/post/Post'
+
 
 const MyRouter = () =>{ 
   return(
     <Router>
-      <Stack key='root'>
-        <Scene key='home' component={Home} title='Home'/>
-        <Scene key='content' component={Content} title='Content Screen'/>
+      <Stack key='root' headerMode='none'>
+        <Scene key='home' component={Home}/>
+        <Scene key='content' component={Content} />
+        <Scene key='register' component={Register}/>
+        <Scene key='post' component={Post} />
       </Stack>
     </Router>
   )

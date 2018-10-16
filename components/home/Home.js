@@ -1,18 +1,53 @@
 import React from 'react'
-import {StyleSheet, View, Text, Button} from 'react-native'
+import {StyleSheet, View, Text} from 'react-native'
 import { connect } from 'react-redux'
+import {getUsers} from '../../ducks/reducer'
+import {Button, Header} from 'react-native-elements'
 import {Actions} from 'react-native-router-flux'
+import LoginButton from '../header/LoginButton'
 
 class Home extends React.Component{
 
   render(){
     return (
-      <View style={styles.container}>
-        <Text style={styles.text}>Home</Text>
-        <Button title="Click Me!!" onPress={() => {
-          alert('Clicked Button!!')
-          Actions.content()
-          }}>Click Me!!</Button>
+      <View>
+        <Header style={styles.header}
+        leftComponent={{ icon: 'menu', color: '#fff' }}
+        centerComponent={{ text: 'APPY', style: { color: '#fff' } }}
+        rightComponent={<LoginButton/>}
+        />
+        <View style={styles.container}>
+          <Text style={styles.text}>Home</Text>
+          <Button 
+          titleStyle={{ fontWeight: "700" }}
+          buttonStyle={{
+            backgroundColor: "rgba(92, 99,216, 1)",
+            width: 300,
+            height: 45,
+            borderColor: "transparent",
+            borderWidth: 0,
+            borderRadius: 5
+          }}
+          title="Content Link" onPress={() => {
+            alert('Clicked Button!!')
+            this.props.getUsers()
+            Actions.content()
+          }}>Content Link</Button>
+          <Button 
+           buttonStyle={{
+            marginTop: 50,
+            backgroundColor: "rgba(92, 99,216, 1)",
+            width: 300,
+            height: 45,
+            borderColor: "transparent",
+            borderWidth: 0,
+            borderRadius: 5,
+          }}
+          titleStyle={{ fontWeight: "700" }}
+          title="New Post" onPress={() => {
+            Actions.post()
+          }}>New Post</Button>
+        </View>
       </View>
     )
   }
@@ -21,15 +56,18 @@ class Home extends React.Component{
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    justifyContent: 'space-between',
+    alignItems: "center",
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
   },
   text:{
-    flex: 1,
-    backgroundColor: 'red',
-    fontSize: 130
+    fontSize: 30
+  },
+  header:{
+    flex: 1
   }
 });
 
-export default connect(state => state)(Home);
+export default connect(state => state, {getUsers})(Home);
