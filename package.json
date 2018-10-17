@@ -16,6 +16,7 @@
     "dotenv": "^6.1.0",
     "expo": "^30.0.1",
     "express": "^4.16.4",
+    "express-session": "^1.15.6",
     "massive": "^5.5.0",
     "material-design-icons": "^3.0.1",
     "moment": "^2.22.2",
@@ -26,6 +27,7 @@
     "react-native-router-flux": "^4.0.5",
     "react-redux": "^5.0.7",
     "redux": "^4.0.1",
-    "redux-promise-middleware": "^5.1.1"
+    "redux-promise-middleware": "^5.1.1",
+    "start": "^5.1.0"
   }
 }
