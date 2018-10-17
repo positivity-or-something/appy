@@ -5,9 +5,40 @@ import { getUsers } from "../../ducks/reducer";
 import { Button, Header } from "react-native-elements";
 import { Actions } from "react-native-router-flux";
 import LoginButton from "../header/LoginButton";
+import axios from "axios";
 
 class Home extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      content: []
+    };
+  }
+  componentDidMount() {
+    console.warn("test");
+    axios(`http://localhost:3001/api/content`)
+      .then(response => {
+        console.warn(response);
+        this.setState({ content: response });
+      })
+      .catch(err => console.warn("ERROR CAUGHT", err));
+  }
+
   render() {
+    const { content } = this.state;
+    let displayContent = content.map((e, i) => {
+      return (
+        <View
+          style={{
+            border: solid,
+            borderColor: black,
+            borderWidth: 1
+          }}
+        >
+          {e.body}
+        </View>
+      );
+    });
     return (
       <View>
         <Header
@@ -55,6 +86,8 @@ class Home extends React.Component {
             New Post
           </Button>
         </View>
+        {displayContent}
+        <View />
       </View>
     );
   }
