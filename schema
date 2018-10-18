@@ -1,0 +1,41 @@
+--CREATE TABLE users (
+--  id SERIAL PRIMARY KEY,
+--  name varchar(30),
+--  email varchar(50), 
+--  image text,
+--reputation varchar(50)
+--);
+
+--CREATE TABLE content (
+--  id SERIAL PRIMARY KEY,
+--  title varchar(30),
+--  category varchar(50), 
+--  image text,
+--  body varchar,
+--  date varchar(20),
+--  show_content varchar(20),
+--  reputation varchar(50),
+--  user_id integer,
+--  FOREIGN KEY (user_id) REFERENCES users(id) 
+--);
+
+--CREATE TABLE reputation (
+--  id SERIAL PRIMARY KEY,
+--  content_id integer,
+--positive_content varchar(50),
+--negative_content varchar(50),
+--  user_id integer,
+--  FOREIGN KEY (content_id) REFERENCES content(id),
+--  FOREIGN KEY (user_id) REFERENCES users(id) 
+--);
+
+--CREATE TABLE comments (
+--  id SERIAL PRIMARY KEY,
+--  content_id integer,
+--  user_id integer,
+--  body varchar(500),
+--  date varchar(20),
+--  show_comment varchar(20),
+--  FOREIGN KEY (content_id) REFERENCES content(id),
+--  FOREIGN KEY (user_id) REFERENCES users(id) 
+--);

@@ -1,9 +1,10 @@
 import React, { Component } from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, Button, Modal } from "react-native";
 import { Icon } from "react-native-elements";
 import { connect } from "react-redux";
 import axios from "axios";
 
+import Comments from "../comment/Comments";
 class Content extends Component {
   constructor() {
     super();
@@ -14,7 +15,8 @@ class Content extends Component {
       upvotes: 0,
       downvotes: 0,
       rep: 0,
-      isLoading: true
+      isLoading: true,
+      openModal: null
     };
   }
 
@@ -79,6 +81,12 @@ class Content extends Component {
       .catch(err => console.log(err));
   }
 
+  modalClosedHandler = () => {
+    this.setState({
+      openModal: null
+    });
+  };
+
   render() {
     let comments = this.state.comments.map((comment, i) => {
       return <Text key={i}>{`COMMENT ${i + 1}: ${comment.comment_body}`}</Text>;
@@ -100,6 +108,25 @@ class Content extends Component {
           color="red"
           onPress={() => this.vote()}
         />
+        <Button
+          title="Add Comment"
+          onPress={this.setState({ openModal: true })}
+        />
+        <View>{comments}</View>
+        {/* <Comments
+          closeModal={this.modalClosedHandler}
+          openCloseModal={this.state.openCloseModal}
+        /> */}
+        <Modal visible={this.state.openModal !== null}>
+          <View>
+            <TextInput
+              style={styles.inputStyle}
+              multiline={true}
+              placeholder="Create a new comment"
+            />
+            <Button title="Add Comment" onPress={this.closeModal} />
+          </View>
+        </Modal>
         <View style={{ marginTop: 25 }}>{comments}</View>
       </View>
     );
@@ -116,5 +143,8 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     alignItems: "center",
     justifyContent: "center"
+  },
+  inputStyle: {
+    width: "100%"
   }
 });
