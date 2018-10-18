@@ -26,6 +26,9 @@ function getPost(req, res) {
 
 function getContent(req, res) {
   const db = req.app.get("db");
+  while(!db){
+    return null
+  }
   db.get_All_Post()
     .then(response => {
       console.log(response);

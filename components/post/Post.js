@@ -70,6 +70,7 @@ async imagePermission(gallery) {
       <View style={styles.container}>
         <TextInput placeholder={this.state.subject} onChangeText={(text) => this.setState({subject: text})}/>
         <TextInput placeholder={this.state.postBody} onChangeText={(text) => this.setState({postBody: text})}/>
+        <Icon onPress={() => this.imagePermission()} name='camera-alt'/>
         <Icon onPress={() => this.imagePermission(true)} name='image'/>  
         <Button onPress={() => {
           this.post()

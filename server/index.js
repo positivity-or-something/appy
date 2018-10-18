@@ -5,7 +5,7 @@ const massive = require("massive");
 const cors = require("cors");
 const session = require("express-session");
 const app = express();
-const { getUsers, getUser } = require("./controllers/userCtrl");
+const { getUsers, getUser, getUserById } = require("./controllers/userCtrl");
 const {
   post,
   getPost,
@@ -34,14 +34,15 @@ app.use(
   })
 );
 
+//-------------------USER-----------------------------
 app.get("/api/users", getUsers);
 app.post(`/api/user`, getUser);
-
+app.post("/api/getuser", getUserById);
+//-------------------MAKE POST------------------------
 app.post("/api/post", post);
 app.get("/api/post/:id", getPost);
-//----------------------Content---------------------------------
+//----------------------Content-----------------------
 app.get("/api/content", getContent);
-
 app.post("/api/upvote/:id", upVote);
 app.post("/api/downvote/:id", downVote);
 
