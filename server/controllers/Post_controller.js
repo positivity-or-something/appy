@@ -30,7 +30,10 @@ function getContent(req, res) {
     return null
   }
   db.get_All_Post()
-    .then(response => res.status(200).send(response))
+    .then(response => {
+      console.log(response);
+      res.status(200).send(response);
+    })
     .catch(err => console.log(err));
 }
 
