@@ -5,8 +5,9 @@ import {
   StyleSheet,
   Button,
   Text,
-  TouchableOpacity
+  Platform
 } from "react-native";
+import { Icon } from "react-native-elements";
 import axios from "axios";
 import { setUser } from "../../ducks/reducer";
 import { Actions } from "react-native-router-flux";
@@ -25,7 +26,7 @@ class Register extends Component {
       passWord: "Password",
       firstName: "First Name",
       email: "Email",
-      photoUrl: "Need Firebase or S3 for this!!",
+      photoUrl: "Need Firebase or S3 for this!!"
     };
 
     this.imagePermission = this.imagePermission.bind(this);
@@ -40,19 +41,20 @@ class Register extends Component {
       photoUrl: this.state.photoUrl
     };
     axios
-      .post(`http://localhost:3001/api/user`, body)
+      .post('http://' + (Platform.OS === 'ios' ? 'localhost' : '172.31.98.128') + ':3001/api/user', body)
       .then(res => this.props.setUser(res.data[0].id))
       .catch(err => console.log(err));
   }
 
-  async imagePermission() {
-    const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
+  async imagePermission(gallery) {
+    let result = ''
+    const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL, Permissions.CAMERA, Permissions.AUDIO_RECORDING);
     if (status === "granted") {
-      console.log("PERMISSION GRANTED");
-      let result = await ImagePicker.launchImageLibraryAsync({
-        allowsEditing: true,
-        aspect: [4, 3]
-      });
+      if(gallery){
+         result = await ImagePicker.launchImageLibraryAsync({ allowsEditing: true, aspect: [4, 3] });
+      }else{
+         result = await ImagePicker.launchCameraAsync({allowsEditing: true})
+      }
       if (!result.cancelled) {
         const config = {
           keyPrefix: "s3/",
@@ -115,9 +117,8 @@ class Register extends Component {
               placeholder={this.state.email}
               onChangeText={text => this.setState({ email: text })}
             />
-            <TouchableOpacity onPress={this.imagePermission}>
-              <Text>Select Image</Text>
-            </TouchableOpacity>
+            <Icon onPress={() => this.imagePermission()} name='camera-alt'/>
+            <Icon onPress={() => this.imagePermission(true)} name='image'/>  
             <Button
               title="Submit"
               onPress={() => {

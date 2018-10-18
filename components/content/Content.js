@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View, Text, StyleSheet, Button, Modal } from "react-native";
+import { View, Text, StyleSheet, Button, Modal, TextInput } from "react-native";
 import { Icon } from "react-native-elements";
 import { connect } from "react-redux";
 import axios from "axios";
@@ -81,7 +81,7 @@ class Content extends Component {
       .catch(err => console.log(err));
   }
 
-  modalClosedHandler = () => {
+  closeModal = () => {
     this.setState({
       openModal: null
     });
@@ -110,7 +110,7 @@ class Content extends Component {
         />
         <Button
           title="Add Comment"
-          onPress={this.setState({ openModal: true })}
+          onPress={() => this.setState({ openModal: true })}
         />
         <View>{comments}</View>
         {/* <Comments
