@@ -15,11 +15,9 @@ class Home extends React.Component {
     };
   }
   componentDidMount() {
-    console.warn("test");
-    axios(`http://172.31.98.128:3001/api/content`)
+    axios(`http://localhost:3001/api/content`)
       .then(response => {
-        console.warn(response);
-        this.setState({ content: response });
+        this.setState({ content: response.data });
       })
       .catch(err => console.warn("ERROR CAUGHT", err));
   }
@@ -29,9 +27,9 @@ class Home extends React.Component {
     let displayContent = content.map((e, i) => {
       return (
         <View
+          key={i}
           style={{
-            border: solid,
-            borderColor: black,
+            borderColor: "black",
             borderWidth: 1
           }}
         >

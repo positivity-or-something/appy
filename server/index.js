@@ -10,7 +10,8 @@ const {
   post,
   getPost,
   upVote,
-  downVote
+  downVote,
+  getContent
 } = require("./controllers/Post_controller");
 
 app.use(json());
@@ -40,6 +41,9 @@ app.post("/api/post", post);
 app.get("/api/post/:id", getPost);
 //----------------------Content---------------------------------
 // app.get("/api/content", getContent);
+
+app.post("/api/upvote/:id", upVote);
+app.post("/api/downvote/:id", downVote);
 
 app.post("/api/upvote/:id", upVote);
 app.post("/api/downvote/:id", downVote);

@@ -1,10 +1,19 @@
 import React, { Component } from "react";
-import {View, TextInput, StyleSheet, Button, Text} from 'react-native'
-import { Actions } from 'react-native-router-flux'
-import { connect } from 'react-redux'
-import axios from 'axios'
-import {setUser} from '../../ducks/reducer'
-
+import {
+  View,
+  TextInput,
+  StyleSheet,
+  Button,
+  Text,
+  TouchableOpacity
+} from "react-native";
+import axios from "axios";
+import { setUser } from "../../ducks/reducer";
+import { Actions } from "react-native-router-flux";
+import { connect } from "react-redux";
+import { ImagePicker, Camera, Permissions } from "expo";
+import { accessKey, secretKey } from "../../keys";
+import { RNS3 } from "react-native-aws3";
 
 class Register extends Component {
   constructor() {
@@ -16,8 +25,12 @@ class Register extends Component {
       passWord: "Password",
       firstName: "First Name",
       email: "Email",
-      photoUrl: "Need Firebase or S3 for this!!"
+      photoUrl: "Need Firebase or S3 for this!!",
+      photoName: "",
+      photoType: ""
     };
+
+    this.imagePermission = this.imagePermission.bind(this);
   }
 
   setUser() {
@@ -34,9 +47,42 @@ class Register extends Component {
       .catch(err => console.log(err));
   }
 
+  async imagePermission() {
+    const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
+    if (status === "granted") {
+      console.log("PERMISSION GRANTED");
+      let result = await ImagePicker.launchImageLibraryAsync({
+        allowsEditing: true,
+        aspect: [4, 3]
+      });
+      if (!result.cancelled) {
+        const config = {
+          keyPrefix: "s3/",
+          bucket: "groupprojappy",
+          region: "us-east-1",
+          accessKey: accessKey,
+          secretKey: secretKey,
+          successActionStatus: 201
+        };
+        let file = {
+          uri: result.uri,
+          name: result.fileName,
+          type: "image/png"
+        };
+        RNS3.put(file, config).then(response =>
+          this.setState({ photoUrl: response.body.postResponse.location })
+        );
+      }
+    } else {
+      throw new Error("Permissions not granted");
+    }
+  }
+
   render() {
+    console.log(this.state);
     return (
       <View style={styles.container}>
+<<<<<<< HEAD
         <TextInput autoCapitalize='none' placeholder={this.state.userName} onChangeText={(text) => this.setState({userName: text})}/>
         <TextInput autoCapitalize='none' placeholder={this.state.passWord} onChangeText={(text) => this.setState({passWord: text})}/>
         {
@@ -46,15 +92,34 @@ class Register extends Component {
               this.setUser()
               Actions.home()
               }}></Button>
+=======
+        <TextInput
+          autoCapitalize="none"
+          placeholder={this.state.userName}
+          onChangeText={text => this.setState({ userName: text })}
+        />
+        <TextInput
+          autoCapitalize="none"
+          placeholder={this.state.passWord}
+          onChangeText={text => this.setState({ passWord: text })}
+        />
+        {this.state.currentUser ? (
+          <View>
+            <Button
+              title="Login"
+              onPress={() => {
+                this.setUser();
+                Actions.home();
+              }}
+            />
+>>>>>>> master
             <Text>First Time Here?</Text>
             <Button
               title="Register"
               onPress={() => this.setState({ currentUser: false })}
             />
-            <Button title="Home" onPress={() => Actions.home()}>
-              Home
-            </Button>
           </View>
+<<<<<<< HEAD
           :
           <View style='none'>
             <TextInput placeholder={this.state.firstName} onChangeText={(text) => this.setState({firstName: text})}/>
@@ -64,6 +129,28 @@ class Register extends Component {
               this.setUser()
               Actions.home()}}>
             </Button>
+=======
+        ) : (
+          <View>
+            <TextInput
+              placeholder={this.state.firstName}
+              onChangeText={text => this.setState({ firstName: text })}
+            />
+            <TextInput
+              placeholder={this.state.email}
+              onChangeText={text => this.setState({ email: text })}
+            />
+            <TouchableOpacity onPress={this.imagePermission}>
+              <Text>Select Image</Text>
+            </TouchableOpacity>
+            <Button
+              title="Submit"
+              onPress={() => {
+                this.setUser();
+                Actions.home();
+              }}
+            />
+>>>>>>> master
           </View>
         )}
       </View>
