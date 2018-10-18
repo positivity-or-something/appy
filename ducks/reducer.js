@@ -1,26 +1,42 @@
 import axios from 'axios'
 import moment from 'moment'
 
+
 const initialState = {
-  state: true
+  users: [],
+  userId: ''
 }
 
-const GET_STATE = 'GET_STATE'
+const GET_USERS = 'GET_USERS'
+const SET_USER = 'SET_USER'
 
 export default function(state = initialState, action){
   switch (action.type) {
-    case GET_STATE:
+    case `${GET_USERS}_FULFILLED`:
       return{
-        ...state
+        ...state,
+        users: action.payload
+      }
+      case SET_USER:
+      return{
+        ...state,
+        userId: action.payload
       }
     default:
       return state
   }
 }
 
-export function getState(){
+export function setUser(id){
   return{
-    type: GET_STATE,
-    payload: ''
+    type: SET_USER,
+    payload: id
+  }
+}
+
+export function getUsers(){
+  return{
+    type: GET_USERS,
+    payload: axios(`http://localhost:3001/api/users`)
   }
 }
