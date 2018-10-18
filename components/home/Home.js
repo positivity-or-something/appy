@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, View, Text } from "react-native";
+import { Platform, StyleSheet, View, Text } from "react-native";
 import { connect } from "react-redux";
 import { getUsers } from "../../ducks/reducer";
 import { Button, Header } from "react-native-elements";
@@ -15,7 +15,16 @@ class Home extends React.Component {
     };
   }
   componentDidMount() {
-    axios(`http://localhost:3001/api/content`)
+    // console.log(
+    //   "http://" +
+    //     (Platform.OS === "ios" ? "localhost" : "172.31.98.128") +
+    //     ":3001/api/content"
+    // );
+    axios(
+      "http://" +
+        (Platform.OS === "ios" ? "localhost" : "172.31.98.128") +
+        ":3001/api/content"
+    )
       .then(response => {
         this.setState({ content: response.data });
       })

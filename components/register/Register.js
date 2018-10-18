@@ -42,7 +42,7 @@ class Register extends Component {
       photoUrl: this.state.photoUrl
     };
     axios
-      .post(`http://localhost:3001/api/user`, body)
+      .post(`http://localhost:3001/api/user, body)
       .then(res => this.props.setUser(res.data[0].id))
       .catch(err => console.log(err));
   }
