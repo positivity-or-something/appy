@@ -1,6 +1,5 @@
 import React from "react";
-import { Modal, View, Image, Text, Button, StyleSheet } from "react-native";
-import { TextInput } from "react-native-gesture-handler";
+import { Modal, View, Image, Text, Button, StyleSheet, TextInput } from "react-native";
 
 const Comments = props => {
   let modalContent = null;

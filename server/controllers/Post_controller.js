@@ -5,7 +5,8 @@ function post(req, res) {
     req.body.subject,
     req.body.postBody,
     req.body.timeStamp,
-    req.body.category
+    req.body.category,
+    req.body.image
   ])
     .then(response => res.status(200).send(response))
     .catch(err => console.log(err));
