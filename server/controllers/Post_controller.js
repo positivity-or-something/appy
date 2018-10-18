@@ -29,31 +29,34 @@ function getContent(req, res) {
     .then(response => res.status(200).send(response))
     .catch(err => console.log(err));
 }
-<<<<<<< HEAD
-module.exports = {
-  post,
-  getPost,
-  getContent
-};
-=======
 
-function upVote(req, res){
-  console.log('HIT UPVOTE CTRL METHOD', req.body)
-  const db = req.app.get('db')
+function upVote(req, res) {
+  console.log("HIT UPVOTE CTRL METHOD", req.body);
+  const db = req.app.get("db");
   db.upvote([parseInt(req.params.id, 10), req.body.userId])
-  .then(res => console.log('UPVOTE:', res) || res.sendStatus(200))
-  .catch((err) => console.log(err) || db.update_vote([parseInt(req.params.id, 10), req.body.userId, 1, 0])
-  .then(response => res.sendStatus(200))
-  .catch(error => console.log(error)))
+    .then(res => console.log("UPVOTE:", res) || res.sendStatus(200))
+    .catch(
+      err =>
+        console.log(err) ||
+        db
+          .update_vote([parseInt(req.params.id, 10), req.body.userId, 1, 0])
+          .then(response => res.sendStatus(200))
+          .catch(error => console.log(error))
+    );
 }
 
-function downVote(req, res){
-  const db = req.app.get('db')
+function downVote(req, res) {
+  const db = req.app.get("db");
   db.downvote([parseInt(req.params.id, 10), req.body.userId])
-  .then(res => console.log('DOWNVOTE:', res) || res.sendStatus(200))
-  .catch((err) => console.log(err) || db.update_vote([parseInt(req.params.id, 10), req.body.userId, 0, 1])
-  .then(response => res.sendStatus(200))
-  .catch(error => console.log(error)))
+    .then(res => console.log("DOWNVOTE:", res) || res.sendStatus(200))
+    .catch(
+      err =>
+        console.log(err) ||
+        db
+          .update_vote([parseInt(req.params.id, 10), req.body.userId, 0, 1])
+          .then(response => res.sendStatus(200))
+          .catch(error => console.log(error))
+    );
 }
 
 module.exports = {
@@ -61,5 +64,4 @@ module.exports = {
   getPost,
   upVote,
   downVote
-}
->>>>>>> master
+};

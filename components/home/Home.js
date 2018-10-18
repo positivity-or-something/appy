@@ -16,7 +16,7 @@ class Home extends React.Component {
   }
   componentDidMount() {
     console.warn("test");
-    axios(`http://localhost:3001/api/content`)
+    axios(`http://172.31.98.128:3001/api/content`)
       .then(response => {
         console.warn(response);
         this.setState({ content: response });

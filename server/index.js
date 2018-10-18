@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 require("dotenv").config();
 const express = require("express");
 const { json } = require("body-parser");
@@ -7,18 +6,12 @@ const cors = require("cors");
 const session = require("express-session");
 const app = express();
 const { getUsers, getUser } = require("./controllers/userCtrl");
-const { post, getPost, getContent } = require("./controllers/Post_controller");
-=======
-require('dotenv').config()
-const express = require('express')
-const { json } = require('body-parser')
-const massive = require('massive')
-const cors = require('cors')
-const session = require('express-session')
-const app = express()
-const { getUsers, getUser } = require('./controllers/userCtrl')
-const { post, getPost, upVote, downVote } = require('./controllers/Post_controller')
->>>>>>> master
+const {
+  post,
+  getPost,
+  upVote,
+  downVote
+} = require("./controllers/Post_controller");
 
 app.use(json());
 app.use(cors());
@@ -46,15 +39,11 @@ app.post(`/api/user`, getUser);
 app.post("/api/post", post);
 app.get("/api/post/:id", getPost);
 //----------------------Content---------------------------------
-app.get("/api/content", getContent);
+// app.get("/api/content", getContent);
 
-<<<<<<< HEAD
+app.post("/api/upvote/:id", upVote);
+app.post("/api/downvote/:id", downVote);
+
 app.listen(process.env.SERVER_PORT, () =>
   console.log(`listening on port ${process.env.SERVER_PORT}`)
 );
-=======
-app.post('/api/upvote/:id', upVote)
-app.post('/api/downvote/:id', downVote)
-
-app.listen(process.env.SERVER_PORT, () => console.log(`listening on port ${process.env.SERVER_PORT}`))
->>>>>>> master
