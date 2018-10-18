@@ -2,7 +2,7 @@ import React from "react";
 import { StyleSheet, View, Text } from "react-native";
 import { connect } from "react-redux";
 import { getUsers } from "../../ducks/reducer";
-import { Button, Header } from "react-native-elements";
+import { Button, Header, Avatar, Icon } from "react-native-elements";
 import { Actions } from "react-native-router-flux";
 import LoginButton from "../header/LoginButton";
 import axios from "axios";
@@ -11,9 +11,11 @@ class Home extends React.Component {
   constructor() {
     super();
     this.state = {
-      content: []
+      content: [],
+      user: {}
     };
   }
+
   componentDidMount() {
     axios(`http://localhost:3001/api/content`)
       .then(response => {
@@ -22,7 +24,16 @@ class Home extends React.Component {
       .catch(err => console.warn("ERROR CAUGHT", err));
   }
 
+  componentDidUpdate(prevProps){
+    prevProps.userId !== this.props.userId ?
+    axios.post(`http://localhost:3001/api/getuser`, {id: this.props.userId})
+      .then(response => this.setState({user: response.data[0]}))
+      .catch(err => console.log(err))
+      :null
+  }
+
   render() {
+    console.log(this.props)
     const { content } = this.state;
     let displayContent = content.map((e, i) => {
       return (
@@ -41,9 +52,23 @@ class Home extends React.Component {
       <View>
         <Header
           style={styles.header}
-          leftComponent={{ icon: "menu", color: "#fff" }}
-          centerComponent={{ text: "APPY", style: { color: "#fff" } }}
-          rightComponent={<LoginButton />}
+          leftComponent={
+          <Icon
+          name='menu'
+          color='white'
+          onPress={() => alert('Some Event')}
+          />}
+          centerComponent={{ text: "APPY", style: { color: "#fff" }}}
+          rightComponent={this.props.userId ? 
+            <Avatar
+              small
+              rounded
+              source={{uri: this.state.user.image_url || 'URL'}}
+              onPress={() => console.log("Works!")}
+              activeOpacity={0.7}
+            /> : 
+            <LoginButton />}
+            innerContainerStyles={{ marginTop: 10 }}
         />
         <View style={styles.container}>
           <Text style={styles.text}>Home</Text>

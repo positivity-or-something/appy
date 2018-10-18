@@ -8,11 +8,11 @@ import Post from "./components/post/Post";
 const MyRouter = () => {
   return (
     <Router>
-      <Stack key="root" headerMode="none">
-        <Scene key="home" component={Home} />
+      <Stack key="root" headerMode="screen">
+        <Scene key="home" component={Home} hideNavBar/>
         <Scene key="content" component={Content} />
-        <Scene key="register" component={Register} />
-        <Scene key="post" component={Post} />
+        <Scene key="register" title="Login" component={Register} />
+        <Scene key="post" title="Create Post" component={Post} />
       </Stack>
     </Router>
   );
