@@ -82,17 +82,6 @@ class Register extends Component {
     console.log(this.state);
     return (
       <View style={styles.container}>
-<<<<<<< HEAD
-        <TextInput autoCapitalize='none' placeholder={this.state.userName} onChangeText={(text) => this.setState({userName: text})}/>
-        <TextInput autoCapitalize='none' placeholder={this.state.passWord} onChangeText={(text) => this.setState({passWord: text})}/>
-        {
-          this.state.currentUser ?
-          <View style='none'>
-            <Button title="Login" onPress={() => {
-              this.setUser()
-              Actions.home()
-              }}></Button>
-=======
         <TextInput
           autoCapitalize="none"
           placeholder={this.state.userName}
@@ -112,24 +101,12 @@ class Register extends Component {
                 Actions.home();
               }}
             />
->>>>>>> master
             <Text>First Time Here?</Text>
             <Button
               title="Register"
               onPress={() => this.setState({ currentUser: false })}
             />
           </View>
-<<<<<<< HEAD
-          :
-          <View style='none'>
-            <TextInput placeholder={this.state.firstName} onChangeText={(text) => this.setState({firstName: text})}/>
-            <TextInput placeholder={this.state.email} onChangeText={(text) => this.setState({email: text})}/>
-            <TextInput placeholder={this.state.photoUrl}/>
-            <Button title="Submit" onPress={() => {
-              this.setUser()
-              Actions.home()}}>
-            </Button>
-=======
         ) : (
           <View>
             <TextInput
@@ -150,7 +127,6 @@ class Register extends Component {
                 Actions.home();
               }}
             />
->>>>>>> master
           </View>
         )}
       </View>
