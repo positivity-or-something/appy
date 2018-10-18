@@ -26,8 +26,6 @@ class Register extends Component {
       firstName: "First Name",
       email: "Email",
       photoUrl: "Need Firebase or S3 for this!!",
-      photoName: "",
-      photoType: ""
     };
 
     this.imagePermission = this.imagePermission.bind(this);
@@ -66,7 +64,7 @@ class Register extends Component {
         };
         let file = {
           uri: result.uri,
-          name: result.fileName,
+          name: `${this.state.firstName}s pic`,
           type: "image/png"
         };
         RNS3.put(file, config).then(response =>
