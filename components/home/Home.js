@@ -1,10 +1,11 @@
 import React from "react";
-import { Platform, StyleSheet, View, Text } from "react-native";
+import { Platform, StyleSheet, View, Text, Image } from "react-native";
 import { connect } from "react-redux";
 import { getUsers } from "../../ducks/reducer";
 import { Button, Header } from "react-native-elements";
 import { Actions } from "react-native-router-flux";
 import LoginButton from "../header/LoginButton";
+import Footer from "../footer/Footer";
 import axios from "axios";
 
 class Home extends React.Component {
@@ -26,6 +27,7 @@ class Home extends React.Component {
         ":3001/api/content"
     )
       .then(response => {
+        // console.warn("THIS IS A WARNING", response);
         this.setState({ content: response.data });
       })
       .catch(err => console.warn("ERROR CAUGHT", err));
@@ -33,6 +35,7 @@ class Home extends React.Component {
 
   render() {
     const { content } = this.state;
+    console.warn("THIS IS CONTENT", content);
     let displayContent = content.map((e, i) => {
       return (
         <View
@@ -42,7 +45,12 @@ class Home extends React.Component {
             borderWidth: 1
           }}
         >
-          {e.body}
+          <Image
+            source={{ uri: e.image }}
+            defaultSource={require("../../img/1-cee-lo-albums.jpg")}
+          />
+          <Text>{e.body}</Text>
+          <Text>{e.date}</Text>
         </View>
       );
     });
@@ -94,6 +102,10 @@ class Home extends React.Component {
           </Button>
         </View>
         {displayContent}
+        <View>
+          <Footer />
+        </View>
+
         <View />
       </View>
     );

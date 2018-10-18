@@ -41,23 +41,31 @@ class Register extends Component {
       photoUrl: this.state.photoUrl
     };
     axios
-<<<<<<< HEAD
-      .post(`http://localhost:3001/api/user, body)
-=======
-      .post('http://' + (Platform.OS === 'ios' ? 'localhost' : '172.31.98.128') + ':3001/api/user', body)
->>>>>>> master
+      .post(
+        "http://" +
+          (Platform.OS === "ios" ? "localhost" : "172.31.98.128") +
+          ":3001/api/user",
+        body
+      )
       .then(res => this.props.setUser(res.data[0].id))
       .catch(err => console.log(err));
   }
 
   async imagePermission(gallery) {
-    let result = ''
-    const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL, Permissions.CAMERA, Permissions.AUDIO_RECORDING);
+    let result = "";
+    const { status } = await Permissions.askAsync(
+      Permissions.CAMERA_ROLL,
+      Permissions.CAMERA,
+      Permissions.AUDIO_RECORDING
+    );
     if (status === "granted") {
-      if(gallery){
-         result = await ImagePicker.launchImageLibraryAsync({ allowsEditing: true, aspect: [4, 3] });
-      }else{
-         result = await ImagePicker.launchCameraAsync({allowsEditing: true})
+      if (gallery) {
+        result = await ImagePicker.launchImageLibraryAsync({
+          allowsEditing: true,
+          aspect: [4, 3]
+        });
+      } else {
+        result = await ImagePicker.launchCameraAsync({ allowsEditing: true });
       }
       if (!result.cancelled) {
         const config = {
@@ -121,8 +129,8 @@ class Register extends Component {
               placeholder={this.state.email}
               onChangeText={text => this.setState({ email: text })}
             />
-            <Icon onPress={() => this.imagePermission()} name='camera-alt'/>
-            <Icon onPress={() => this.imagePermission(true)} name='image'/>  
+            <Icon onPress={() => this.imagePermission()} name="camera-alt" />
+            <Icon onPress={() => this.imagePermission(true)} name="image" />
             <Button
               title="Submit"
               onPress={() => {

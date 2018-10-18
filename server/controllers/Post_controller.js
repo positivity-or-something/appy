@@ -27,7 +27,10 @@ function getPost(req, res) {
 function getContent(req, res) {
   const db = req.app.get("db");
   db.get_All_Post()
-    .then(response => res.status(200).send(response))
+    .then(response => {
+      console.log(response);
+      res.status(200).send(response);
+    })
     .catch(err => console.log(err));
 }
 
