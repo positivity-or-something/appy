@@ -1,17 +1,10 @@
 import React, { Component } from "react";
-<<<<<<< HEAD
 import { View, Text, StyleSheet, Button, Modal } from "react-native";
-=======
-import { View, Text, StyleSheet } from "react-native";
->>>>>>> master
 import { Icon } from "react-native-elements";
 import { connect } from "react-redux";
 import axios from "axios";
 
-<<<<<<< HEAD
 import Comments from "../comment/Comments";
-=======
->>>>>>> master
 class Content extends Component {
   constructor() {
     super();
@@ -22,12 +15,8 @@ class Content extends Component {
       upvotes: 0,
       downvotes: 0,
       rep: 0,
-<<<<<<< HEAD
       isLoading: true,
       openModal: null
-=======
-      isLoading: true
->>>>>>> master
     };
   }
 
@@ -62,7 +51,6 @@ class Content extends Component {
       rep: upvotes - downvotes
     });
   }
-<<<<<<< HEAD
 
   async vote(type) {
     console.log("HIT VOTE METHOD");
@@ -98,37 +86,6 @@ class Content extends Component {
       openModal: null
     });
   };
-=======
-
-  async vote(type) {
-    console.log("HIT VOTE METHOD");
-    let body = {
-      userId: this.props.userId
-    };
-    type
-      ? await axios.post(
-          `http://localhost:3001/api/upvote/${this.props.postId}`,
-          body
-        )
-      : await axios.post(
-          `http://localhost:3001/api/downvote/${this.props.postId}`,
-          body
-        );
-
-    axios(`http://localhost:3001/api/post/${this.props.postId}`)
-      .then(res =>
-        this.setState(
-          {
-            content: res.data.post[0],
-            comments: res.data.comments,
-            isLoading: false
-          },
-          () => this.getRep(res.data.post)
-        )
-      )
-      .catch(err => console.log(err));
-  }
->>>>>>> master
 
   render() {
     let comments = this.state.comments.map((comment, i) => {
@@ -151,7 +108,6 @@ class Content extends Component {
           color="red"
           onPress={() => this.vote()}
         />
-<<<<<<< HEAD
         <Button
           title="Add Comment"
           onPress={this.setState({ openModal: true })}
@@ -171,8 +127,6 @@ class Content extends Component {
             <Button title="Add Comment" onPress={this.closeModal} />
           </View>
         </Modal>
-=======
->>>>>>> master
         <View style={{ marginTop: 25 }}>{comments}</View>
       </View>
     );
@@ -189,11 +143,8 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     alignItems: "center",
     justifyContent: "center"
-<<<<<<< HEAD
   },
   inputStyle: {
     width: "100%"
-=======
->>>>>>> master
   }
 });
