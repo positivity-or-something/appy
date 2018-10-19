@@ -11,7 +11,8 @@ const {
   getPost,
   upVote,
   downVote,
-  getContent
+  getContent,
+  deletePost
 } = require("./controllers/Post_controller");
 
 app.use(json());
@@ -38,9 +39,10 @@ app.use(
 app.get("/api/users", getUsers);
 app.post(`/api/user`, getUser);
 app.post("/api/getuser", getUserById);
-//-------------------MAKE POST------------------------
+//-------------------POSTING ENDPOINTS------------------------
 app.post("/api/post", post);
 app.get("/api/post/:id", getPost);
+app.delete('/api/deletepost/:id', deletePost)
 //----------------------Content-----------------------
 app.get("/api/content", getContent);
 app.post("/api/upvote/:id", upVote);

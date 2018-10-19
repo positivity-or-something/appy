@@ -8,6 +8,7 @@ class footer extends Component {
     return (
       <View
         style={{
+          height: 50,
           flexDirection: "row",
           justifyContent: "space-around",
           alignItems: "flex-end",
