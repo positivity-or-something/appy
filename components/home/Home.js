@@ -1,5 +1,5 @@
 import React from "react";
-import { Platform, StyleSheet, View, Text, Image } from "react-native";
+import { Platform, StyleSheet, View, Text, Image, TouchableOpacity } from "react-native";
 import { connect } from "react-redux";
 import { getUsers } from "../../ducks/reducer";
 import { Button, Header, Avatar, Icon } from "react-native-elements";
@@ -19,11 +19,6 @@ class Home extends React.Component {
   }
 
   componentDidMount() {
-    // console.log(
-    //   "http://" +
-    //     (Platform.OS === "ios" ? "localhost" : "172.31.98.128") +
-    //     ":3001/api/content"
-    // );
     if(!this.state.content[0]){
       axios(
         "http://" +
@@ -61,11 +56,17 @@ class Home extends React.Component {
             borderWidth: 1
           }}
         >
+        <TouchableOpacity
+        onPress={() => {
+          this.props.getUsers();
+          Actions.content({ postId: e.id });
+        }}>
           <Image
             source={{ uri: e.image || "../../img/1-cee-lo-albums.jpg"}}
           />
           <Text>{e.body}</Text>
           <Text>{e.date}</Text>
+        </TouchableOpacity>
           {e.user_id === this.props.userId ? 
           <Button
           onPress={() => this.props.deletePost(e.id)}
@@ -97,24 +98,6 @@ class Home extends React.Component {
         />
         <View style={styles.container}>
           <Text style={styles.text}>Home</Text>
-          <Button
-            titleStyle={{ fontWeight: "700" }}
-            buttonStyle={{
-              backgroundColor: "rgba(92, 99,216, 1)",
-              width: 300,
-              height: 45,
-              borderColor: "transparent",
-              borderWidth: 0,
-              borderRadius: 5
-            }}
-            title="Content Link"
-            onPress={() => {
-              this.props.getUsers();
-              Actions.content({ postId: 2 });
-            }}
-          >
-            Content Link
-          </Button>
         </View>
         {displayContent}
         <View >
