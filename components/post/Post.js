@@ -52,9 +52,10 @@ async imagePermission(gallery) {
         secretKey: secretKey,
         successActionStatus: 201
       };
+      let fileNum = Math.random() * 9999
       let file = {
         uri: result.uri,
-        name: `${this.state.firstName}s post pic`,
+        name: `${this.state.firstName}s post pic ${fileNum}`,
         type: "image/png"
       };
       RNS3.put(file, config).then(response =>

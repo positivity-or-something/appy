@@ -1,5 +1,5 @@
 import React from "react";
-import { Platform, StyleSheet, View, Text, Image, TouchableOpacity } from "react-native";
+import { Platform, StyleSheet, View, Text, Image, TouchableOpacity, ScrollView } from "react-native";
 import { connect } from "react-redux";
 import { getUsers } from "../../ducks/reducer";
 import { Button, Header, Avatar, Icon } from "react-native-elements";
@@ -62,15 +62,21 @@ class Home extends React.Component {
           Actions.content({ postId: e.id });
         }}>
           <Image
+            style={{width: 300, height: 300}}
             source={{ uri: e.image || "../../img/1-cee-lo-albums.jpg"}}
           />
           <Text>{e.body}</Text>
           <Text>{e.date}</Text>
         </TouchableOpacity>
           {e.user_id === this.props.userId ? 
-          <Button
-          onPress={() => this.props.deletePost(e.id)}
-          >Delete</Button> : null}
+          <Icon
+          raised
+          name='delete'
+          color='red'
+          onPress={() => 
+            alert("Post Deleted") ||
+            this.props.deletePost(e.id)}
+          ></Icon> : null}
         </View>
       );
     })}
@@ -96,13 +102,10 @@ class Home extends React.Component {
             <LoginButton />}
             innerContainerStyles={{ marginTop: 10 }}
         />
-        <View style={styles.container}>
-          <Text style={styles.text}>Home</Text>
-        </View>
-        {displayContent}
-        <View >
-          <Footer />
-        </View>
+        <ScrollView style={{maxHeight: 777, minHeight: 777}}>
+          {displayContent}
+        </ScrollView>
+          <Footer style={{position: 'absolute', bottom: 0}}/>
         <View />
       </View>
     );
