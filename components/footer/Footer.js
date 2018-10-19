@@ -10,7 +10,8 @@ class footer extends Component {
         style={{
           flexDirection: "row",
           justifyContent: "space-around",
-          backgroundColor: "yellow",
+          alignItems: "flex-end",
+          backgroundColor: "orange",
           borderColor: "black"
         }}
       >
