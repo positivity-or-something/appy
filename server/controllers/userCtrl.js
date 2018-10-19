@@ -11,7 +11,7 @@ function getUsers(req, res) {
 
 function getUser(req, res) {
   const db = req.app.get("db");
-  if (req.body.email !== "Email" && req.body.firstName !== "First Name") {
+  if (req.body.email !== "Email" || req.body.firstName !== "First Name") {
     db.register_user([
       req.body.userName,
       req.body.passWord,
@@ -28,7 +28,15 @@ function getUser(req, res) {
   }
 }
 
+function getUserById(req, res){
+  const db = req.app.get("db")
+  db.get_user_by_id(req.body.id)
+  .then(response => res.status(200).send(response))
+  .catch(err => console.log(err))
+}
+
 module.exports = {
   getUsers,
-  getUser
+  getUser,
+  getUserById
 };

@@ -88,6 +88,7 @@ class Content extends Component {
     };
     let userId = this.props.userId;
 
+<<<<<<< HEAD
     axios.post(`http://localhost:3001/api/postcomment/${userId}`, body).then(
       res =>
         res === "Please add comment"
@@ -98,6 +99,12 @@ class Content extends Component {
               commentInput: ""
             })
     );
+=======
+  closeModal = () => {
+    this.setState({
+      openModal: null
+    });
+>>>>>>> master
   };
 
   makeCommentHandler = text => {
@@ -134,6 +141,7 @@ class Content extends Component {
         <Button
           title="Add Comment"
           onPress={() => this.setState({ openModal: true })}
+<<<<<<< HEAD
         />
         <Comments
           openModal={this.state.openModal}
@@ -141,6 +149,8 @@ class Content extends Component {
           commentInput={this.state.commentInput}
           makeCommentHandler={this.makeCommentHandler}
           // eachComment={eachComment}
+=======
+>>>>>>> master
         />
         <View>
           <Text>{eachComment}</Text>

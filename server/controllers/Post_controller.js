@@ -5,7 +5,8 @@ function post(req, res) {
     req.body.subject,
     req.body.postBody,
     req.body.timeStamp,
-    req.body.category
+    req.body.category,
+    req.body.image
   ])
     .then(response => res.status(200).send(response))
     .catch(err => console.log(err));
@@ -26,7 +27,9 @@ function getPost(req, res) {
 function getContent(req, res) {
   const db = req.app.get("db");
   db.get_All_Post()
-    .then(response => res.status(200).send(response))
+    .then(response => {
+      res.status(200).send(response);
+    })
     .catch(err => console.log(err));
 }
 
@@ -58,10 +61,18 @@ function downVote(req, res) {
     );
 }
 
+function deletePost(req, res){
+  const db = req.app.get('db')
+  db.delete_post(parseInt(req.params.id, 10))
+  .then(response => res.status(200).send(response))
+  .catch(err => console.log(err))
+}
+
 module.exports = {
   post,
   getPost,
   upVote,
   downVote,
-  getContent
+  getContent,
+  deletePost
 };

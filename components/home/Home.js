@@ -1,30 +1,69 @@
 import React from "react";
-import { StyleSheet, View, Text } from "react-native";
+import { Platform, StyleSheet, View, Text, Image, TouchableOpacity, TouchableHighlight, ScrollView, Modal } from "react-native";
 import { connect } from "react-redux";
 import { getUsers } from "../../ducks/reducer";
-import { Button, Header } from "react-native-elements";
+import {Header, Avatar, Icon } from "react-native-elements";
 import { Actions } from "react-native-router-flux";
 import LoginButton from "../header/LoginButton";
+import Footer from "../footer/Footer";
 import axios from "axios";
+import { updateContent, deletePost } from '../../ducks/reducer'
 
 class Home extends React.Component {
   constructor() {
     super();
+
     this.state = {
-      content: []
+      content: [],
+      user: {},
+      show: false,
+      quote: ''
     };
+
+    this.toggleModal = this.toggleModal.bind(this)
+    this.scrollToTop = this.scrollToTop.bind(this)
   }
+
   componentDidMount() {
-    axios(`http://localhost:3001/api/content`)
-      .then(response => {
-        this.setState({ content: response.data });
-      })
-      .catch(err => console.warn("ERROR CAUGHT", err));
+    axios("http://api.forismatic.com/api/1.0/?method=getQuote&format=json&lang=en")
+    .then(res => this.setState({quote: res.data.quoteText}))
+    .catch(err => console.log('QUOTE GENERATOR ERROR', err))
+
+    if(!this.state.content[0]){
+      axios(
+        "http://" +
+          (Platform.OS === "ios" ? "localhost" : "172.31.98.128") +
+          ":3001/api/content"
+      )
+        .then(response => {
+          this.props.updateContent(response.data);
+        })
+        .catch(err => console.warn("ERROR CAUGHT", err));
+    }
+  }
+
+  componentDidUpdate(prevProps){
+    prevProps.userId !== this.props.userId || this.props.userId && !this.state.user.image_url ? 
+    axios.post(`http://localhost:3001/api/getuser`, {id: this.props.userId})
+      .then(response => this.setState({user: response.data[0]}))
+      .catch(err => console.log(err))
+      :null
+  }
+
+  toggleModal(){
+    this.setState({show: !this.state.show})
+  }
+
+  scrollToTop(){
+    this.ScrollView.scrollTo({x: 0, y: 0, animated: true})
   }
 
   render() {
-    const { content } = this.state;
-    let displayContent = content.map((e, i) => {
+    console.log(this.state)
+    const { content } = this.props;
+    let displayContent = null
+    if(content[0]){
+       displayContent = content.map((e, i) => {
       return (
         <View
           key={i}
@@ -33,59 +72,92 @@ class Home extends React.Component {
             borderWidth: 1
           }}
         >
-          {e.body}
+        <TouchableOpacity
+        onPress={() => {
+          this.props.getUsers();
+          Actions.content({ postId: e.id });
+        }}>
+          <Image
+            style={{width: 300, height: 300}}
+            source={{ uri: e.image || "../../img/1-cee-lo-albums.jpg"}}
+          />
+          <Text>{e.body}</Text>
+          <Text>{e.date}</Text>
+        </TouchableOpacity>
+          {e.user_id === this.props.userId ? 
+          <Icon
+          raised
+          name='delete'
+          color='red'
+          onPress={() => 
+            alert("Post Deleted") ||
+            this.props.deletePost(e.id)}
+          ></Icon> : null}
         </View>
       );
-    });
+    })}
     return (
       <View>
         <Header
           style={styles.header}
-          leftComponent={{ icon: "menu", color: "#fff" }}
-          centerComponent={{ text: "APPY", style: { color: "#fff" } }}
-          rightComponent={<LoginButton />}
+          leftComponent={
+          <Icon
+          name='menu'
+          color='white'
+          onPress={() => alert('Some Event')}
+          />}
+          centerComponent={
+            <Icon 
+            name='vertical-align-top'
+            color='white'
+            onPress={this.scrollToTop}/>
+          }
+          rightComponent={this.props.userId ? 
+            <Avatar
+              small
+              rounded
+              source={{uri: this.state.user.image_url || 'URL'}}
+              onPress={() => console.log("Works!")}
+              activeOpacity={0.7}
+            /> : 
+            <LoginButton />}
+            innerContainerStyles={{ marginTop: 10 }}
         />
-        <View style={styles.container}>
-          <Text style={styles.text}>Home</Text>
-          <Button
-            titleStyle={{ fontWeight: "700" }}
-            buttonStyle={{
-              backgroundColor: "rgba(92, 99,216, 1)",
-              width: 300,
-              height: 45,
-              borderColor: "transparent",
-              borderWidth: 0,
-              borderRadius: 5
-            }}
-            title="Content Link"
-            onPress={() => {
-              this.props.getUsers();
-              Actions.content({ postId: 2 });
-            }}
-          >
-            Content Link
-          </Button>
-          <Button
-            buttonStyle={{
-              marginTop: 50,
-              backgroundColor: "rgba(92, 99,216, 1)",
-              width: 300,
-              height: 45,
-              borderColor: "transparent",
-              borderWidth: 0,
-              borderRadius: 5
-            }}
-            titleStyle={{ fontWeight: "700" }}
-            title="New Post"
-            onPress={() => {
-              Actions.post();
-            }}
-          >
-            New Post
-          </Button>
-        </View>
-        {displayContent}
-        <View />
+        <ScrollView 
+        ref={ref => {this.ScrollView = ref}}
+        style={{maxHeight: 777, minHeight: 777}}>
+          {displayContent}
+        </ScrollView>
+          <Footer toggleModal={this.toggleModal}/>
+          <View style={{marginTop: 22}}>
+            <Modal
+              animationType="slide"
+              transparent={false}
+              visible={this.state.show}
+              onRequestClose={() => {
+                alert('Modal has been closed.');
+              }}>
+              <View style={{marginTop: 100}}>
+                <View>
+                  <Text>{this.state.quote}</Text>
+
+                  <TouchableHighlight
+                    onPress={() => {
+                      this.toggleModal();
+                    }}>
+                    <Text>Hide Modal</Text>
+                  </TouchableHighlight>
+                </View>
+              </View>
+            </Modal>
+
+            <TouchableHighlight
+              onPress={() => {
+                this.setModalVisible(true);
+              }}>
+              <Text>Show Modal</Text>
+            </TouchableHighlight>
+          </View>
       </View>
     );
   }
@@ -104,11 +176,12 @@ const styles = StyleSheet.create({
     fontSize: 30
   },
   header: {
-    flex: 1
+    flex: 1,
+    marginTop: 10
   }
 });
 
 export default connect(
   state => state,
-  { getUsers }
+  { getUsers, updateContent, deletePost }
 )(Home);
