@@ -8,6 +8,7 @@ import { accessKey, secretKey } from "../../keys";
 import { RNS3 } from "react-native-aws3";
 import { connect } from 'react-redux'
 import { Actions } from 'react-native-router-flux'
+import { updateContent } from '../../ducks/reducer'
 
 class Post extends Component {
   constructor() {
@@ -29,7 +30,7 @@ post(){
     image: this.state.photoUrl
   }
   axios.post('http://' + (Platform.OS === 'ios' ? 'localhost' : '172.31.98.128') + ':3001/api/post', body)
-  .then((response) => console.log(response))
+  .then((response) => this.props.updateContent(response.data))
   .catch(err => console.log(err))
 }
 
@@ -80,7 +81,7 @@ async imagePermission(gallery) {
   }
 }
 
-export default connect(state => state)(Post)
+export default connect(state => state, { updateContent })(Post)
 
 const styles = StyleSheet.create({
   container: {
