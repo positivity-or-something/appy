@@ -1,8 +1,8 @@
 import React from "react";
-import { Platform, StyleSheet, View, Text, Image, TouchableOpacity, ScrollView } from "react-native";
+import { Platform, StyleSheet, View, Text, Image, TouchableOpacity, TouchableHighlight, ScrollView, Modal } from "react-native";
 import { connect } from "react-redux";
 import { getUsers } from "../../ducks/reducer";
-import { Button, Header, Avatar, Icon } from "react-native-elements";
+import {Header, Avatar, Icon } from "react-native-elements";
 import { Actions } from "react-native-router-flux";
 import LoginButton from "../header/LoginButton";
 import Footer from "../footer/Footer";
@@ -12,13 +12,23 @@ import { updateContent, deletePost } from '../../ducks/reducer'
 class Home extends React.Component {
   constructor() {
     super();
+
     this.state = {
       content: [],
-      user: {}
+      user: {},
+      show: false,
+      quote: ''
     };
+
+    this.toggleModal = this.toggleModal.bind(this)
+    this.scrollToTop = this.scrollToTop.bind(this)
   }
 
   componentDidMount() {
+    axios("http://api.forismatic.com/api/1.0/?method=getQuote&format=json&lang=en")
+    .then(res => this.setState({quote: res.data.quoteText}))
+    .catch(err => console.log('QUOTE GENERATOR ERROR', err))
+
     if(!this.state.content[0]){
       axios(
         "http://" +
@@ -40,10 +50,16 @@ class Home extends React.Component {
       :null
   }
 
-  
+  toggleModal(){
+    this.setState({show: !this.state.show})
+  }
+
+  scrollToTop(){
+    this.ScrollView.scrollTo({x: 0, y: 0, animated: true})
+  }
 
   render() {
-    console.log(this.props)
+    console.log(this.state)
     const { content } = this.props;
     let displayContent = null
     if(content[0]){
@@ -90,7 +106,12 @@ class Home extends React.Component {
           color='white'
           onPress={() => alert('Some Event')}
           />}
-          centerComponent={{ text: "APPY", style: { color: "#fff" }}}
+          centerComponent={
+            <Icon 
+            name='vertical-align-top'
+            color='white'
+            onPress={this.scrollToTop}/>
+          }
           rightComponent={this.props.userId ? 
             <Avatar
               small
@@ -102,11 +123,41 @@ class Home extends React.Component {
             <LoginButton />}
             innerContainerStyles={{ marginTop: 10 }}
         />
-        <ScrollView style={{maxHeight: 777, minHeight: 777}}>
+        <ScrollView 
+        ref={ref => {this.ScrollView = ref}}
+        style={{maxHeight: 777, minHeight: 777}}>
           {displayContent}
         </ScrollView>
-          <Footer style={{position: 'absolute', bottom: 0}}/>
-        <View />
+          <Footer toggleModal={this.toggleModal}/>
+          <View style={{marginTop: 22}}>
+            <Modal
+              animationType="slide"
+              transparent={false}
+              visible={this.state.show}
+              onRequestClose={() => {
+                alert('Modal has been closed.');
+              }}>
+              <View style={{marginTop: 100}}>
+                <View>
+                  <Text>{this.state.quote}</Text>
+
+                  <TouchableHighlight
+                    onPress={() => {
+                      this.toggleModal();
+                    }}>
+                    <Text>Hide Modal</Text>
+                  </TouchableHighlight>
+                </View>
+              </View>
+            </Modal>
+
+            <TouchableHighlight
+              onPress={() => {
+                this.setModalVisible(true);
+              }}>
+              <Text>Show Modal</Text>
+            </TouchableHighlight>
+          </View>
       </View>
     );
   }
@@ -125,7 +176,8 @@ const styles = StyleSheet.create({
     fontSize: 30
   },
   header: {
-    flex: 1
+    flex: 1,
+    marginTop: 10
   }
 });
 

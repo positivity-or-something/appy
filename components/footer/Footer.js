@@ -1,9 +1,13 @@
 import React, { Component } from "react";
-import { Platform, StyleSheet, View, Text, Image, Button } from "react-native";
+import { View} from "react-native";
 import { Actions } from "react-native-router-flux";
 import { Icon } from "react-native-elements";
 
 class footer extends Component {
+  constructor(props){
+    super(props)
+
+  }
   render() {
     return (
       <View
@@ -16,7 +20,7 @@ class footer extends Component {
         }}
       >
         <Icon name="home" onPress={() => Actions.home()} />
-        <Icon name="person" />
+        <Icon name="sentiment-very-satisfied" onPress={() => this.props.toggleModal()}/>
         <Icon name="comment" onPress={() => Actions.post()} />
       </View>
     );
