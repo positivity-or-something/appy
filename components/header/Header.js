@@ -11,6 +11,7 @@ class Header extends React.Component {
         <Icon name="photo_camera" />
         <Text style={{ fontSize: 30, fontFamily }}>Appy</Text>
         <Icon name="person_add" />
+        <Icon name="vertical_align_top" />
       </View>
     );
   }

@@ -118,7 +118,12 @@ class Home extends React.Component {
           }
           innerContainerStyles={{ marginTop: 10 }}
         />
-        <ScrollView style={{ maxHeight: 777, minHeight: 777 }}>
+        <ScrollView
+          style={{ maxHeight: 777, minHeight: 777 }}
+          ref={c => {
+            this.scroll = c;
+          }}
+        >
           {displayContent}
         </ScrollView>
         <Footer style={{ position: "absolute", bottom: 0 }} />
