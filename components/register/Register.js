@@ -76,9 +76,10 @@ class Register extends Component {
           secretKey: secretKey,
           successActionStatus: 201
         };
+        let fileNum = Math.random() * 9999
         let file = {
           uri: result.uri,
-          name: `${this.state.firstName}s pic`,
+          name: `${this.state.firstName}s pic ${fileNum}`,
           type: "image/png"
         };
         RNS3.put(file, config).then(response =>
@@ -91,7 +92,6 @@ class Register extends Component {
   }
 
   render() {
-    console.log(this.state);
     return (
       <View style={styles.container}>
         <TextInput
