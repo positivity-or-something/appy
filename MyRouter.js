@@ -4,6 +4,7 @@ import Home from "./components/home/Home";
 import Content from "./components/content/Content";
 import Register from "./components/register/Register";
 import Post from "./components/post/Post";
+import Profile from './components/profile/Profile'
 
 const MyRouter = () => {
   return (
@@ -13,6 +14,7 @@ const MyRouter = () => {
         <Scene key="content" component={Content} />
         <Scene key="register" title="Login" component={Register} />
         <Scene key="post" title="Create Post" component={Post} />
+        <Scene key='profile' title="Profile" component={Profile}/>
       </Stack>
     </Router>
   );

@@ -59,7 +59,7 @@ class Home extends React.Component {
   }
 
   render() {
-    console.log(this.state)
+    console.log(this.props)
     const { content } = this.props;
     let displayContent = null
     if(content[0]){
@@ -117,7 +117,10 @@ class Home extends React.Component {
               small
               rounded
               source={{uri: this.state.user.image_url || 'URL'}}
-              onPress={() => console.log("Works!")}
+              onPress={() => {
+                this.props.getUsers()
+                Actions.profile({user: this.state.user})
+              }}
               activeOpacity={0.7}
             /> : 
             <LoginButton />}
