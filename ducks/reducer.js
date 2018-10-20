@@ -16,7 +16,7 @@ export default function(state = initialState, action){
     case `${GET_USERS}_FULFILLED`:
       return{
         ...state,
-        users: action.payload
+        users: action.payload.data
       }
       case SET_USER:
       return{
