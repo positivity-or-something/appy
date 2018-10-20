@@ -88,34 +88,17 @@ class Content extends Component {
     };
     let userId = this.props.userId;
 
-<<<<<<< HEAD
-    axios.post(`http://localhost:3001/api/postcomment/${userId}`, body).then(
-      res =>
-        res === "Please add comment"
-          ? alert(res)
-          : this.setState({
-              comments: res.data.commetnts,
-              openModal: null,
-              commentInput: ""
-            })
-    );
-=======
   closeModal = () => {
     this.setState({
       openModal: null
     });
->>>>>>> master
   };
 
   makeCommentHandler = text => {
     this.setState({ commentInput: text });
   };
 
-  // modalClosedHandler = () => {
-  //   this.setState({
-  //     openModal: null
-  //   });
-  // };
+
 
   render() {
     let eachComment = this.state.allComments.map((comment, i) => {
@@ -141,16 +124,6 @@ class Content extends Component {
         <Button
           title="Add Comment"
           onPress={() => this.setState({ openModal: true })}
-<<<<<<< HEAD
-        />
-        <Comments
-          openModal={this.state.openModal}
-          postCommentHandler={this.postCommentHandler}
-          commentInput={this.state.commentInput}
-          makeCommentHandler={this.makeCommentHandler}
-          // eachComment={eachComment}
-=======
->>>>>>> master
         />
         <View>
           <Text>{eachComment}</Text>
@@ -168,7 +141,8 @@ class Content extends Component {
       </View>
     );
   }
-}
+}}
+
 
 export default connect(state => state)(Content);
 
@@ -184,4 +158,4 @@ const styles = StyleSheet.create({
   inputStyle: {
     width: "100%"
   }
-});
+})
