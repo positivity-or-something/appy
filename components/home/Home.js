@@ -9,6 +9,7 @@ import Footer from "../footer/Footer";
 import axios from "axios";
 import { updateContent, deletePost } from '../../ducks/reducer'
 
+
 class Home extends React.Component {
   constructor() {
     super();
@@ -25,6 +26,15 @@ class Home extends React.Component {
   }
 
   componentDidMount() {
+    //WORKING ON ARTICLES FROM THIS API
+    // axios('https://newsapi.org/v2/everything?' +
+    // 'q=puppy&' +
+    // 'from=2018-10-20&' +
+    // 'sortBy=popularity&' +
+    // 'apiKey=c9cd68fcd90640f3a023e49292d64491')
+    //       .then(response => console.log('NEWS:', response))
+    //       .catch(error => console.log('NEWS ERROR', error))
+
     axios("http://api.forismatic.com/api/1.0/?method=getQuote&format=json&lang=en")
     .then(res => this.setState({quote: res.data.quoteText}))
     .catch(err => console.log('QUOTE GENERATOR ERROR', err))
