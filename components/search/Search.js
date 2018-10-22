@@ -47,7 +47,7 @@ class Search extends Component {
     });
 
     return (
-      <View>
+      <View style={{width: 150, height: 25, backgroundColor: 'red'}}>
         <TextInput
           onChangeText={text => this.handleAll(text)}
           type="text"

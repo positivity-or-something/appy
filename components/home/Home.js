@@ -94,7 +94,8 @@ class Home extends React.Component {
             key={i}
             style={{
               borderColor: "black",
-              borderWidth: 1
+              borderWidth: 1,
+              alignItems: 'center'
             }}
           >
             <TouchableOpacity
@@ -102,6 +103,7 @@ class Home extends React.Component {
                 this.props.getUsers();
                 Actions.content({ postId: e.id });
               }}
+              style={{alignItems: 'center'}}
             >
               <Image
                 style={{ width: 300, height: 300 }}
@@ -130,11 +132,7 @@ class Home extends React.Component {
         <Header
           style={styles.header}
           leftComponent={
-            <Icon
-              name="menu"
-              color="white"
-              onPress={() => alert("Some Event")}
-            />
+            <Search />
           }
           centerComponent={
             <Icon
@@ -169,7 +167,6 @@ class Home extends React.Component {
         >
           {displayContent}
         </ScrollView>
-        <Search />
         <Footer toggleModal={this.toggleModal} />
         <View style={{ marginTop: 22 }}>
           <Modal
@@ -182,15 +179,14 @@ class Home extends React.Component {
           >
             <View style={{ marginTop: 100 }}>
               <View>
-                <Text>{this.state.quote}</Text>
-
-                <TouchableHighlight
+                  <Icon 
+                  name='close'
                   onPress={() => {
                     this.toggleModal();
                   }}
-                >
-                  <Text>Hide Modal</Text>
-                </TouchableHighlight>
+                  />
+                <Text>{this.state.quote}</Text>
+
               </View>
             </View>
           </Modal>
