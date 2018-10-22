@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View } from "react-native";
+import { View, Text } from "react-native";
 import { Actions } from "react-native-router-flux";
 import { Icon } from "react-native-elements";
 
@@ -20,6 +20,7 @@ class footer extends Component {
         }}
       >
         <Icon name="home" onPress={() => Actions.home()} />
+        <Icon name="check-circle" onPress={() => Actions.radB()} />
         <Icon
           name="sentiment-very-satisfied"
           onPress={() => this.props.toggleModal()}

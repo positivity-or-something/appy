@@ -18,6 +18,7 @@ import LoginButton from "../header/LoginButton";
 import Footer from "../footer/Footer";
 import axios from "axios";
 import { updateContent, deletePost } from "../../ducks/reducer";
+import Search from "../search/Search";
 
 class Home extends React.Component {
   constructor() {
@@ -166,6 +167,7 @@ class Home extends React.Component {
         >
           {displayContent}
         </ScrollView>
+        <Search />
         <Footer toggleModal={this.toggleModal} />
         <View style={{ marginTop: 22 }}>
           <Modal
