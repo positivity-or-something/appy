@@ -14,7 +14,7 @@ const MyRouter = () => {
         <Scene key="content" component={Content} />
         <Scene key="register" title="Login" component={Register} />
         <Scene key="post" title="Create Post" component={Post} />
-        <Scene key='profile' title="Profile" component={Profile}/>
+        <Scene key='profile' title="Profile" component={Profile} />
       </Stack>
     </Router>
   );
