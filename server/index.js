@@ -12,7 +12,8 @@ const {
   upVote,
   downVote,
   getContent,
-  deletePost
+  deletePost,
+  findWords
 } = require("./controllers/Post_controller");
 
 app.use(json());
@@ -42,7 +43,7 @@ app.post("/api/getuser", getUserById);
 //-------------------POSTING ENDPOINTS------------------------
 app.post("/api/post", post);
 app.get("/api/post/:id", getPost);
-app.delete('/api/deletepost/:id', deletePost)
+app.delete("/api/deletepost/:id", deletePost);
 //----------------------Content-----------------------
 app.get("/api/content", getContent);
 app.post("/api/upvote/:id", upVote);
@@ -50,6 +51,8 @@ app.post("/api/downvote/:id", downVote);
 
 app.post("/api/upvote/:id", upVote);
 app.post("/api/downvote/:id", downVote);
+//---------------------SEARCH------------------------
+app.post("/api/words", findWords);
 
 app.listen(process.env.SERVER_PORT, () =>
   console.log(`listening on port ${process.env.SERVER_PORT}`)
