@@ -1,33 +1,32 @@
-import React from 'react'
-import {View, Text, StyleSheet, StatusBar} from 'react-native'
-import { connect } from 'react-redux'
-import { Avatar, Icon, Header } from "react-native-elements"
-import NavigationBar from 'react-native-navbar'
-import { Actions } from 'react-native-router-flux'
+import React from "react";
+import { View, Text, StyleSheet, StatusBar } from "react-native";
+import { connect } from "react-redux";
+import { Avatar, Icon, Header } from "react-native-elements";
+// import NavigationBar from 'react-native-navbar'
+import { Actions } from "react-native-router-flux";
 
-class Profile extends React.Component{
-  constructor(props){
-    super(props)
+class Profile extends React.Component {
+  constructor(props) {
+    super(props);
 
     this.state = {
       userContent: []
-    }
+    };
   }
 
-  componentDidMount(){
-    let posts = this.props.content.filter(e => e.user_id === this.props.userId)
-    this.setState({userContent: posts})
+  componentDidMount() {
+    let posts = this.props.content.filter(e => e.user_id === this.props.userId);
+    this.setState({ userContent: posts });
   }
 
-
-  render(){
+  render() {
     // console.log(this.state)
     // console.log(this.props)
     return (
       <View>
         <Text>Profile</Text>
       </View>
-    )
+    );
   }
 }
 
