@@ -6,7 +6,8 @@ function post(req, res) {
     req.body.postBody,
     req.body.timeStamp,
     req.body.category,
-    req.body.image
+    req.body.image,
+    req.body.interest
   ])
     .then(response => res.status(200).send(response))
     .catch(err => console.log(err));
@@ -61,11 +62,23 @@ function downVote(req, res) {
     );
 }
 
-function deletePost(req, res){
-  const db = req.app.get('db')
+function deletePost(req, res) {
+  const db = req.app.get("db");
   db.delete_post(parseInt(req.params.id, 10))
-  .then(response => res.status(200).send(response))
-  .catch(err => console.log(err))
+    .then(response => res.status(200).send(response))
+    .catch(err => console.log(err));
+}
+
+function findWords(req, res) {
+  console.log("HERE LIES REQ.BODY", req.body);
+  const db = req.app.get("db");
+  const { text } = req.body;
+  db.search_post([text])
+    .then(response => {
+      console.log("HERE IS FIND WORDS", response);
+      res.status(200).send(response);
+    })
+    .catch(err => console.log(err));
 }
 
 module.exports = {
@@ -74,5 +87,6 @@ module.exports = {
   upVote,
   downVote,
   getContent,
-  deletePost
+  deletePost,
+  findWords
 };
