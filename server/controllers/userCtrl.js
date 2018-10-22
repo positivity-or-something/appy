@@ -17,7 +17,8 @@ function getUser(req, res) {
       req.body.passWord,
       req.body.firstName,
       req.body.email,
-      req.body.photoUrl
+      req.body.photoUrl,
+      req.body.interests
     ])
       .then(response => res.status(200).send(response))
       .catch(err => console.log(err));
