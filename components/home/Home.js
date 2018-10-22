@@ -8,7 +8,8 @@ import {
   TouchableOpacity,
   TouchableHighlight,
   ScrollView,
-  Modal
+  Modal,
+  StatusBar
 } from "react-native";
 import { connect } from "react-redux";
 import { getUsers } from "../../ducks/reducer";
@@ -107,7 +108,7 @@ class Home extends React.Component {
                 source={{ uri: e.image || "../../img/1-cee-lo-albums.jpg" }}
               />
               <Text>{e.body}</Text>
-              <Text>{e.date}</Text>
+              <Text>{e.date.slice(0, 10)}</Text>
             </TouchableOpacity>
             {e.user_id === this.props.userId ? (
               <Icon
@@ -125,6 +126,7 @@ class Home extends React.Component {
     }
     return (
       <View>
+        <StatusBar hidden />
         <Header
           style={styles.header}
           leftComponent={
