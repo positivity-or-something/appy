@@ -1,8 +1,16 @@
 import React from "react";
-import { View, Text, StyleSheet, StatusBar } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  StatusBar,
+  TouchableOpacity,
+  Image,
+  ScrollView
+} from "react-native";
 import { connect } from "react-redux";
 import { Avatar, Icon, Header } from "react-native-elements";
-// import NavigationBar from 'react-native-navbar'
+import NavigationBar from "react-native-navbar";
 import { Actions } from "react-native-router-flux";
 
 class Profile extends React.Component {
@@ -20,11 +28,54 @@ class Profile extends React.Component {
   }
 
   render() {
-    // console.log(this.state)
-    // console.log(this.props)
+    console.log(this.state);
+    console.log(this.props.user);
+    let posts = [];
+    let tags = this.props.user.interests
+      .split(",")
+      .map(tag => <Text>{`#${tag}`}</Text>);
+    if (this.state.userContent[0]) {
+      posts = this.state.userContent.map((e, i) => {
+        return (
+          <View
+            key={i}
+            style={{
+              borderColor: "black",
+              borderWidth: 1,
+              alignItems: "center"
+            }}
+          >
+            <TouchableOpacity
+              onPress={() => {
+                Actions.content({ postId: e.id });
+              }}
+              style={{ alignItems: "center" }}
+            >
+              <Image
+                style={{ width: 300, height: 300 }}
+                source={{ uri: e.image || "../../img/1-cee-lo-albums.jpg" }}
+              />
+              <Text>{e.body}</Text>
+              <Text>{e.date.slice(0, 10)}</Text>
+            </TouchableOpacity>
+            {e.user_id === this.props.userId ? (
+              <Icon
+                raised
+                name="delete"
+                color="red"
+                onPress={() =>
+                  alert("Post Deleted") || this.props.deletePost(e.id)
+                }
+              />
+            ) : null}
+          </View>
+        );
+      });
+    }
     return (
-      <View>
-        <Text>Profile</Text>
+      <View style={styles.container}>
+        {tags}
+        <ScrollView>{posts}</ScrollView>
       </View>
     );
   }
