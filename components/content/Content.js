@@ -86,7 +86,7 @@ class Content extends Component {
       newComment: this.state.commentInput,
       postId: this.props.postId
     };
-    let userId = this.props.userId;
+    let userId = this.props.userId}
 
   closeModal = () => {
     this.setState({
@@ -141,7 +141,7 @@ class Content extends Component {
       </View>
     );
   }
-}}
+}
 
 
 export default connect(state => state)(Content);

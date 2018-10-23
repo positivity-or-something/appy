@@ -21,6 +21,8 @@ import axios from "axios";
 import { updateContent, deletePost } from "../../ducks/reducer";
 import Search from "../search/Search";
 
+import { myArray } from "../dummydata/dummydata";
+
 class Home extends React.Component {
   constructor() {
     super();
@@ -85,30 +87,27 @@ class Home extends React.Component {
 
   render() {
     console.log(this.props);
-    const { content } = this.props;
+    const content = myArray;
     let displayContent = null;
     if (content[0]) {
       displayContent = content.map((e, i) => {
         return (
-          <View
-            key={i}
-            style={{
-              borderColor: "black",
-              borderWidth: 1
-            }}
-          >
+          <View key={i} style={styles.cardContainer}>
             <TouchableOpacity
               onPress={() => {
                 this.props.getUsers();
                 Actions.content({ postId: e.id });
               }}
             >
-              <Image
-                style={{ width: 300, height: 300 }}
-                source={{ uri: e.image || "../../img/1-cee-lo-albums.jpg" }}
-              />
+              <View style={styles.imageContainer}>
+                <Image
+                  style={styles.image}
+                  source={{ uri: e.image || "../../img/1-cee-lo-albums.jpg" }}
+                />
+              </View>
+              <Text>{e.title}</Text>
               <Text>{e.body}</Text>
-              <Text>{e.date.slice(0, 10)}</Text>
+              <Text>{e.date}</Text>
             </TouchableOpacity>
             {e.user_id === this.props.userId ? (
               <Icon
@@ -223,6 +222,21 @@ const styles = StyleSheet.create({
   header: {
     flex: 1,
     marginTop: 10
+  },
+  image: {
+    width: "100%",
+    height: "100%"
+  },
+  imageContainer: {
+    flex: 1,
+    width: "85%",
+    height: 300,
+    justifyContent: "center",
+    alignItems: "center"
+  },
+  cardContainer: {
+    flex: 1,
+    padding: 20
   }
 });
 
