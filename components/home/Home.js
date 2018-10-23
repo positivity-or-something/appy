@@ -125,16 +125,6 @@ class Home extends React.Component {
               <Text>{e.body}</Text>
               <Text>{e.date.slice(0, 10)}</Text>
             </TouchableOpacity>
-            {e.user_id === this.props.userId ? (
-              <Icon
-                raised
-                name="delete"
-                color="red"
-                onPress={() =>
-                  alert("Post Deleted") || this.props.deletePost(e.id)
-                }
-              />
-            ) : null}
           </View>
         );
       });

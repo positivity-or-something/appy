@@ -12,6 +12,7 @@ import { connect } from "react-redux";
 import { Avatar, Icon, Header } from "react-native-elements";
 import NavigationBar from "react-native-navbar";
 import { Actions } from "react-native-router-flux";
+import { deletePost } from '../../ducks/reducer'
 
 class Profile extends React.Component {
   constructor(props) {
@@ -27,13 +28,17 @@ class Profile extends React.Component {
     this.setState({ userContent: posts });
   }
 
+  componentDidUpdate(prevProps){
+    prevProps.content.length !== this.props.content.length ? 
+    this.setState({ userContent: this.props.content.filter(e => e.user_id === this.props.userId)})
+    : null
+  }
+
   render() {
     console.log(this.state);
-    console.log(this.props.user);
+    console.log(this.props);
     let posts = [];
-    let tags = this.props.user.interests
-      .split(",")
-      .map(tag => <Text>{`#${tag}`}</Text>);
+    let tags = this.props.user.interests.split(",").map(tag => <Text>{`#${tag}`}</Text>);
     if (this.state.userContent[0]) {
       posts = this.state.userContent.map((e, i) => {
         return (
@@ -63,8 +68,8 @@ class Profile extends React.Component {
                 raised
                 name="delete"
                 color="red"
-                onPress={() =>
-                  alert("Post Deleted") || this.props.deletePost(e.id)
+                onPress={() =>{
+                  this.props.deletePost(e.id)}
                 }
               />
             ) : null}
@@ -81,7 +86,7 @@ class Profile extends React.Component {
   }
 }
 
-export default connect(state => state)(Profile);
+export default connect(state => state, {deletePost})(Profile);
 
 const styles = StyleSheet.create({
   container: {
