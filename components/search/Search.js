@@ -10,8 +10,8 @@ import {
 import axios from "axios";
 
 class Search extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       post: [],
       words: " "
@@ -47,9 +47,13 @@ class Search extends Component {
     });
 
     return (
-      <View>
+      <View style={{width: 250, height: 25, backgroundColor: 'red'}}>
         <TextInput
-          onChangeText={text => this.handleAll(text)}
+          onChangeText={text => {
+            text.length > 0 ?
+            this.handleAll(text)
+            :this.props.hideSearch()
+          }}
           type="text"
           // value={this.state.post}
         />

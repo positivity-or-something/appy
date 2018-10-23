@@ -12,7 +12,7 @@ import axios from "axios";
 import { setUser } from "../../ducks/reducer";
 import { Actions } from "react-native-router-flux";
 import { connect } from "react-redux";
-import { ImagePicker, Camera, Permissions } from "expo";
+import { ImagePicker, Permissions } from "expo";
 import { accessKey, secretKey } from "../../keys";
 import { RNS3 } from "react-native-aws3";
 
