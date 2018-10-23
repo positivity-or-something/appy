@@ -21,9 +21,6 @@ class Search extends Component {
   componentDidMount = () => {};
 
   handleAll(text) {
-    // let search1 = {
-    //   { text }
-    // };
     axios
       .post(
         "http://" +
@@ -47,24 +44,14 @@ class Search extends Component {
     });
 
     return (
-      <View style={{width: 250, height: 25, backgroundColor: 'red'}}>
+      <View style={{ width: 250, height: 25, backgroundColor: "red" }}>
         <TextInput
           onChangeText={text => {
-            text.length > 0 ?
-            this.handleAll(text)
-            :this.props.hideSearch()
+            text.length > 0 ? this.handleAll(text) : this.props.hideSearch();
           }}
           type="text"
-          // value={this.state.post}
         />
-        {/* <Button
-          title="search"
-          onPress={() => {
-            this.handleAll(this.state.words);
-          }}
-        > */}
 
-        {/* </Button> */}
         <Text>{show}</Text>
       </View>
     );

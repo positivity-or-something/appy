@@ -72,7 +72,11 @@ function deletePost(req, res) {
 function findWords(req, res) {
   console.log("HERE LIES REQ.BODY", req.body);
   const db = req.app.get("db");
-  const { text } = req.body;
+  let { text } = req.body;
+  if (text.includes("#")) {
+    text = text.slice(1);
+  }
+
   db.search_post([text])
     .then(response => {
       console.log("HERE IS FIND WORDS", response);
