@@ -10,10 +10,11 @@ import {
   ScrollView,
   Modal,
   StatusBar,
-  Dimensions
+  Dimensions,
+  AsyncStorage
 } from "react-native";
 import { connect } from "react-redux";
-import { getUsers } from "../../ducks/reducer";
+import { getUsers, setUser } from "../../ducks/reducer";
 import { Header, Avatar, Icon } from "react-native-elements";
 import { Actions } from "react-native-router-flux";
 import LoginButton from "../header/LoginButton";
@@ -50,7 +51,7 @@ class Home extends React.Component {
     // 'apiKey=c9cd68fcd90640f3a023e49292d64491')
     //       .then(response => console.log('NEWS:', response))
     //       .catch(error => console.log('NEWS ERROR', error))
-
+    AsyncStorage.getItem("userId").then(ressy => console.log(ressy));
     axios(
       "http://api.forismatic.com/api/1.0/?method=getQuote&format=json&lang=en"
     )
@@ -67,6 +68,17 @@ class Home extends React.Component {
           this.props.updateContent(response.data);
         })
         .catch(err => console.warn("ERROR CAUGHT", err));
+    }
+    if (this.props.userId && !AsyncStorage.getItem("userId")) {
+      AsyncStorage.setItem("userId", this.props.userId).then(resp =>
+        this.props.setUser(resp)
+      );
+    }
+
+    if (!this.props.userId) {
+      AsyncStorage.getItem("userId")
+        .then(id => (id ? this.props.setUser(id) : null))
+        .catch(err => console.log(err));
     }
   }
 
@@ -93,6 +105,8 @@ class Home extends React.Component {
   }
 
   render() {
+    console.log(this.props);
+    console.log(this.state);
     let left,
       center = null;
     this.state.search
@@ -103,7 +117,7 @@ class Home extends React.Component {
           <Icon
             style={{ paddingTop: 20 }}
             name="search"
-            color="black"
+            color="white"
             onPress={() => this.setState({ search: true })}
           />
         ));
@@ -111,13 +125,12 @@ class Home extends React.Component {
       ? (center = (
           <Icon
             name="vertical-align-top"
-            color="black"
+            color="white"
             onPress={this.scrollToTop}
           />
         ))
       : null;
-    console.log(this.props);
-    let { content } = this.props;
+    const { content } = this.props;
     let displayContent = null;
     if (content[0]) {
       displayContent = content.map((e, i) => {
@@ -150,16 +163,6 @@ class Home extends React.Component {
               <Text style={{ paddingTop: 10, paddingBottom: 5 }}>{e.body}</Text>
               <Text>{e.date.slice(0, 10)}</Text>
             </TouchableOpacity>
-            {e.user_id === this.props.userId ? (
-              <Icon
-                raised
-                name="delete"
-                color="red"
-                onPress={() =>
-                  alert("Post Deleted") || this.props.deletePost(e.id)
-                }
-              />
-            ) : null}
           </View>
         );
       });
@@ -271,5 +274,5 @@ const styles = StyleSheet.create({
 
 export default connect(
   state => state,
-  { getUsers, updateContent, deletePost }
+  { getUsers, updateContent, setUser }
 )(Home);
