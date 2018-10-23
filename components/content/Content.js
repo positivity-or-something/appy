@@ -1,22 +1,32 @@
 import React, { Component } from "react";
-import { View, Text, StyleSheet, Button, Modal, TextInput } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  Button,
+  Modal,
+  TextInput,
+  Dimensions,
+  Image
+} from "react-native";
 import { Icon } from "react-native-elements";
 import { connect } from "react-redux";
 import axios from "axios";
 
-import Comments from "../comment/Comments";
+import Comments from "../Comments/Comments";
 class Content extends Component {
   constructor() {
     super();
 
     this.state = {
       content: {},
-      comments: [],
+      allComments: [],
       upvotes: 0,
       downvotes: 0,
       rep: 0,
       isLoading: true,
-      openModal: null
+      openModal: null,
+      commentInput: ""
     };
   }
 
@@ -80,6 +90,13 @@ class Content extends Component {
       )
       .catch(err => console.log(err));
   }
+  postCommentHandler = () => {
+    let body = {
+      newComment: this.state.commentInput,
+      postId: this.props.postId
+    };
+    let userId = this.props.userId;
+  };
 
   closeModal = () => {
     this.setState({
@@ -87,16 +104,28 @@ class Content extends Component {
     });
   };
 
+  makeCommentHandler = text => {
+    this.setState({ commentInput: text });
+  };
+
   render() {
-    let comments = this.state.comments.map((comment, i) => {
+    let eachComment = this.state.allComments.map((comment, i) => {
       return <Text key={i}>{`COMMENT ${i + 1}: ${comment.comment_body}`}</Text>;
     });
     return (
       <View style={styles.container}>
-        <Text>{`TITLE: ${this.state.content.title}`}</Text>
+        {/* <Text>{`TITLE: ${this.state.content.title}`}</Text> */}
+        <View style={styles.imageContainer}>
+          <Image
+            style={styles.image}
+            source={{ uri: this.state.content.image }}
+          />
+        </View>
+
         <Text style={{ marginTop: 25, marginBottom: 25 }}>{`BODY: ${
           this.state.content.body
         }`}</Text>
+
         <Icon
           name="keyboard-arrow-up"
           color="green"
@@ -112,12 +141,10 @@ class Content extends Component {
           title="Add Comment"
           onPress={() => this.setState({ openModal: true })}
         />
-        <View>{comments}</View>
-        {/* <Comments
-          closeModal={this.modalClosedHandler}
-          openCloseModal={this.state.openCloseModal}
-        /> */}
-        <Modal visible={this.state.openModal !== null}>
+        <View>
+          <Text>{eachComment}</Text>
+        </View>
+        {/* <Modal visible={this.state.openModal !== null}>
           <View>
             <TextInput
               style={styles.inputStyle}
@@ -126,14 +153,18 @@ class Content extends Component {
             />
             <Button title="Add Comment" onPress={this.closeModal} />
           </View>
-        </Modal>
-        <View style={{ marginTop: 25 }}>{comments}</View>
+        </Modal> */}
       </View>
     );
   }
 }
 
 export default connect(state => state)(Content);
+
+const dime = {
+  fullHeight: Dimensions.get("window").height,
+  fullWidth: Dimensions.get("window").width
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -146,5 +177,13 @@ const styles = StyleSheet.create({
   },
   inputStyle: {
     width: "100%"
+  },
+  image: {
+    width: "100%",
+    height: "100%"
+  },
+  imageContainer: {
+    width: dime.fullWidth,
+    height: 400
   }
 });

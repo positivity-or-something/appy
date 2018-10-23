@@ -7,7 +7,7 @@ class Header extends React.Component {
   render() {
     console.log(this.props);
     return (
-      <View>
+      <View containerStyle={{ backgroundColor: "#ffffff" }}>
         <Icon name="photo_camera" />
         <Text style={{ fontSize: 30, fontFamily }}>Appy</Text>
         <Icon name="person_add" />

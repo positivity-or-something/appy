@@ -10,6 +10,7 @@ import {
   ScrollView,
   Modal,
   StatusBar,
+  Dimensions,
   AsyncStorage
 } from "react-native";
 import { connect } from "react-redux";
@@ -21,6 +22,8 @@ import Footer from "../footer/Footer";
 import axios from "axios";
 import { updateContent, deletePost } from "../../ducks/reducer";
 import Search from "../search/Search";
+
+import { myArray } from "../dummydata/dummydata";
 
 class Home extends React.Component {
   constructor() {
@@ -48,7 +51,7 @@ class Home extends React.Component {
     // 'apiKey=c9cd68fcd90640f3a023e49292d64491')
     //       .then(response => console.log('NEWS:', response))
     //       .catch(error => console.log('NEWS ERROR', error))
-    AsyncStorage.getItem('userId').then(ressy => console.log(ressy))
+    AsyncStorage.getItem("userId").then(ressy => console.log(ressy));
     axios(
       "http://api.forismatic.com/api/1.0/?method=getQuote&format=json&lang=en"
     )
@@ -66,15 +69,16 @@ class Home extends React.Component {
         })
         .catch(err => console.warn("ERROR CAUGHT", err));
     }
-    if(this.props.userId && !AsyncStorage.getItem('userId')){
-      AsyncStorage.setItem('userId', this.props.userId)
-      .then(resp => this.props.setUser(resp))
+    if (this.props.userId && !AsyncStorage.getItem("userId")) {
+      AsyncStorage.setItem("userId", this.props.userId).then(resp =>
+        this.props.setUser(resp)
+      );
     }
 
-    if(!this.props.userId){
-      AsyncStorage.getItem('userId')
-    .then(id => id ? this.props.setUser(id) : null)
-    .catch(err => console.log(err))
+    if (!this.props.userId) {
+      AsyncStorage.getItem("userId")
+        .then(id => (id ? this.props.setUser(id) : null))
+        .catch(err => console.log(err));
     }
   }
 
@@ -96,20 +100,36 @@ class Home extends React.Component {
     this.ScrollView.scrollTo({ x: 0, y: 0, animated: true });
   }
 
-  hideSearch(){
-    this.setState({search: false})
+  hideSearch() {
+    this.setState({ search: false });
   }
 
   render() {
     console.log(this.props);
     console.log(this.state);
-    let left, center = null
-    this.state.search ? 
-      left = <Search style={{paddingTop: 20}} hideSearch={this.hideSearch}/> : 
-      left = <Icon style={{paddingTop: 20}} name='search' color='white' onPress={() => this.setState({search: true})} />
-    !this.state.search ? 
-      center = <Icon name="vertical-align-top" color="white" onPress={this.scrollToTop}/> : 
-      null;
+    let left,
+      center = null;
+    this.state.search
+      ? (left = (
+          <Search style={{ paddingTop: 20 }} hideSearch={this.hideSearch} />
+        ))
+      : (left = (
+          <Icon
+            style={{ paddingTop: 20 }}
+            name="search"
+            color="white"
+            onPress={() => this.setState({ search: true })}
+          />
+        ));
+    !this.state.search
+      ? (center = (
+          <Icon
+            name="vertical-align-top"
+            color="white"
+            onPress={this.scrollToTop}
+          />
+        ))
+      : null;
     const { content } = this.props;
     let displayContent = null;
     if (content[0]) {
@@ -118,9 +138,15 @@ class Home extends React.Component {
           <View
             key={i}
             style={{
-              borderColor: "black",
-              borderWidth: 1,
-              alignItems: 'center'
+              // borderColor: "gray",
+              // borderWidth: 0.5,
+              alignItems: "center",
+              padding: 20,
+              marginBottom: 30,
+              width: "90%",
+              alignSelf: "center",
+              backgroundColor: "white",
+              borderBottomColor: "#D4E6F1"
             }}
           >
             <TouchableOpacity
@@ -128,13 +154,13 @@ class Home extends React.Component {
                 this.props.getUsers();
                 Actions.content({ postId: e.id });
               }}
-              style={{alignItems: 'center'}}
+              style={{ alignItems: "center" }}
             >
-              <Image
-                style={{ width: 300, height: 300 }}
-                source={{ uri: e.image || "../../img/1-cee-lo-albums.jpg" }}
-              />
-              <Text>{e.body}</Text>
+              <View style={styles.imageContainer}>
+                <Image style={styles.image} source={{ uri: e.image }} />
+              </View>
+              <Text style={{ fontWeight: "bold" }}> - {e.title} - </Text>
+              <Text style={{ paddingTop: 10, paddingBottom: 5 }}>{e.body}</Text>
               <Text>{e.date.slice(0, 10)}</Text>
             </TouchableOpacity>
           </View>
@@ -142,10 +168,10 @@ class Home extends React.Component {
       });
     }
     return (
-      <View>
+      <View style={{ backgroundColor: "white" }}>
         <StatusBar hidden />
         <Header
-          style={styles.header}
+          backgroundColor="white"
           leftComponent={left}
           centerComponent={center}
           rightComponent={
@@ -161,21 +187,21 @@ class Home extends React.Component {
                 activeOpacity={0.7}
               />
             ) : (
-              <LoginButton style={{paddingTop: 10}}/>
+              <LoginButton style={{ paddingTop: 10 }} />
             )
           }
-          innerContainerStyles= {{
+          innerContainerStyles={{
             flex: 1,
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            alignItems: 'flex-end'
+            flexDirection: "row",
+            justifyContent: "space-between",
+            alignItems: "flex-end"
           }}
         />
         <ScrollView
           ref={ref => {
             this.ScrollView = ref;
           }}
-          style={{ maxHeight: 777, minHeight: 777 }}
+          style={{ maxHeight: 600, minHeight: 600, marginBottom: 100 }}
         >
           {displayContent}
         </ScrollView>
@@ -191,14 +217,13 @@ class Home extends React.Component {
           >
             <View style={{ marginTop: 100 }}>
               <View>
-                  <Icon 
-                  name='close'
+                <Icon
+                  name="close"
                   onPress={() => {
                     this.toggleModal();
                   }}
-                  />
+                />
                 <Text>{this.state.quote}</Text>
-
               </View>
             </View>
           </Modal>
@@ -216,12 +241,17 @@ class Home extends React.Component {
   }
 }
 
+const dime = {
+  fullHeight: Dimensions.get("window").height,
+  fullWidth: Dimensions.get("window").width
+};
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: "space-between",
     alignItems: "center",
-    backgroundColor: "#fff",
+    backgroundColor: "#ffff",
     alignItems: "center",
     justifyContent: "center"
   },
@@ -231,6 +261,14 @@ const styles = StyleSheet.create({
   header: {
     flex: 1,
     paddingTop: 25
+  },
+  image: {
+    width: "100%",
+    height: "100%"
+  },
+  imageContainer: {
+    width: dime.fullWidth,
+    height: 400
   }
 });
 

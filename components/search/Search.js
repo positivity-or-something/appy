@@ -44,12 +44,15 @@ class Search extends Component {
     });
 
     return (
-      <View style={{ width: 250, height: 25, backgroundColor: "red" }}>
+      <View style={{ width: 250, height: 25, backgroundColor: "gray" }}>
         <TextInput
           onChangeText={text => {
             text.length > 0 ? this.handleAll(text) : this.props.hideSearch();
           }}
           type="text"
+          fontSize={20}
+          color="white"
+          // value={this.state.post}
         />
 
         <Text>{show}</Text>
