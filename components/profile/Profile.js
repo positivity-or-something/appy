@@ -1,46 +1,55 @@
-import React from 'react'
-import {View, Text, StyleSheet, StatusBar, TouchableOpacity, Image, ScrollView} from 'react-native'
-import { connect } from 'react-redux'
-import { Avatar, Icon, Header } from "react-native-elements"
-import NavigationBar from 'react-native-navbar'
-import { Actions } from 'react-native-router-flux'
+import React from "react";
+import {
+  View,
+  Text,
+  StyleSheet,
+  StatusBar,
+  TouchableOpacity,
+  Image,
+  ScrollView
+} from "react-native";
+import { connect } from "react-redux";
+import { Avatar, Icon, Header } from "react-native-elements";
+import NavigationBar from "react-native-navbar";
+import { Actions } from "react-native-router-flux";
 
-class Profile extends React.Component{
-  constructor(props){
-    super(props)
+class Profile extends React.Component {
+  constructor(props) {
+    super(props);
 
     this.state = {
       userContent: []
-    }
+    };
   }
 
-  componentDidMount(){
-    let posts = this.props.content.filter(e => e.user_id === this.props.userId)
-    this.setState({userContent: posts})
+  componentDidMount() {
+    let posts = this.props.content.filter(e => e.user_id === this.props.userId);
+    this.setState({ userContent: posts });
   }
 
-
-  render(){
-    console.log(this.state)
-    console.log(this.props.user)
-    let posts = []
-    let tags = this.props.user.interests.split(',').map(tag => <Text>{`#${tag}`}</Text>)
-    if (this.state.userContent[0]){
-    posts = this.state.userContent.map((e, i) => {
+  render() {
+    console.log(this.state);
+    console.log(this.props.user);
+    let posts = [];
+    let tags = this.props.user.interests
+      .split(",")
+      .map(tag => <Text>{`#${tag}`}</Text>);
+    if (this.state.userContent[0]) {
+      posts = this.state.userContent.map((e, i) => {
         return (
           <View
             key={i}
             style={{
               borderColor: "black",
               borderWidth: 1,
-              alignItems: 'center'
+              alignItems: "center"
             }}
           >
             <TouchableOpacity
               onPress={() => {
                 Actions.content({ postId: e.id });
               }}
-              style={{alignItems: 'center'}}
+              style={{ alignItems: "center" }}
             >
               <Image
                 style={{ width: 300, height: 300 }}
@@ -66,11 +75,9 @@ class Profile extends React.Component{
     return (
       <View style={styles.container}>
         {tags}
-        <ScrollView>
-          {posts}
-        </ScrollView>
+        <ScrollView>{posts}</ScrollView>
       </View>
-    )
+    );
   }
 }
 
