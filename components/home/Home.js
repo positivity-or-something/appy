@@ -9,7 +9,8 @@ import {
   TouchableHighlight,
   ScrollView,
   Modal,
-  StatusBar
+  StatusBar,
+  Dimensions
 } from "react-native";
 import { connect } from "react-redux";
 import { getUsers } from "../../ducks/reducer";
@@ -87,52 +88,67 @@ class Home extends React.Component {
     this.ScrollView.scrollTo({ x: 0, y: 0, animated: true });
   }
 
-  hideSearch(){
-    this.setState({search: false})
+  hideSearch() {
+    this.setState({ search: false });
   }
 
   render() {
-    let left, center = null
-    this.state.search ? 
-      left = <Search style={{paddingTop: 20}} hideSearch={this.hideSearch}/> : 
-      left = <Icon style={{paddingTop: 20}} name='search' color='white' onPress={() => this.setState({search: true})} />
-    !this.state.search ? 
-      center = <Icon name="vertical-align-top" color="white" onPress={this.scrollToTop}/> : 
-      null;
+    let left,
+      center = null;
+    this.state.search
+      ? (left = (
+          <Search style={{ paddingTop: 20 }} hideSearch={this.hideSearch} />
+        ))
+      : (left = (
+          <Icon
+            style={{ paddingTop: 20 }}
+            name="search"
+            color="black"
+            onPress={() => this.setState({ search: true })}
+          />
+        ));
+    !this.state.search
+      ? (center = (
+          <Icon
+            name="vertical-align-top"
+            color="black"
+            onPress={this.scrollToTop}
+          />
+        ))
+      : null;
     console.log(this.props);
-    const content = myArray;
+    let { content } = this.props;
     let displayContent = null;
     if (content[0]) {
       displayContent = content.map((e, i) => {
         return (
-<<<<<<< HEAD
-          <View key={i} style={styles.cardContainer}>
-=======
           <View
             key={i}
             style={{
-              borderColor: "black",
-              borderWidth: 1,
-              alignItems: 'center'
+              // borderColor: "gray",
+              // borderWidth: 0.5,
+              alignItems: "center",
+              padding: 20,
+              marginBottom: 30,
+              width: "90%",
+              alignSelf: "center",
+              backgroundColor: "white",
+              borderBottomColor: "#D4E6F1"
             }}
           >
->>>>>>> master
             <TouchableOpacity
               onPress={() => {
                 this.props.getUsers();
                 Actions.content({ postId: e.id });
               }}
-              style={{alignItems: 'center'}}
+              style={{ alignItems: "center" }}
             >
               <View style={styles.imageContainer}>
-                <Image
-                  style={styles.image}
-                  source={{ uri: e.image || "../../img/1-cee-lo-albums.jpg" }}
-                />
+                <Image style={styles.image} source={{ uri: e.image }} />
               </View>
-              <Text>{e.title}</Text>
-              <Text>{e.body}</Text>
-              <Text>{e.date}</Text>
+              <Text style={{ fontWeight: "bold" }}> - {e.title} - </Text>
+              <Text style={{ paddingTop: 10, paddingBottom: 5 }}>{e.body}</Text>
+              <Text>{e.date.slice(0, 10)}</Text>
             </TouchableOpacity>
             {e.user_id === this.props.userId ? (
               <Icon
@@ -149,10 +165,10 @@ class Home extends React.Component {
       });
     }
     return (
-      <View>
+      <View style={{ backgroundColor: "white" }}>
         <StatusBar hidden />
         <Header
-          style={styles.header}
+          backgroundColor="white"
           leftComponent={left}
           centerComponent={center}
           rightComponent={
@@ -168,21 +184,21 @@ class Home extends React.Component {
                 activeOpacity={0.7}
               />
             ) : (
-              <LoginButton style={{paddingTop: 10}}/>
+              <LoginButton style={{ paddingTop: 10 }} />
             )
           }
-          innerContainerStyles= {{
+          innerContainerStyles={{
             flex: 1,
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            alignItems: 'flex-end'
+            flexDirection: "row",
+            justifyContent: "space-between",
+            alignItems: "flex-end"
           }}
         />
         <ScrollView
           ref={ref => {
             this.ScrollView = ref;
           }}
-          style={{ maxHeight: 777, minHeight: 777 }}
+          style={{ maxHeight: 600, minHeight: 600, marginBottom: 100 }}
         >
           {displayContent}
         </ScrollView>
@@ -198,14 +214,13 @@ class Home extends React.Component {
           >
             <View style={{ marginTop: 100 }}>
               <View>
-                  <Icon 
-                  name='close'
+                <Icon
+                  name="close"
                   onPress={() => {
                     this.toggleModal();
                   }}
-                  />
+                />
                 <Text>{this.state.quote}</Text>
-
               </View>
             </View>
           </Modal>
@@ -223,12 +238,17 @@ class Home extends React.Component {
   }
 }
 
+const dime = {
+  fullHeight: Dimensions.get("window").height,
+  fullWidth: Dimensions.get("window").width
+};
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: "space-between",
     alignItems: "center",
-    backgroundColor: "#fff",
+    backgroundColor: "#ffff",
     alignItems: "center",
     justifyContent: "center"
   },
@@ -237,26 +257,15 @@ const styles = StyleSheet.create({
   },
   header: {
     flex: 1,
-<<<<<<< HEAD
-    marginTop: 10
+    paddingTop: 25
   },
   image: {
     width: "100%",
     height: "100%"
   },
   imageContainer: {
-    flex: 1,
-    width: "85%",
-    height: 300,
-    justifyContent: "center",
-    alignItems: "center"
-  },
-  cardContainer: {
-    flex: 1,
-    padding: 20
-=======
-    paddingTop: 25
->>>>>>> master
+    width: dime.fullWidth,
+    height: 400
   }
 });
 
