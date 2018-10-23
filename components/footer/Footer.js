@@ -20,12 +20,11 @@ class footer extends Component {
         }}
       >
         <Icon name="home" onPress={() => Actions.home()} />
-        <Icon name="check-circle" onPress={() => Actions.radB()} />
         <Icon
           name="sentiment-very-satisfied"
           onPress={() => this.props.toggleModal()}
         />
-        <Icon name="comment" onPress={() => Actions.post()} />
+        <Icon name="comment" onPress={() => Actions.radB()} />
       </View>
     );
   }
