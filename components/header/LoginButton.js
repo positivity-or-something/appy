@@ -9,7 +9,7 @@ const LoginButton = () => {
       backgroundColor="transparent"
       color="white"
       title="Login"
-      onPress={() => console.log("CLICKED") || Actions.register()}
+      onPress={() => Actions.register()}
     >
       Login
     </Button>

@@ -29,11 +29,13 @@ class Home extends React.Component {
       content: [],
       user: {},
       show: false,
-      quote: ""
+      quote: "",
+      search: false
     };
 
     this.toggleModal = this.toggleModal.bind(this);
     this.scrollToTop = this.scrollToTop.bind(this);
+    this.hideSearch = this.hideSearch.bind(this);
   }
 
   componentDidMount() {
@@ -83,7 +85,18 @@ class Home extends React.Component {
     this.ScrollView.scrollTo({ x: 0, y: 0, animated: true });
   }
 
+  hideSearch(){
+    this.setState({search: false})
+  }
+
   render() {
+    let left, center = null
+    this.state.search ? 
+      left = <Search style={{paddingTop: 20}} hideSearch={this.hideSearch}/> : 
+      left = <Icon style={{paddingTop: 20}} name='search' color='white' onPress={() => this.setState({search: true})} />
+    !this.state.search ? 
+      center = <Icon name="vertical-align-top" color="white" onPress={this.scrollToTop}/> : 
+      null;
     console.log(this.props);
     const { content } = this.props;
     let displayContent = null;
@@ -131,16 +144,8 @@ class Home extends React.Component {
         <StatusBar hidden />
         <Header
           style={styles.header}
-          leftComponent={
-            <Search />
-          }
-          centerComponent={
-            <Icon
-              name="vertical-align-top"
-              color="white"
-              onPress={this.scrollToTop}
-            />
-          }
+          leftComponent={left}
+          centerComponent={center}
           rightComponent={
             this.props.userId ? (
               <Avatar
@@ -154,10 +159,15 @@ class Home extends React.Component {
                 activeOpacity={0.7}
               />
             ) : (
-              <LoginButton />
+              <LoginButton style={{paddingTop: 10}}/>
             )
           }
-          innerContainerStyles={{ marginTop: 10 }}
+          innerContainerStyles= {{
+            flex: 1,
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            alignItems: 'flex-end'
+          }}
         />
         <ScrollView
           ref={ref => {
@@ -218,7 +228,7 @@ const styles = StyleSheet.create({
   },
   header: {
     flex: 1,
-    marginTop: 10
+    paddingTop: 25
   }
 });
 
