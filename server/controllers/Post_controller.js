@@ -37,13 +37,13 @@ function getContent(req, res) {
 function upVote(req, res) {
   const db = req.app.get("db");
   db.upvote([parseInt(req.params.id, 10), req.body.userId])
-    .then(res => res.sendStatus(200))
+    .then(resp => res.status(200).send(resp))
     .catch(
       err =>
         console.log(err) ||
         db
           .update_vote([parseInt(req.params.id, 10), req.body.userId, 1, 0])
-          .then(response => res.sendStatus(200))
+          .then(response => res.status(200).send(response))
           .catch(error => console.log(error))
     );
 }
