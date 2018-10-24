@@ -7,7 +7,7 @@ const LoginButton = () => {
     <Button
       style={styles.button}
       backgroundColor="transparent"
-      color="black"
+      color="white"
       title="Login"
       onPress={() => Actions.register()}
     >
