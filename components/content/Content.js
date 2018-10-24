@@ -4,16 +4,15 @@ import {
   Text,
   StyleSheet,
   Button,
-  Modal,
-  TextInput,
   Dimensions,
   Image
 } from "react-native";
 import { Icon } from "react-native-elements";
 import { connect } from "react-redux";
 import axios from "axios";
+import Comment from "../comment/Comment";
+import moment from 'moment'
 
-import Comments from "../Comments/Comments";
 class Content extends Component {
   constructor() {
     super();
@@ -26,8 +25,11 @@ class Content extends Component {
       rep: 0,
       isLoading: true,
       openModal: null,
-      commentInput: ""
+      commentInput: "",
+      show: false
     };
+
+    this.toggleModal = this.toggleModal.bind(this)
   }
 
   componentDidMount() {
@@ -63,7 +65,6 @@ class Content extends Component {
   }
 
   async vote(type) {
-    console.log("HIT VOTE METHOD");
     let body = {
       userId: this.props.userId
     };
@@ -90,25 +91,31 @@ class Content extends Component {
       )
       .catch(err => console.log(err));
   }
-  postCommentHandler = () => {
+  addComment = () => {
     let body = {
-      newComment: this.state.commentInput,
-      postId: this.props.postId
-    };
-    let userId = this.props.userId;
+      body: this.state.commentInput,
+      postId: this.props.postId,
+      userId: this.props.userId,
+      date: moment(),
+    }
+
+    axios.post(`http://localhost:3001/api/comment`, body)
+    .then(res => console.log(res))
+    .catch(err => console.log(err))
+
   };
 
-  closeModal = () => {
-    this.setState({
-      openModal: null
-    });
-  };
-
-  makeCommentHandler = text => {
+  commentHandler = text => {
     this.setState({ commentInput: text });
   };
 
+  toggleModal(){
+    this.setState({show: !this.state.show})
+  }
+
   render() {
+    console.log(this.state)
+    console.log(this.props)
     let eachComment = this.state.allComments.map((comment, i) => {
       return <Text key={i}>{`COMMENT ${i + 1}: ${comment.comment_body}`}</Text>;
     });
@@ -139,11 +146,16 @@ class Content extends Component {
         />
         <Button
           title="Add Comment"
-          onPress={() => this.setState({ openModal: true })}
+          onPress={() => this.setState({ show: true })}
         />
         <View>
           <Text>{eachComment}</Text>
         </View>
+        <Comment
+        addComment={this.addComment} 
+        show={this.state.show}
+        toggleModal={this.toggleModal} 
+        commentHandler={this.commentHandler}/>
         {/* <Modal visible={this.state.openModal !== null}>
           <View>
             <TextInput

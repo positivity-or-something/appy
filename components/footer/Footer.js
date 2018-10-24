@@ -11,20 +11,22 @@ class footer extends Component {
     return (
       <View
         style={{
-          height: 50,
+          height: 40,
           flexDirection: "row",
           justifyContent: "space-around",
           alignItems: "flex-end",
-          backgroundColor: "orange",
-          borderColor: "black"
+          backgroundColor: "#81DAF5",
+          borderColor: "black",
+          paddingBottom: 8
         }}
       >
-        <Icon name="home" onPress={() => Actions.home()} />
+        <Icon color='white' name="home" onPress={() => Actions.home()} />
         <Icon
+          color='white'
           name="sentiment-very-satisfied"
           onPress={() => this.props.toggleModal()}
         />
-        <Icon name="comment" onPress={() => Actions.radB()} />
+        <Icon color='white' name="comment" onPress={() => Actions.radB()} />
       </View>
     );
   }
