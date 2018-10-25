@@ -124,14 +124,13 @@ class Content extends Component {
     }
     return (
       <View style={styles.container}>
-        {/* <Text>{`TITLE: ${this.state.content.title}`}</Text> */}
+      {this.state.content ? 
         <View style={styles.imageContainer}>
           <Image
             style={styles.image}
-            source={{ uri: this.state.content.image }}
+            source={{ uri: this.state.content.image}}
           />
-        </View>
-
+        </View>: null}
         <Text style={{ marginTop: 25, marginBottom: 25 }}>{`BODY: ${
           this.state.content.body
         }`}</Text>
