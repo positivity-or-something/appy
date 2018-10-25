@@ -22,23 +22,6 @@ class Search extends Component {
   }
   componentDidMount = () => {};
 
-  handleAll(text) {
-    axios
-      .post(
-        "http://" +
-          (Platform.OS === "ios" ? "localhost" : "172.31.98.128") +
-          ":3001/api/words",
-        { text }
-      )
-      .then(response => {
-        // console.log(response);
-        // if(!response.data.length){
-        //   Alert.alert("No search match")
-        // }
-        this.setState({ post: response.data });
-      });
-  }
-
   handleWords(e) {
     this.setState({ words: e });
   }
@@ -59,7 +42,7 @@ class Search extends Component {
       <View style={{ width: 250, height: 25, backgroundColor: "gray" }}>
         <TextInput
           onChangeText={text => {
-            text.length > 0 ? this.handleAll(text) : this.props.hideSearch();
+            text.length > 0 ? this.props.handleAll(text) : this.props.hideSearch();
           }}
           type="text"
           fontSize={20}

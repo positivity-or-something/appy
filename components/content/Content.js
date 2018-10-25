@@ -19,7 +19,7 @@ class Content extends Component {
 
     this.state = {
       content: {},
-      allComments: [],
+      comments: [],
       upvotes: 0,
       downvotes: 0,
       rep: 0,
@@ -116,9 +116,12 @@ class Content extends Component {
   render() {
     console.log(this.state)
     console.log(this.props)
-    let eachComment = this.state.allComments.map((comment, i) => {
-      return <Text key={i}>{`COMMENT ${i + 1}: ${comment.comment_body}`}</Text>;
-    });
+    let eachComment = ''
+    if(this.state.comments[0]){
+      eachComment = this.state.comments.map((comment, i) => {
+        return <Text key={i}>{`${comment.comment_body}`}</Text>
+      })
+    }
     return (
       <View style={styles.container}>
         {/* <Text>{`TITLE: ${this.state.content.title}`}</Text> */}
@@ -148,24 +151,16 @@ class Content extends Component {
           title="Add Comment"
           onPress={() => this.setState({ show: true })}
         />
+        {eachComment ?
         <View>
           <Text>{eachComment}</Text>
-        </View>
+        </View> 
+        : null}
         <Comment
         addComment={this.addComment} 
         show={this.state.show}
         toggleModal={this.toggleModal} 
         commentHandler={this.commentHandler}/>
-        {/* <Modal visible={this.state.openModal !== null}>
-          <View>
-            <TextInput
-              style={styles.inputStyle}
-              multiline={true}
-              placeholder="Create a new comment"
-            />
-            <Button title="Add Comment" onPress={this.closeModal} />
-          </View>
-        </Modal> */}
       </View>
     );
   }

@@ -9,6 +9,14 @@ function postComment(req, res) {
     .catch(err => console.log("ERROR IN CONTROLLER", err));
 }
 
+function getComments(req, res){
+  const db = req.app.get('db')
+  db.get_comments(+req.params.id)
+    .then(response => console.log(response) || res.status(200)
+    .send(response)).catch(err => console.log(err))
+}
+
 module.exports = {
-  postComment
+  postComment,
+  getComments
 };
