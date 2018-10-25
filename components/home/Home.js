@@ -95,14 +95,12 @@ class Home extends React.Component {
         { text }
       )
       .then(response => {
-        // console.log(response);
         this.setState({ filteredContent: response.data });
       });
   }
 
   formatPosts(postsArr){
     let displayContent = postsArr.map((e, i) => {
-      console.log(e)
       return (
         <View
         key={i}
@@ -121,7 +119,7 @@ class Home extends React.Component {
       <TouchableOpacity
         onPress={() => {
           this.props.getUsers();
-          Actions.content({ postId: e.id });
+          Actions.content({ postId: e.id, userImg: e.image_url, userName: e.first_name });
         }}
         style={{ alignItems: "center" }}
       >
@@ -146,13 +144,11 @@ class Home extends React.Component {
   }
 
   render() {
-    console.log(this.props);
-    console.log(this.state);
     let left,
       center = null;
     this.state.search
       ? (left = (
-          <Search style={{ paddingTop: 20 }} hideSearch={this.hideSearch} handleAll={this.handleAll}/>
+          <Search style={{ paddingTop: 20 }} hideSearch={this.hideSearch} handleAll={this.handleAll} />
         ))
       : (left = (
           <Icon
@@ -192,7 +188,7 @@ class Home extends React.Component {
               source={{ uri: this.state.user.image_url || "URL" }}
               onPress={() => {
                 this.props.getUsers();
-                Actions.profile({ user: this.state.user });
+                Actions.profile({ user: this.state.user, current: true });
               }}
               activeOpacity={0.7}
               />

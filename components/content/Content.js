@@ -5,9 +5,11 @@ import {
   StyleSheet,
   Button,
   Dimensions,
-  Image
+  Image,
+  ScrollView
 } from "react-native";
-import { Icon } from "react-native-elements";
+import { Actions } from 'react-native-router-flux';
+import { Icon, Avatar } from "react-native-elements";
 import { connect } from "react-redux";
 import axios from "axios";
 import Comment from "../comment/Comment";
@@ -45,6 +47,12 @@ class Content extends Component {
         )
       )
       .catch(err => console.log(err));
+  }
+
+  componentDidUpdate(prevProps, prevState){
+    if(this.state.comments.length !== prevState.comments.length){
+      this.setState({comments: this.state.comments})
+    }
   }
 
   getRep(reputation) {
@@ -100,7 +108,9 @@ class Content extends Component {
     }
 
     axios.post(`http://localhost:3001/api/comment`, body)
-    .then(res => console.log(res))
+    .then(res => {
+      this.setState({comments: res.data.filter(e => e.content_id === this.state.content.id)})
+    })
     .catch(err => console.log(err))
 
   };
@@ -115,52 +125,68 @@ class Content extends Component {
 
   render() {
     console.log(this.state)
-    console.log(this.props)
     let eachComment = ''
     if(this.state.comments[0]){
       eachComment = this.state.comments.map((comment, i) => {
-        return <Text key={i}>{`${comment.comment_body}`}</Text>
+        return (
+        <View key={i}>
+          <Avatar
+          small
+          rounded
+          source={{ uri: comment.image_url || "URL" }}
+          onPress={() => Actions.profile({ selectedUser: this.props.users.filter(e => e.id === comment.user_id)[0]})}/>
+          <Text>{comment.first_name}</Text>
+          <Text>{`${comment.comment_body}`}</Text>
+        </View>
+        )
       })
     }
     return (
-      <View style={styles.container}>
-      {this.state.content ? 
-        <View style={styles.imageContainer}>
-          <Image
-            style={styles.image}
-            source={{ uri: this.state.content.image}}
-          />
-        </View>: null}
-        <Text style={{ marginTop: 25, marginBottom: 25 }}>{`BODY: ${
-          this.state.content.body
-        }`}</Text>
+      <ScrollView>
+        <View style={styles.container}>
+            <Avatar
+            small
+            rounded
+            source={{ uri: this.props.userImg || "URL" }}/>
+            <Text>{this.props.userName}</Text>
+          {this.state.content ? 
+            <View style={styles.imageContainer}>
+              <Image
+                style={styles.image}
+                source={{ uri: this.state.content.image}}
+              />
+            </View>: null}
+            <Text style={{ marginTop: 25, marginBottom: 25 }}>{`BODY: ${
+              this.state.content.body
+            }`}</Text>
 
-        <Icon
-          name="keyboard-arrow-up"
-          color="green"
-          onPress={() => this.vote(true)}
-        />
-        <Text>{`${this.state.rep}`}</Text>
-        <Icon
-          name="keyboard-arrow-down"
-          color="red"
-          onPress={() => this.vote()}
-        />
-        <Button
-          title="Add Comment"
-          onPress={() => this.setState({ show: true })}
-        />
-        {eachComment ?
-        <View>
-          <Text>{eachComment}</Text>
-        </View> 
-        : null}
-        <Comment
-        addComment={this.addComment} 
-        show={this.state.show}
-        toggleModal={this.toggleModal} 
-        commentHandler={this.commentHandler}/>
-      </View>
+            <Icon
+              name="keyboard-arrow-up"
+              color="green"
+              onPress={() => this.vote(true)}
+            />
+            <Text>{`${this.state.rep}`}</Text>
+            <Icon
+              name="keyboard-arrow-down"
+              color="red"
+              onPress={() => this.vote()}
+            />
+            <Button
+              title="Add Comment"
+              onPress={() => this.setState({ show: true })}
+            />
+            {eachComment ?
+            <View>
+              <Text>{eachComment}</Text>
+            </View> 
+            : null}
+            <Comment
+            addComment={this.addComment} 
+            show={this.state.show}
+            toggleModal={this.toggleModal} 
+            commentHandler={this.commentHandler}/>
+        </View>
+      </ScrollView>
     );
   }
 }

@@ -3,3 +3,4 @@ u.id AS user_id, u.first_name, u.email, u.image_url, u.user_name, u.pass_word, u
 FROM content c
 JOIN users u ON c.user_id = u.id
 WHERE show_content = true
+ORDER BY c.date DESC
