@@ -34,15 +34,18 @@ class Search extends Component {
       }
       //     Alert.alert("No search match.");
       // }, 5000);
-
-      return <Text key={i}>{e.body}</Text>;
+      else {
+        return <Text key={i}>{e.body}</Text>;
+      }
     });
 
     return (
       <View style={{ width: 250, height: 25, backgroundColor: "gray" }}>
         <TextInput
           onChangeText={text => {
-            text.length > 0 ? this.props.handleAll(text) : this.props.hideSearch();
+            text.length > 0
+              ? this.props.handleAll(text)
+              : this.props.hideSearch();
           }}
           type="text"
           fontSize={20}
