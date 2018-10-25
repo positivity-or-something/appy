@@ -28,7 +28,8 @@ class Home extends React.Component {
     super();
 
     this.state = {
-      content: [],
+      filteredContent: [],
+      currentPosts: [],
       user: {},
       show: false,
       quote: "",
@@ -40,24 +41,17 @@ class Home extends React.Component {
     this.toggleModal = this.toggleModal.bind(this);
     this.scrollToTop = this.scrollToTop.bind(this);
     this.hideSearch = this.hideSearch.bind(this);
+    this.handleAll = this.handleAll.bind(this)
   }
 
   componentDidMount() {
-    //WORKING ON ARTICLES FROM THIS API
-    // axios('https://newsapi.org/v2/everything?' +
-    // 'q=puppy&' +
-    // 'from=2018-10-20&' +
-    // 'sortBy=popularity&' +
-    // 'apiKey=c9cd68fcd90640f3a023e49292d64491')
-    //       .then(response => console.log('NEWS:', response))
-    //       .catch(error => console.log('NEWS ERROR', error))
     axios(
       "http://api.forismatic.com/api/1.0/?method=getQuote&format=json&lang=en"
     )
       .then(res => this.setState({ quote: res.data.quoteText }))
       .catch(err => console.log("QUOTE GENERATOR ERROR", err));
 
-    if (!this.state.content[0]) {
+    if (!this.props.content[0]) {
       axios(
         "http://" +
           (Platform.OS === "ios" ? "localhost" : "172.31.98.128") +
@@ -92,6 +86,59 @@ class Home extends React.Component {
     this.setState({ search: false });
   }
 
+  handleAll(text) {
+    axios
+      .post(
+        "http://" +
+          (Platform.OS === "ios" ? "localhost" : "172.31.98.128") +
+          ":3001/api/words",
+        { text }
+      )
+      .then(response => {
+        // console.log(response);
+        this.setState({ filteredContent: response.data });
+      });
+  }
+
+  formatPosts(postsArr){
+    let displayContent = postsArr.map((e, i) => {
+      return (
+        <View
+        key={i}
+        style={{
+          // borderColor: "gray",
+          // borderWidth: 0.5,
+          alignItems: "center",
+          padding: 20,
+          marginBottom: 30,
+          width: "90%",
+          alignSelf: "center",
+          backgroundColor: "white",
+          borderBottomColor: "#D4E6F1"
+        }}
+        >
+      <TouchableOpacity
+        onPress={() => {
+          this.props.getUsers();
+          Actions.content({ postId: e.id });
+        }}
+        style={{ alignItems: "center" }}
+      >
+        <View style={styles.imageContainer}>
+          <Image style={styles.image} source={{ uri: e.image }} />
+        </View>
+        <Text style={{ fontWeight: "bold" }}> - {e.title} - </Text>
+        <Text style={{ paddingTop: 10, paddingBottom: 5 }}>{e.body}</Text>
+        <Text>{e.date.slice(0, 10)}</Text>
+      </TouchableOpacity>
+    </View>
+  );
+});
+  this.state.currentPosts.length !== displayContent.length ?
+  this.setState({currentPosts: displayContent}):
+  null
+  }
+
   render() {
     console.log(this.props);
     console.log(this.state);
@@ -99,7 +146,7 @@ class Home extends React.Component {
       center = null;
     this.state.search
       ? (left = (
-          <Search style={{ paddingTop: 20 }} hideSearch={this.hideSearch} />
+          <Search style={{ paddingTop: 20 }} hideSearch={this.hideSearch} handleAll={this.handleAll}/>
         ))
       : (left = (
           <Icon
@@ -122,41 +169,8 @@ class Home extends React.Component {
         ))
         : null;
         const { content } = this.props;
-        let displayContent = null;
         if (content[0]) {
-          displayContent = content.map((e, i) => {
-            return (
-              <View
-              key={i}
-              style={{
-                // borderColor: "gray",
-                // borderWidth: 0.5,
-                alignItems: "center",
-                padding: 20,
-                marginBottom: 30,
-                width: "90%",
-                alignSelf: "center",
-                backgroundColor: "white",
-                borderBottomColor: "#D4E6F1"
-              }}
-              >
-            <TouchableOpacity
-              onPress={() => {
-                this.props.getUsers();
-                Actions.content({ postId: e.id });
-              }}
-              style={{ alignItems: "center" }}
-            >
-              <View style={styles.imageContainer}>
-                <Image style={styles.image} source={{ uri: e.image }} />
-              </View>
-              <Text style={{ fontWeight: "bold" }}> - {e.title} - </Text>
-              <Text style={{ paddingTop: 10, paddingBottom: 5 }}>{e.body}</Text>
-              <Text>{e.date.slice(0, 10)}</Text>
-            </TouchableOpacity>
-          </View>
-        );
-      });
+          this.state.filteredContent[0] ? this.formatPosts(this.state.filteredContent) : this.formatPosts(this.props.content)
     }
     return (
       <View style={{ backgroundColor: "white" }}>
@@ -199,7 +213,7 @@ class Home extends React.Component {
           style={{ maxHeight: this.state.fullHeight - 100,
                    minHeight: this.state.fullHeight - 100}}
         >
-          {displayContent}
+          {this.state.currentPosts}
         </ScrollView>
         <Footer toggleModal={this.toggleModal} />
         <View style={{ marginTop: 22 }}>
@@ -264,3 +278,13 @@ export default connect(
   state => state,
   { getUsers, updateContent, setUser }
 )(Home);
+
+
+ //WORKING ON ARTICLES FROM THIS API
+    // axios('https://newsapi.org/v2/everything?' +
+    // 'q=puppy&' +
+    // 'from=2018-10-20&' +
+    // 'sortBy=popularity&' +
+    // 'apiKey=c9cd68fcd90640f3a023e49292d64491')
+    //       .then(response => console.log('NEWS:', response))
+    //       .catch(error => console.log('NEWS ERROR', error))
