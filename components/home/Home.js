@@ -68,7 +68,7 @@ class Home extends React.Component {
     prevProps.userId !== this.props.userId ||
     (this.props.userId && !this.state.user.image_url)
       ? axios
-          .post(`http://localhost:3001/api/getuser`, { id: this.props.userId })
+          .post(`http://` + (Platform.OS === "ios" ? "localhost" : "172.31.98.128") + `:3001/api/getuser`, { id: this.props.userId })
           .then(response => this.setState({ user: response.data[0] }))
           .catch(err => console.log(err))
       : null;
@@ -102,6 +102,7 @@ class Home extends React.Component {
 
   formatPosts(postsArr){
     let displayContent = postsArr.map((e, i) => {
+      console.log(e)
       return (
         <View
         key={i}
@@ -124,6 +125,11 @@ class Home extends React.Component {
         }}
         style={{ alignItems: "center" }}
       >
+        <Avatar
+        small
+        rounded
+        source={{ uri: e.image_url || "URL" }}/>
+        <Text>{e.first_name}</Text>
         <View style={styles.imageContainer}>
           <Image style={styles.image} source={{ uri: e.image }} />
         </View>
