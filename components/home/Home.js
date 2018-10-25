@@ -19,7 +19,7 @@ import { Actions } from "react-native-router-flux";
 import LoginButton from "../header/LoginButton";
 import Footer from "../footer/Footer";
 import axios from "axios";
-import { updateContent} from "../../ducks/reducer";
+import { updateContent } from "../../ducks/reducer";
 import Search from "../search/Search";
 import { myArray } from "../dummydata/dummydata";
 
@@ -111,35 +111,44 @@ class Home extends React.Component {
         ));
     !this.state.search
       ? (center = (
-        <View style={{position: 'absolute', top: 1, left: (this.state.fullWidth/2)-30}}>
-          <TouchableWithoutFeedback onPress={this.scrollToTop}>  
-            <Image
-              source={{uri: 'https://s3.amazonaws.com/groupprojappy/s3/logo-happy.png'}}
-              style={{height: 60, width: 60, borderRadius: 25}}
-            />
-          </TouchableWithoutFeedback>
-        </View>
+          <View
+            style={{
+              position: "absolute",
+              top: 1,
+              left: this.state.fullWidth / 2 - 30
+            }}
+          >
+            <TouchableWithoutFeedback onPress={this.scrollToTop}>
+              <Image
+                source={{
+                  uri:
+                    "https://s3.amazonaws.com/groupprojappy/s3/logo-happy.png"
+                }}
+                style={{ height: 60, width: 60, borderRadius: 25 }}
+              />
+            </TouchableWithoutFeedback>
+          </View>
         ))
-        : null;
-        const { content } = this.props;
-        let displayContent = null;
-        if (content[0]) {
-          displayContent = content.map((e, i) => {
-            return (
-              <View
-              key={i}
-              style={{
-                // borderColor: "gray",
-                // borderWidth: 0.5,
-                alignItems: "center",
-                padding: 20,
-                marginBottom: 30,
-                width: "90%",
-                alignSelf: "center",
-                backgroundColor: "white",
-                borderBottomColor: "#D4E6F1"
-              }}
-              >
+      : null;
+    const { content } = this.props;
+    let displayContent = null;
+    if (content[0]) {
+      displayContent = content.map((e, i) => {
+        return (
+          <View
+            key={i}
+            style={{
+              // borderColor: "gray",
+              // borderWidth: 0.5,
+              alignItems: "center",
+              padding: 20,
+              marginBottom: 30,
+              width: "90%",
+              alignSelf: "center",
+              backgroundColor: "white",
+              borderBottomColor: "#D4E6F1"
+            }}
+          >
             <TouchableOpacity
               onPress={() => {
                 this.props.getUsers();
@@ -167,19 +176,19 @@ class Home extends React.Component {
           rightComponent={
             this.props.userId ? (
               <Avatar
-              small
-              rounded
-              source={{ uri: this.state.user.image_url || "URL" }}
-              onPress={() => {
-                this.props.getUsers();
-                Actions.profile({ user: this.state.user });
-              }}
-              activeOpacity={0.7}
+                small
+                rounded
+                source={{ uri: this.state.user.image_url || "URL" }}
+                onPress={() => {
+                  this.props.getUsers();
+                  Actions.profile({ user: this.state.user });
+                }}
+                activeOpacity={0.7}
               />
-              ) : (
-                <LoginButton />
-                )
-              }
+            ) : (
+              <LoginButton />
+            )
+          }
           innerContainerStyles={{
             flex: 1,
             flexDirection: "row",
@@ -196,8 +205,10 @@ class Home extends React.Component {
           ref={ref => {
             this.ScrollView = ref;
           }}
-          style={{ maxHeight: this.state.fullHeight - 100,
-                   minHeight: this.state.fullHeight - 100}}
+          style={{
+            maxHeight: this.state.fullHeight - 100,
+            minHeight: this.state.fullHeight - 100
+          }}
         >
           {displayContent}
         </ScrollView>
@@ -256,7 +267,7 @@ const styles = StyleSheet.create({
   },
   imageContainer: {
     width: dime.fullWidth,
-    height: 400
+    height: 450
   }
 });
 

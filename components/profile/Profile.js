@@ -6,20 +6,23 @@ import {
   StatusBar,
   TouchableOpacity,
   Image,
-  ScrollView
+  ScrollView,
+  Dimensions
 } from "react-native";
 import { connect } from "react-redux";
 import { Avatar, Icon, Header } from "react-native-elements";
 import NavigationBar from "react-native-navbar";
 import { Actions } from "react-native-router-flux";
-import { deletePost } from '../../ducks/reducer'
+import { deletePost } from "../../ducks/reducer";
 
 class Profile extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      userContent: []
+      userContent: [],
+      fullHeight: Dimensions.get("window").height,
+      fullWidth: Dimensions.get("window").width
     };
   }
 
@@ -28,25 +31,29 @@ class Profile extends React.Component {
     this.setState({ userContent: posts });
   }
 
-  componentDidUpdate(prevProps){
-    prevProps.content.length !== this.props.content.length ? 
-    this.setState({ userContent: this.props.content.filter(e => e.user_id === this.props.userId)})
-    : null
+  componentDidUpdate(prevProps) {
+    prevProps.content.length !== this.props.content.length
+      ? this.setState({
+          userContent: this.props.content.filter(
+            e => e.user_id === this.props.userId
+          )
+        })
+      : null;
   }
 
   render() {
     console.log(this.state);
     console.log(this.props);
     let posts = [];
-    let tags = this.props.user.interests.split(",").map(tag => <Text>{`#${tag}`}</Text>);
+    let tags = this.props.user.interests
+      .split(",")
+      .map(tag => <Text style={{ padding: 2 }}>{`#${tag}`}</Text>);
     if (this.state.userContent[0]) {
       posts = this.state.userContent.map((e, i) => {
         return (
           <View
             key={i}
             style={{
-              borderColor: "black",
-              borderWidth: 1,
               alignItems: "center"
             }}
           >
@@ -57,7 +64,7 @@ class Profile extends React.Component {
               style={{ alignItems: "center" }}
             >
               <Image
-                style={{ width: 300, height: 300 }}
+                style={{ width: this.state.fullWidth, height: 450 }}
                 source={{ uri: e.image || "../../img/1-cee-lo-albums.jpg" }}
               />
               <Text>{e.body}</Text>
@@ -68,9 +75,9 @@ class Profile extends React.Component {
                 raised
                 name="delete"
                 color="red"
-                onPress={() =>{
-                  this.props.deletePost(e.id)}
-                }
+                onPress={() => {
+                  this.props.deletePost(e.id);
+                }}
               />
             ) : null}
           </View>
@@ -86,7 +93,10 @@ class Profile extends React.Component {
   }
 }
 
-export default connect(state => state, {deletePost})(Profile);
+export default connect(
+  state => state,
+  { deletePost }
+)(Profile);
 
 const styles = StyleSheet.create({
   container: {
