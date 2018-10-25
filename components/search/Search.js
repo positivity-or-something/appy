@@ -5,9 +5,11 @@ import {
   Button,
   StyleSheet,
   Platform,
-  Text
+  Text,
+  Alert
 } from "react-native";
 import axios from "axios";
+import { Modal } from "react-native-router-flux";
 
 class Search extends Component {
   constructor(props) {
@@ -30,6 +32,9 @@ class Search extends Component {
       )
       .then(response => {
         // console.log(response);
+        // if(!response.data.length){
+        //   Alert.alert("No search match")
+        // }
         this.setState({ post: response.data });
       });
   }
@@ -40,6 +45,13 @@ class Search extends Component {
   render() {
     // console.warn(this.state);
     let show = this.state.post.map((e, i) => {
+      // setTimeout(function() {
+      if (!this.state.post[0]) {
+        return <Test>Alert.alert("No search match")</Test>;
+      }
+      //     Alert.alert("No search match.");
+      // }, 5000);
+
       return <Text key={i}>{e.body}</Text>;
     });
 
