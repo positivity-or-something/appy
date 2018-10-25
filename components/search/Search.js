@@ -24,7 +24,6 @@ class Search extends Component {
     this.setState({ words: e });
   }
   render() {
-    // console.warn(this.state);
     let show = this.state.post.map((e, i) => {
       return <Text key={i}>{e.body}</Text>;
     });

@@ -1,6 +1,5 @@
 function postComment(req, res) {
   const db = req.app.get("db");
-  console.log("POST COMMENT:", req.body, req.params);
   if (req.body.comment === "") {
     res.status(400).send("Please add comment");
   }
@@ -12,7 +11,7 @@ function postComment(req, res) {
 function getComments(req, res){
   const db = req.app.get('db')
   db.get_comments(+req.params.id)
-    .then(response => console.log(response) || res.status(200)
+    .then(response => res.status(200)
     .send(response)).catch(err => console.log(err))
 }
 
