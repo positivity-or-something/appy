@@ -30,6 +30,8 @@ class Home extends React.Component {
 
     this.state = {
       filteredContent: [],
+      tags: ["Motivation", "Achievement", "Work", "Inspiration", "Determination", 
+            "Lifestyle", "PositiveVibes", "Entrepreneur", "Happy", "Celebration"],
       currentPosts: [],
       user: {},
       show: false,
@@ -101,7 +103,7 @@ class Home extends React.Component {
         { text }
       )
       .then(response => {
-        this.setState({ filteredContent: response.data });
+        console.log(response.data) || this.setState({ filteredContent: response.data });
       });
   }
 
@@ -245,6 +247,14 @@ class Home extends React.Component {
         ? this.formatPosts(this.state.filteredContent)
         : this.formatPosts(this.props.content);
     }
+    let tagButtons = this.state.tags.map((e, i) => {
+      return <Button
+      key={i}
+      title={`#${e}`}
+      Style={{height: 50, width: this.state.fullWidth/4, color: 'blue'}}
+      onPress={() => this.handleAll(e)}
+      />
+    })
     return (
       <View style={{ backgroundColor: "white" }}>
         <StatusBar hidden />
@@ -288,66 +298,9 @@ class Home extends React.Component {
             minHeight: this.state.fullHeight - 100
           }}
         >
-          {/* <Button
-            backgroundColor="transparent"
-            color="white"
-            title="Login"
-            onPress={() => Actions.register()}>#Motivation
-          </Button>
-          <Button
-            backgroundColor="transparent"
-            color="white"
-            title="Login"
-            onPress={() => Actions.register()}>#Achievement
-          </Button>
-          <Button
-            backgroundColor="transparent"
-            color="white"
-            title="Login"
-            onPress={() => Actions.register()}>#Lifestyle
-          </Button>
-          <Button
-            backgroundColor="transparent"
-            color="white"
-            title="Login"
-            onPress={() => Actions.register()}>#Happy
-          </Button>
-          <Button
-            backgroundColor="transparent"
-            color="white"
-            title="Login"
-            onPress={() => Actions.register()}>#Work
-          </Button>
-          <Button
-            backgroundColor="transparent"
-            color="white"
-            title="Login"
-            onPress={() => Actions.register()}>#Inspiration
-          </Button>
-          <Button
-            backgroundColor="transparent"
-            color="white"
-            title="Login"
-            onPress={() => Actions.register()}>#Determination
-          </Button>
-          <Button
-            backgroundColor="transparent"
-            color="white"
-            title="Login"
-            onPress={() => Actions.register()}>#PositiveVibes
-          </Button>
-          <Button
-            backgroundColor="transparent"
-            color="white"
-            title="Login"
-            onPress={() => Actions.register()}>#Entrepreneur
-          </Button>
-          <Button
-            backgroundColor="transparent"
-            color="white"
-            title="Login"
-            onPress={() => Actions.register()}>#Celebration
-          </Button> */}
+          <View style={{flex: 1, flexWrap: 'wrap', justifyContent: 'space-between', height: this.state.fullHeight/6}}>
+            {tagButtons}
+          </View>
           {this.state.currentPosts}
         </ScrollView>
         <Footer toggleModal={this.toggleModal} />
