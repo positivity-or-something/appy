@@ -5,7 +5,9 @@ import {
   StyleSheet,
   Button,
   Text,
-  Platform
+  Platform,
+  Dimensions,
+  TouchableWithoutFeedback
 } from "react-native";
 import { Icon, CheckBox } from "react-native-elements";
 import axios from "axios";
@@ -27,7 +29,7 @@ class Register extends Component {
       firstName: "First Name",
       email: "Email",
       photoUrl: "Need Firebase or S3 for this!!",
-      interests: '',
+      interests: "",
       motivation: false,
       achievement: false,
       lifestyle: false,
@@ -37,7 +39,9 @@ class Register extends Component {
       positiveVibes: false,
       entrepreneur: false,
       happy: false,
-      celebration: false
+      celebration: false,
+      fullHeight: Dimensions.get("window").height,
+      fullWidth: Dimensions.get("window").width
     };
 
     this.imagePermission = this.imagePermission.bind(this);
@@ -88,7 +92,7 @@ class Register extends Component {
           secretKey: secretKey,
           successActionStatus: 201
         };
-        let fileNum = Math.random() * 9999
+        let fileNum = Math.random() * 9999;
         let file = {
           uri: result.uri,
           name: `${this.state.firstName}s pic ${fileNum}`,
@@ -107,17 +111,27 @@ class Register extends Component {
     return (
       <View style={styles.container}>
         <TextInput
+          style={styles.inputContainer}
           autoCapitalize="none"
           placeholder={this.state.userName}
           onChangeText={text => this.setState({ userName: text })}
         />
         <TextInput
+          style={styles.inputContainer}
           autoCapitalize="none"
           placeholder={this.state.passWord}
           onChangeText={text => this.setState({ passWord: text })}
         />
         {this.state.currentUser ? (
           <View>
+            <TouchableWithoutFeedback
+              onPress={() => {
+                this.setUser();
+                Actions.home();
+              }}
+            >
+              <Text style={{ fontSize: 22 }}>Login</Text>
+            </TouchableWithoutFeedback>
             <Button
               title="Login"
               onPress={() => {
@@ -125,8 +139,14 @@ class Register extends Component {
                 Actions.home();
               }}
             />
-            <Text>First Time Here?</Text>
+            <Text style={{ fontSize: 22 }}>First Time Here?</Text>
+            <TouchableWithoutFeedback
+              onPress={() => this.setState({ currentUser: false })}
+            >
+              <Text style={{ fontSize: 22 }}>Register</Text>
+            </TouchableWithoutFeedback>
             <Button
+              style={{ fontSize: 22 }}
               title="Register"
               onPress={() => this.setState({ currentUser: false })}
             />
@@ -143,126 +163,164 @@ class Register extends Component {
             />
             <Icon onPress={() => this.imagePermission()} name="camera-alt" />
             <Icon onPress={() => this.imagePermission(true)} name="image" />
-            <CheckBox 
+            <CheckBox
               center
-              title='Motivation'
-              iconType='material'
-              checkedIcon='check-box'
-              uncheckedIcon='check-box-outline-blank'
+              title="Motivation"
+              iconType="material"
+              checkedIcon="check-box"
+              uncheckedIcon="check-box-outline-blank"
               checked={this.state.motivation}
               onPress={() => {
-              this.setState({motivation: true});
-              this.state.interests ? 
-              this.setState({interests: `${this.state.interests},Motivation`}) 
-              : this.setState({interests: `Motivation`})}}/>
-              <CheckBox 
+                this.setState({ motivation: true });
+                this.state.interests
+                  ? this.setState({
+                      interests: `${this.state.interests},Motivation`
+                    })
+                  : this.setState({ interests: `Motivation` });
+              }}
+            />
+            <CheckBox
               center
-              title='Achievement'
-              iconType='material'
-              checkedIcon='check-box'
-              uncheckedIcon='check-box-outline-blank'
+              title="Achievement"
+              iconType="material"
+              checkedIcon="check-box"
+              uncheckedIcon="check-box-outline-blank"
               checked={this.state.achievement}
               onPress={() => {
-                this.setState({achievement: true});
-                this.state.interests ? 
-                this.setState({interests: `${this.state.interests},Achievement`})
-                : this.setState({interests: `Achievement`})}}/>
-              <CheckBox 
+                this.setState({ achievement: true });
+                this.state.interests
+                  ? this.setState({
+                      interests: `${this.state.interests},Achievement`
+                    })
+                  : this.setState({ interests: `Achievement` });
+              }}
+            />
+            <CheckBox
               center
-              title='Lifestyle'
-              iconType='material'
-              checkedIcon='check-box'
-              uncheckedIcon='check-box-outline-blank'
+              title="Lifestyle"
+              iconType="material"
+              checkedIcon="check-box"
+              uncheckedIcon="check-box-outline-blank"
               checked={this.state.lifestyle}
               onPress={() => {
-              this.setState({lifestyle: true});
-              this.state.interests ? 
-              this.setState({interests: `${this.state.interests},Lifestyle`}) 
-              : this.setState({interests: `Lifestyle`})}}/>
-              <CheckBox 
+                this.setState({ lifestyle: true });
+                this.state.interests
+                  ? this.setState({
+                      interests: `${this.state.interests},Lifestyle`
+                    })
+                  : this.setState({ interests: `Lifestyle` });
+              }}
+            />
+            <CheckBox
               center
-              title='Work'
-              iconType='material'
-              checkedIcon='check-box'
-              uncheckedIcon='check-box-outline-blank'
+              title="Work"
+              iconType="material"
+              checkedIcon="check-box"
+              uncheckedIcon="check-box-outline-blank"
               checked={this.state.work}
               onPress={() => {
-              this.setState({work: true});
-              this.state.interests ? 
-              this.setState({interests: `${this.state.interests},Work`})
-              : this.setState({interests: `Work`})}}/>
-              <CheckBox 
+                this.setState({ work: true });
+                this.state.interests
+                  ? this.setState({ interests: `${this.state.interests},Work` })
+                  : this.setState({ interests: `Work` });
+              }}
+            />
+            <CheckBox
               center
-              title='Determination'
-              iconType='material'
-              checkedIcon='check-box'
-              uncheckedIcon='check-box-outline-blank'
+              title="Determination"
+              iconType="material"
+              checkedIcon="check-box"
+              uncheckedIcon="check-box-outline-blank"
               checked={this.state.determination}
               onPress={() => {
-              this.setState({determination: true});
-              this.state.interests ? 
-              this.setState({interests: `${this.state.interests},Determination`}) 
-              : this.setState({interests: `Determination`})}}/>
-              <CheckBox 
+                this.setState({ determination: true });
+                this.state.interests
+                  ? this.setState({
+                      interests: `${this.state.interests},Determination`
+                    })
+                  : this.setState({ interests: `Determination` });
+              }}
+            />
+            <CheckBox
               center
-              title='Inspiration'
-              iconType='material'
-              checkedIcon='check-box'
-              uncheckedIcon='check-box-outline-blank'
+              title="Inspiration"
+              iconType="material"
+              checkedIcon="check-box"
+              uncheckedIcon="check-box-outline-blank"
               checked={this.state.inspiration}
               onPress={() => {
-              this.setState({inspiration: true});
-              this.state.interests ? 
-              this.setState({interests: `${this.state.interests},Inspiration`})
-              : this.setState({interests: `Inspiration`})}}/>
-              <CheckBox 
+                this.setState({ inspiration: true });
+                this.state.interests
+                  ? this.setState({
+                      interests: `${this.state.interests},Inspiration`
+                    })
+                  : this.setState({ interests: `Inspiration` });
+              }}
+            />
+            <CheckBox
               center
-              title='PositiveVibes'
-              iconType='material'
-              checkedIcon='check-box'
-              uncheckedIcon='check-box-outline-blank'
+              title="PositiveVibes"
+              iconType="material"
+              checkedIcon="check-box"
+              uncheckedIcon="check-box-outline-blank"
               checked={this.state.positiveVibes}
               onPress={() => {
-              this.setState({positiveVibes: true});
-              this.state.interests ? 
-              this.setState({interests: `${this.state.interests},PositiveVibes`}) 
-              : this.setState({interests: `PositiveVibes`})}}/>
-              <CheckBox 
+                this.setState({ positiveVibes: true });
+                this.state.interests
+                  ? this.setState({
+                      interests: `${this.state.interests},PositiveVibes`
+                    })
+                  : this.setState({ interests: `PositiveVibes` });
+              }}
+            />
+            <CheckBox
               center
-              title='Entrepreneur'
-              iconType='material'
-              checkedIcon='check-box'
-              uncheckedIcon='check-box-outline-blank'
+              title="Entrepreneur"
+              iconType="material"
+              checkedIcon="check-box"
+              uncheckedIcon="check-box-outline-blank"
               checked={this.state.entrepreneur}
               onPress={() => {
-              this.setState({entrepreneur: true});
-              this.state.interests ? 
-              this.setState({interests: `${this.state.interests},Entrepreneur`})
-              : this.setState({interests: `Entrepreneur`})}}/>
-               <CheckBox 
+                this.setState({ entrepreneur: true });
+                this.state.interests
+                  ? this.setState({
+                      interests: `${this.state.interests},Entrepreneur`
+                    })
+                  : this.setState({ interests: `Entrepreneur` });
+              }}
+            />
+            <CheckBox
               center
-              title='Happy'
-              iconType='material'
-              checkedIcon='check-box'
-              uncheckedIcon='check-box-outline-blank'
+              title="Happy"
+              iconType="material"
+              checkedIcon="check-box"
+              uncheckedIcon="check-box-outline-blank"
               checked={this.state.happy}
               onPress={() => {
-              this.setState({happy: true});
-              this.state.interests ? 
-              this.setState({interests: `${this.state.interests},Happy`}) 
-              : this.setState({interests: `Happy`})}}/>
-              <CheckBox 
+                this.setState({ happy: true });
+                this.state.interests
+                  ? this.setState({
+                      interests: `${this.state.interests},Happy`
+                    })
+                  : this.setState({ interests: `Happy` });
+              }}
+            />
+            <CheckBox
               center
-              title='Celebration'
-              iconType='material'
-              checkedIcon='check-box'
-              uncheckedIcon='check-box-outline-blank'
+              title="Celebration"
+              iconType="material"
+              checkedIcon="check-box"
+              uncheckedIcon="check-box-outline-blank"
               checked={this.state.celebration}
               onPress={() => {
-              this.setState({celebration: true});
-              this.state.interests ? 
-              this.setState({interests: `${this.state.interests},Celebration`})
-              : this.setState({interests: `Celebration`})}}/>
+                this.setState({ celebration: true });
+                this.state.interests
+                  ? this.setState({
+                      interests: `${this.state.interests},Celebration`
+                    })
+                  : this.setState({ interests: `Celebration` });
+              }}
+            />
             <Button
               title="Submit"
               onPress={() => {
@@ -282,6 +340,11 @@ export default connect(
   { setUser }
 )(Register);
 
+const dime = {
+  fullHeight: Dimensions.get("window").height,
+  fullWidth: Dimensions.get("window").width
+};
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -293,5 +356,9 @@ const styles = StyleSheet.create({
   },
   condText: {
     flex: 1
+  },
+  inputContainer: {
+    padding: 15,
+    fontSize: 22
   }
 });
