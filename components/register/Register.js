@@ -130,7 +130,9 @@ class Register extends Component {
                 Actions.home();
               }}
             >
-              <Text style={{ fontSize: 22 }}>Login</Text>
+              <View>
+                <Text style={{ fontSize: 22 }}>Login</Text>
+              </View>
             </TouchableWithoutFeedback>
             <Button
               title="Login"
@@ -143,7 +145,9 @@ class Register extends Component {
             <TouchableWithoutFeedback
               onPress={() => this.setState({ currentUser: false })}
             >
-              <Text style={{ fontSize: 22 }}>Register</Text>
+              <View>
+                <Text style={{ fontSize: 22 }}>Register</Text>
+              </View>
             </TouchableWithoutFeedback>
             <Button
               style={{ fontSize: 22 }}
