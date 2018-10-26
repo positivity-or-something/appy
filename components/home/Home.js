@@ -19,7 +19,7 @@ import { Actions } from "react-native-router-flux";
 import LoginButton from "../header/LoginButton";
 import Footer from "../footer/Footer";
 import axios from "axios";
-import { updateContent} from "../../ducks/reducer";
+import { updateContent } from "../../ducks/reducer";
 import Search from "../search/Search";
 import { myArray } from "../dummydata/dummydata";
 
@@ -41,7 +41,7 @@ class Home extends React.Component {
     this.toggleModal = this.toggleModal.bind(this);
     this.scrollToTop = this.scrollToTop.bind(this);
     this.hideSearch = this.hideSearch.bind(this);
-    this.handleAll = this.handleAll.bind(this)
+    this.handleAll = this.handleAll.bind(this);
   }
 
   componentDidMount() {
@@ -68,7 +68,12 @@ class Home extends React.Component {
     prevProps.userId !== this.props.userId ||
     (this.props.userId && !this.state.user.image_url)
       ? axios
-          .post(`http://` + (Platform.OS === "ios" ? "localhost" : "172.31.98.128") + `:3001/api/getuser`, { id: this.props.userId })
+          .post(
+            `http://` +
+              (Platform.OS === "ios" ? "localhost" : "172.31.98.128") +
+              `:3001/api/getuser`,
+            { id: this.props.userId }
+          )
           .then(response => this.setState({ user: response.data[0] }))
           .catch(err => console.log(err))
       : null;
@@ -99,48 +104,98 @@ class Home extends React.Component {
       });
   }
 
-  formatPosts(postsArr){
+  formatPosts(postsArr) {
     let displayContent = postsArr.map((e, i) => {
       return (
         <View
-        key={i}
-        style={{
-          // borderColor: "gray",
-          // borderWidth: 0.5,
-          alignItems: "center",
-          padding: 20,
-          marginBottom: 30,
-          width: "90%",
-          alignSelf: "center",
-          backgroundColor: "white",
-          borderBottomColor: "#D4E6F1"
-        }}
+          key={i}
+          style={{
+            // borderColor: "gray",
+            // borderWidth: 0.5,
+            alignItems: "center",
+            padding: 20,
+            marginBottom: 30,
+            width: "90%",
+            alignSelf: "center",
+            backgroundColor: "white",
+            borderBottomColor: "#D4E6F1"
+          }}
         >
-      <TouchableOpacity
-        onPress={() => {
-          this.props.getUsers();
-          Actions.content({ postId: e.id, userImg: e.image_url, userName: e.first_name });
-        }}
-        style={{ alignItems: "center" }}
-      >
-        <Avatar
-        small
-        rounded
-        source={{ uri: e.image_url || "URL" }}/>
-        <Text>{e.first_name}</Text>
-        <View style={styles.imageContainer}>
-          <Image style={styles.image} source={{ uri: e.image }} />
+          <TouchableOpacity
+            onPress={() => {
+              this.props.getUsers();
+              Actions.content({
+                postId: e.id,
+                userImg: e.image_url,
+                userName: e.first_name
+              });
+            }}
+            style={{ alignItems: "center" }}
+          >
+            <View
+              style={{
+                alignSelf: "flex-start",
+                flexDirection: "row",
+                padding: 10,
+                alignItems: "center"
+              }}
+            >
+              <Avatar small rounded source={{ uri: e.image_url || "URL" }} />
+              <Text
+                style={{
+                  fontFamily: "HelveticaNeue-Medium",
+                  fontSize: 18,
+                  paddingHorizontal: 10
+                }}
+              >
+                {e.first_name}
+              </Text>
+            </View>
+            <View style={styles.imageContainer}>
+              <Image style={styles.image} source={{ uri: e.image }} />
+            </View>
+            <Text
+              style={{
+                fontWeight: "bold",
+                fontFamily: "HelveticaNeue-Medium",
+                fontSize: 18,
+                alignSelf: "flex-start",
+                paddingHorizontal: 10,
+                marginTop: 10
+              }}
+            >
+              {e.title}
+            </Text>
+            <Text
+              style={{
+                paddingTop: 5,
+                paddingBottom: 5,
+                fontFamily: "Helvetica Neue",
+                fontSize: 18,
+                alignSelf: "flex-start",
+                paddingHorizontal: 10,
+                width: this.state.fullWidth
+              }}
+            >
+              {e.body}
+            </Text>
+            <Text
+              style={{
+                fontFamily: "Helvetica Neue",
+                fontSize: 16.5,
+                alignSelf: "flex-start",
+                paddingLeft: 10
+              }}
+            >
+              {e.date.slice(0, 10)}
+            </Text>
+          </TouchableOpacity>
         </View>
-        <Text style={{ fontWeight: "bold" }}> - {e.title} - </Text>
-        <Text style={{ paddingTop: 10, paddingBottom: 5 }}>{e.body}</Text>
-        <Text>{e.date.slice(0, 10)}</Text>
-      </TouchableOpacity>
-    </View>
-  );
-});
-  this.state.currentPosts.length !== displayContent.length ?
-  this.setState({currentPosts: displayContent}):
-  null
+      );
+    });
+    this.state.currentPosts.length !== displayContent.length
+      ? this.setState({ currentPosts: displayContent })
+      : null;
   }
 
   render() {
@@ -148,7 +203,11 @@ class Home extends React.Component {
       center = null;
     this.state.search
       ? (left = (
-          <Search style={{ paddingTop: 20 }} hideSearch={this.hideSearch} handleAll={this.handleAll} />
+          <Search
+            style={{ paddingTop: 20 }}
+            hideSearch={this.hideSearch}
+            handleAll={this.handleAll}
+          />
         ))
       : (left = (
           <Icon
@@ -160,19 +219,30 @@ class Home extends React.Component {
         ));
     !this.state.search
       ? (center = (
-        <View style={{position: 'absolute', top: 1, left: (this.state.fullWidth/2)-30}}>
-          <TouchableWithoutFeedback onPress={this.scrollToTop}>  
-            <Image
-              source={{uri: 'https://s3.amazonaws.com/groupprojappy/s3/logo-happy.png'}}
-              style={{height: 60, width: 60, borderRadius: 25}}
-            />
-          </TouchableWithoutFeedback>
-        </View>
+          <View
+            style={{
+              position: "absolute",
+              top: 1,
+              left: this.state.fullWidth / 2 - 30
+            }}
+          >
+            <TouchableWithoutFeedback onPress={this.scrollToTop}>
+              <Image
+                source={{
+                  uri:
+                    "https://s3.amazonaws.com/groupprojappy/s3/logo-happy.png"
+                }}
+                style={{ height: 60, width: 60, borderRadius: 25 }}
+              />
+            </TouchableWithoutFeedback>
+          </View>
         ))
-        : null;
-        const { content } = this.props;
-        if (content[0]) {
-          this.state.filteredContent[0] ? this.formatPosts(this.state.filteredContent) : this.formatPosts(this.props.content)
+      : null;
+    const { content } = this.props;
+    if (content[0]) {
+      this.state.filteredContent[0]
+        ? this.formatPosts(this.state.filteredContent)
+        : this.formatPosts(this.props.content);
     }
     return (
       <View style={{ backgroundColor: "white" }}>
@@ -183,19 +253,19 @@ class Home extends React.Component {
           rightComponent={
             this.props.userId ? (
               <Avatar
-              small
-              rounded
-              source={{ uri: this.state.user.image_url || "URL" }}
-              onPress={() => {
-                this.props.getUsers();
-                Actions.profile({ user: this.state.user, current: true });
-              }}
-              activeOpacity={0.7}
+                small
+                rounded
+                source={{ uri: this.state.user.image_url || "URL" }}
+                onPress={() => {
+                  this.props.getUsers();
+                  Actions.profile({ user: this.state.user, current: true });
+                }}
+                activeOpacity={0.7}
               />
-              ) : (
-                <LoginButton />
-                )
-              }
+            ) : (
+              <LoginButton />
+            )
+          }
           innerContainerStyles={{
             flex: 1,
             flexDirection: "row",
@@ -212,8 +282,10 @@ class Home extends React.Component {
           ref={ref => {
             this.ScrollView = ref;
           }}
-          style={{ maxHeight: this.state.fullHeight - 100,
-                   minHeight: this.state.fullHeight - 100}}
+          style={{
+            maxHeight: this.state.fullHeight - 100,
+            minHeight: this.state.fullHeight - 100
+          }}
         >
           {this.state.currentPosts}
         </ScrollView>
@@ -227,15 +299,57 @@ class Home extends React.Component {
               alert("Modal has been closed.");
             }}
           >
-            <View style={{ marginTop: 100 }}>
-              <View>
+            <View
+              style={{
+                height: this.state.fullHeight,
+                backgroundColor: "#81DAF5"
+              }}
+            >
+              <View
+                style={{
+                  marginTop: 20
+                }}
+              >
+                <Image
+                  source={{
+                    uri:
+                      "https://s3.amazonaws.com/groupprojappy/s3/logo-happy.png"
+                  }}
+                  style={{
+                    height: 200,
+                    width: 200,
+                    borderRadius: 25,
+                    alignSelf: "center"
+                  }}
+                />
+                <Text
+                  style={{
+                    padding: 10,
+                    fontSize: 50,
+                    fontFamily: "Helvetica Neue",
+                    color: "white",
+                    alignSelf: "center"
+                  }}
+                >
+                  Quote of the day:
+                </Text>
+                <Text
+                  style={{
+                    marginBottom: 20,
+                    padding: 20,
+                    fontSize: 30,
+                    fontFamily: "Helvetica Neue",
+                    color: "white"
+                  }}
+                >
+                  {this.state.quote}
+                </Text>
                 <Icon
                   name="close"
                   onPress={() => {
                     this.toggleModal();
                   }}
                 />
-                <Text>{this.state.quote}</Text>
               </View>
             </View>
           </Modal>
@@ -272,7 +386,7 @@ const styles = StyleSheet.create({
   },
   imageContainer: {
     width: dime.fullWidth,
-    height: 400
+    height: 450
   }
 });
 
@@ -281,12 +395,11 @@ export default connect(
   { getUsers, updateContent, setUser }
 )(Home);
 
-
- //WORKING ON ARTICLES FROM THIS API
-    // axios('https://newsapi.org/v2/everything?' +
-    // 'q=puppy&' +
-    // 'from=2018-10-20&' +
-    // 'sortBy=popularity&' +
-    // 'apiKey=c9cd68fcd90640f3a023e49292d64491')
-    //       .then(response => console.log('NEWS:', response))
-    //       .catch(error => console.log('NEWS ERROR', error))
+//WORKING ON ARTICLES FROM THIS API
+// axios('https://newsapi.org/v2/everything?' +
+// 'q=puppy&' +
+// 'from=2018-10-20&' +
+// 'sortBy=popularity&' +
+// 'apiKey=c9cd68fcd90640f3a023e49292d64491')
+//       .then(response => console.log('NEWS:', response))
+//       .catch(error => console.log('NEWS ERROR', error))

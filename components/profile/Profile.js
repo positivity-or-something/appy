@@ -5,45 +5,60 @@ import {
   StyleSheet,
   TouchableOpacity,
   Image,
-  ScrollView
+  ScrollView,
+  Dimensions
 } from "react-native";
 import { connect } from "react-redux";
 import { Icon } from "react-native-elements";
 import { Actions } from "react-native-router-flux";
-import { deletePost } from '../../ducks/reducer';
+import { deletePost } from "../../ducks/reducer";
 
 class Profile extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      userContent: []
+      userContent: [],
+      fullHeight: Dimensions.get("window").height,
+      fullWidth: Dimensions.get("window").width
     };
   }
 
   componentDidMount() {
-    if(this.props.current){
-      let posts = this.props.content.filter(e => e.user_id === this.props.userId);
+    if (this.props.current) {
+      let posts = this.props.content.filter(
+        e => e.user_id === this.props.userId
+      );
       this.setState({ userContent: posts });
-    }else{
-      let posts = this.props.content.filter(e => e.user_id === this.props.selectedUser.id);
+    } else {
+      let posts = this.props.content.filter(
+        e => e.user_id === this.props.selectedUser.id
+      );
       this.setState({ userContent: posts });
     }
   }
 
-  componentDidUpdate(prevProps){
-    prevProps.content.length !== this.props.content.length ? 
-    this.setState({ userContent: this.props.content.filter(e => e.user_id === this.props.userId)})
-    : null
+  componentDidUpdate(prevProps) {
+    prevProps.content.length !== this.props.content.length
+      ? this.setState({
+          userContent: this.props.content.filter(
+            e => e.user_id === this.props.userId
+          )
+        })
+      : null;
   }
 
   render() {
     let posts;
     let tags;
-    if(this.props.user){
-      tags = this.props.user.interests.split(",").map((tag, i) => <Text key={i}>{`#${tag}`}</Text>)
-    }else{
-      tags = this.props.selectedUser.interests.split(",").map((tag, i) => <Text key={i}>{`#${tag}`}</Text>)
+    if (this.props.user) {
+      tags = this.props.user.interests
+        .split(",")
+        .map((tag, i) => <Text key={i}>{`#${tag}`}</Text>);
+    } else {
+      tags = this.props.selectedUser.interests
+        .split(",")
+        .map((tag, i) => <Text key={i}>{`#${tag}`}</Text>);
     }
     if (this.state.userContent[0]) {
       posts = this.state.userContent.map((e, i) => {
@@ -51,8 +66,6 @@ class Profile extends React.Component {
           <View
             key={i}
             style={{
-              borderColor: "black",
-              borderWidth: 1,
               alignItems: "center"
             }}
           >
@@ -63,7 +76,7 @@ class Profile extends React.Component {
               style={{ alignItems: "center" }}
             >
               <Image
-                style={{ width: 300, height: 300 }}
+                style={{ width: this.state.fullWidth, height: 450 }}
                 source={{ uri: e.image || "../../img/1-cee-lo-albums.jpg" }}
               />
               <Text>{e.body}</Text>
@@ -74,9 +87,9 @@ class Profile extends React.Component {
                 raised
                 name="delete"
                 color="red"
-                onPress={() =>{
-                  this.props.deletePost(e.id)}
-                }
+                onPress={() => {
+                  this.props.deletePost(e.id);
+                }}
               />
             ) : null}
           </View>
@@ -92,7 +105,10 @@ class Profile extends React.Component {
   }
 }
 
-export default connect(state => state, {deletePost})(Profile);
+export default connect(
+  state => state,
+  { deletePost }
+)(Profile);
 
 const styles = StyleSheet.create({
   container: {
