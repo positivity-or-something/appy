@@ -10,7 +10,8 @@ import {
   Modal,
   StatusBar,
   Dimensions,
-  TouchableWithoutFeedback
+  TouchableWithoutFeedback,
+  Button
 } from "react-native";
 import { connect } from "react-redux";
 import { getUsers, setUser } from "../../ducks/reducer";
@@ -215,6 +216,66 @@ class Home extends React.Component {
           style={{ maxHeight: this.state.fullHeight - 100,
                    minHeight: this.state.fullHeight - 100}}
         >
+          {/* <Button
+            backgroundColor="transparent"
+            color="white"
+            title="Login"
+            onPress={() => Actions.register()}>#Motivation
+          </Button>
+          <Button
+            backgroundColor="transparent"
+            color="white"
+            title="Login"
+            onPress={() => Actions.register()}>#Achievement
+          </Button>
+          <Button
+            backgroundColor="transparent"
+            color="white"
+            title="Login"
+            onPress={() => Actions.register()}>#Lifestyle
+          </Button>
+          <Button
+            backgroundColor="transparent"
+            color="white"
+            title="Login"
+            onPress={() => Actions.register()}>#Happy
+          </Button>
+          <Button
+            backgroundColor="transparent"
+            color="white"
+            title="Login"
+            onPress={() => Actions.register()}>#Work
+          </Button>
+          <Button
+            backgroundColor="transparent"
+            color="white"
+            title="Login"
+            onPress={() => Actions.register()}>#Inspiration
+          </Button>
+          <Button
+            backgroundColor="transparent"
+            color="white"
+            title="Login"
+            onPress={() => Actions.register()}>#Determination
+          </Button>
+          <Button
+            backgroundColor="transparent"
+            color="white"
+            title="Login"
+            onPress={() => Actions.register()}>#PositiveVibes
+          </Button>
+          <Button
+            backgroundColor="transparent"
+            color="white"
+            title="Login"
+            onPress={() => Actions.register()}>#Entrepreneur
+          </Button>
+          <Button
+            backgroundColor="transparent"
+            color="white"
+            title="Login"
+            onPress={() => Actions.register()}>#Celebration
+          </Button> */}
           {this.state.currentPosts}
         </ScrollView>
         <Footer toggleModal={this.toggleModal} />
