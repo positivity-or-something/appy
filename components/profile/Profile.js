@@ -3,15 +3,13 @@ import {
   View,
   Text,
   StyleSheet,
-  StatusBar,
   TouchableOpacity,
   Image,
   ScrollView,
   Dimensions
 } from "react-native";
 import { connect } from "react-redux";
-import { Avatar, Icon, Header } from "react-native-elements";
-import NavigationBar from "react-native-navbar";
+import { Icon } from "react-native-elements";
 import { Actions } from "react-native-router-flux";
 import { deletePost } from "../../ducks/reducer";
 
@@ -27,8 +25,17 @@ class Profile extends React.Component {
   }
 
   componentDidMount() {
-    let posts = this.props.content.filter(e => e.user_id === this.props.userId);
-    this.setState({ userContent: posts });
+    if (this.props.current) {
+      let posts = this.props.content.filter(
+        e => e.user_id === this.props.userId
+      );
+      this.setState({ userContent: posts });
+    } else {
+      let posts = this.props.content.filter(
+        e => e.user_id === this.props.selectedUser.id
+      );
+      this.setState({ userContent: posts });
+    }
   }
 
   componentDidUpdate(prevProps) {
@@ -42,12 +49,17 @@ class Profile extends React.Component {
   }
 
   render() {
-    console.log(this.state);
-    console.log(this.props);
-    let posts = [];
-    let tags = this.props.user.interests
-      .split(",")
-      .map(tag => <Text style={{ padding: 2 }}>{`#${tag}`}</Text>);
+    let posts;
+    let tags;
+    if (this.props.user) {
+      tags = this.props.user.interests
+        .split(",")
+        .map((tag, i) => <Text key={i}>{`#${tag}`}</Text>);
+    } else {
+      tags = this.props.selectedUser.interests
+        .split(",")
+        .map((tag, i) => <Text key={i}>{`#${tag}`}</Text>);
+    }
     if (this.state.userContent[0]) {
       posts = this.state.userContent.map((e, i) => {
         return (

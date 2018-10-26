@@ -15,6 +15,7 @@ const {
   deletePost,
   findWords
 } = require("./controllers/Post_controller");
+const { postComment, getComments } = require('./controllers/Comment_controller')
 
 app.use(json());
 app.use(cors());
@@ -48,12 +49,13 @@ app.delete("/api/deletepost/:id", deletePost);
 app.get("/api/content", getContent);
 app.post("/api/upvote/:id", upVote);
 app.post("/api/downvote/:id", downVote);
-
 app.post("/api/upvote/:id", upVote);
 app.post("/api/downvote/:id", downVote);
+//----------------------Comment-----------------------
+app.post('/api/comment', postComment)
+app.get('/api/comments/:id', getComments)
 //---------------------SEARCH------------------------
 app.post("/api/words", findWords);
-
 app.listen(process.env.SERVER_PORT, () =>
   console.log(`listening on port ${process.env.SERVER_PORT}`)
 );

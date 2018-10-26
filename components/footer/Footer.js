@@ -26,7 +26,7 @@ class footer extends Component {
           name="sentiment-very-satisfied"
           onPress={() => this.props.toggleModal()}
         />
-        <Icon color='white' name="comment" onPress={() => Actions.radB()} />
+        <Icon color='white' name="comment" onPress={() => Actions.post()} />
       </View>
     );
   }

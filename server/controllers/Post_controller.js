@@ -40,7 +40,6 @@ function upVote(req, res) {
     .then(resp => res.status(200).send(resp))
     .catch(
       err =>
-        console.log(err) ||
         db
           .update_vote([parseInt(req.params.id, 10), req.body.userId, 1, 0])
           .then(response => res.status(200).send(response))
@@ -54,7 +53,6 @@ function downVote(req, res) {
     .then(res => res.sendStatus(200))
     .catch(
       err =>
-        console.log(err) ||
         db
           .update_vote([parseInt(req.params.id, 10), req.body.userId, 0, 1])
           .then(response => res.Status(200).send(response))
@@ -70,7 +68,6 @@ function deletePost(req, res) {
 }
 
 function findWords(req, res) {
-  console.log("HERE LIES REQ.BODY", req.body);
   const db = req.app.get("db");
   let { text } = req.body;
   if (text.includes("#")) {
@@ -79,7 +76,6 @@ function findWords(req, res) {
 
   db.search_post([text])
     .then(response => {
-      console.log("HERE IS FIND WORDS", response);
       res.status(200).send(response);
     })
     .catch(err => console.log(err));

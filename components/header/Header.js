@@ -5,7 +5,6 @@ import { Icon } from "react-native-elements";
 
 class Header extends React.Component {
   render() {
-    console.log(this.props);
     return (
       <View containerStyle={{ backgroundColor: "#ffffff" }}>
         <Icon name="photo_camera" />

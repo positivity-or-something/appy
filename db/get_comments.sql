@@ -1,1 +1,1 @@
-SELECT * FROM comments WHERE content_id = $1
+SELECT * FROM comments c JOIN users u ON c.user_id = u.id WHERE c.content_id = $1
