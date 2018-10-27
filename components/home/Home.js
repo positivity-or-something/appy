@@ -360,6 +360,7 @@ class Home extends React.Component {
                 </Text>
                 <Icon
                   name="close"
+                  color="white"
                   onPress={() => {
                     this.toggleModal();
                   }}
