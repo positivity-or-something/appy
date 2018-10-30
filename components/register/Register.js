@@ -131,29 +131,49 @@ class Register extends Component {
               }}
             >
               <View>
-                <Text style={{ fontSize: 22 }}>Login</Text>
+                <Text
+                  style={{
+                    fontSize: 22,
+                    color: "#81DAF5",
+                    alignSelf: "center",
+                    marginBottom: 15
+                  }}
+                >
+                  Login
+                </Text>
               </View>
             </TouchableWithoutFeedback>
-            <Button
+            {/* <Button
               title="Login"
               onPress={() => {
                 this.setUser();
                 Actions.home();
               }}
-            />
-            <Text style={{ fontSize: 22 }}>First Time Here?</Text>
+            /> */}
+            <Text style={{ fontSize: 22, alignSelf: "center" }}>
+              First Time Here?
+            </Text>
             <TouchableWithoutFeedback
               onPress={() => this.setState({ currentUser: false })}
             >
               <View>
-                <Text style={{ fontSize: 22 }}>Register</Text>
+                <Text
+                  style={{
+                    fontSize: 22,
+                    color: "#81DAF5",
+                    alignSelf: "center",
+                    marginTop: 15
+                  }}
+                >
+                  Register
+                </Text>
               </View>
             </TouchableWithoutFeedback>
-            <Button
+            {/* <Button
               style={{ fontSize: 22 }}
               title="Register"
               onPress={() => this.setState({ currentUser: false })}
-            />
+            /> */}
           </View>
         ) : (
           <View>
@@ -364,5 +384,9 @@ const styles = StyleSheet.create({
   inputContainer: {
     padding: 15,
     fontSize: 22
+  },
+  touchText: {
+    fontSize: 22,
+    color: "#81DAF5"
   }
 });
