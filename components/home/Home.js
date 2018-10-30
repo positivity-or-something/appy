@@ -264,16 +264,33 @@ class Home extends React.Component {
     }
     let tagButtons = this.state.tags.map((e, i) => {
       return (
-        <Button
-          key={i}
-          title={`#${e}`}
-          Style={{
-            height: 50,
-            width: this.state.fullWidth / 4,
-            color: "#81DAF5"
-          }}
-          onPress={() => this.handleAll(e)}
-        />
+        <TouchableWithoutFeedback onPress={() => this.handleAll(e)}>
+          <View>
+            <Text
+              key={i}
+              style={{
+                fontSize: 18,
+                color: "#81DAF5",
+                alignSelf: "center",
+                marginTop: 15,
+                color: "#81DAF5"
+              }}
+            >
+              {`#${e} `}
+            </Text>
+          </View>
+        </TouchableWithoutFeedback>
+
+        // <Button
+        //   key={i}
+        //   title={`#${e}`}
+        //   Style={{
+        //     height: 50,
+        //     width: this.state.fullWidth / 4,
+        //     color: "#81DAF5"
+        //   }}
+        //   onPress={() => this.handleAll(e)}
+        // />
       );
     });
     return (
@@ -321,10 +338,14 @@ class Home extends React.Component {
         >
           <View
             style={{
+              width: this.state.fullWidth,
+              paddingHorizontal: 10,
               flex: 1,
+              flexDirection: "row",
               flexWrap: "wrap",
               justifyContent: "space-between",
-              height: this.state.fullHeight / 6
+              height: this.state.fullHeight / 6.5,
+              alignItems: "center"
             }}
           >
             {tagButtons}
