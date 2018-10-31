@@ -54,11 +54,21 @@ class Profile extends React.Component {
     if (this.props.user) {
       tags = this.props.user.interests
         .split(",")
-        .map((tag, i) => <Text key={i}>{`#${tag}`}</Text>);
+        .map((tag, i) => (
+          <Text
+            style={{ fontFamily: "Helvetica Neue", color: "#696969" }}
+            key={i}
+          >{`#${tag} `}</Text>
+        ));
     } else {
       tags = this.props.selectedUser.interests
         .split(",")
-        .map((tag, i) => <Text key={i}>{`#${tag}`}</Text>);
+        .map((tag, i) => (
+          <Text
+            style={{ fontFamily: "Helvetica Neue", color: "#696969" }}
+            key={i}
+          >{`#${tag} `}</Text>
+        ));
     }
     if (this.state.userContent[0]) {
       posts = this.state.userContent.map((e, i) => {
@@ -79,8 +89,32 @@ class Profile extends React.Component {
                 style={{ width: this.state.fullWidth, height: 450 }}
                 source={{ uri: e.image || "../../img/1-cee-lo-albums.jpg" }}
               />
-              <Text>{e.body}</Text>
-              <Text>{e.date.slice(0, 10)}</Text>
+              <Text
+                style={{
+                  alignSelf: "left",
+                  fontFamily: "Helvetica Neue",
+                  color: "#808080",
+                  paddingTop: 5,
+                  paddingBottom: 5,
+                  paddingHorizontal: 10,
+                  fontSize: 18
+                }}
+              >
+                {e.body}
+              </Text>
+              <Text
+                style={{
+                  alignSelf: "left",
+                  fontFamily: "Helvetica Neue",
+                  color: "#808080",
+                  paddingTop: 5,
+                  paddingBottom: 5,
+                  paddingHorizontal: 10,
+                  fontSize: 18
+                }}
+              >
+                {e.date.slice(0, 10)}
+              </Text>
             </TouchableOpacity>
             {e.user_id === this.props.userId ? (
               <Icon
@@ -98,7 +132,7 @@ class Profile extends React.Component {
     }
     return (
       <View style={styles.container}>
-        {tags}
+        <View style={{ flexDirection: "row" }}> {tags} </View>
         <ScrollView>{posts}</ScrollView>
       </View>
     );
@@ -110,8 +144,14 @@ export default connect(
   { deletePost }
 )(Profile);
 
+const dime = {
+  fullHeight: Dimensions.get("window").height,
+  fullWidth: Dimensions.get("window").width
+};
+
 const styles = StyleSheet.create({
   container: {
+    width: dime.fullWidth,
     flex: 1,
     marginTop: 15,
     justifyContent: "space-between",
