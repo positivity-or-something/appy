@@ -30,8 +30,18 @@ class Home extends React.Component {
 
     this.state = {
       filteredContent: [],
-      tags: ["Motivation", "Achievement", "Work", "Inspiration", "Determination", 
-            "Lifestyle", "PositiveVibes", "Entrepreneur", "Happy", "Celebration"],
+      tags: [
+        "Motivation",
+        "Achievement",
+        "Work",
+        "Inspiration",
+        "Determination",
+        "Lifestyle",
+        "PositiveVibes",
+        "Entrepreneur",
+        "Happy",
+        "Celebration"
+      ],
       currentPosts: [],
       user: {},
       show: false,
@@ -63,7 +73,7 @@ class Home extends React.Component {
         .then(response => {
           this.props.updateContent(response.data);
         })
-        .catch(err => console.warn("ERROR CAUGHT", err));
+        .catch(err => console.warn("ERROR CAUGHT", JSON.stringify(err)));
     }
   }
 
@@ -103,7 +113,8 @@ class Home extends React.Component {
         { text }
       )
       .then(response => {
-        console.log(response.data) || this.setState({ filteredContent: response.data });
+        console.log(response.data) ||
+          this.setState({ filteredContent: response.data });
       });
   }
 
@@ -148,7 +159,8 @@ class Home extends React.Component {
                 style={{
                   fontFamily: "HelveticaNeue-Medium",
                   fontSize: 18,
-                  paddingHorizontal: 10
+                  paddingHorizontal: 10,
+                  color: "#696969"
                 }}
               >
                 {e.first_name}
@@ -164,7 +176,8 @@ class Home extends React.Component {
                 fontSize: 18,
                 alignSelf: "flex-start",
                 paddingHorizontal: 10,
-                marginTop: 10
+                marginTop: 10,
+                color: "#696969"
               }}
             >
               {e.title}
@@ -177,7 +190,8 @@ class Home extends React.Component {
                 fontSize: 18,
                 alignSelf: "flex-start",
                 paddingHorizontal: 10,
-                width: this.state.fullWidth
+                width: this.state.fullWidth,
+                color: "#808080"
               }}
             >
               {e.body}
@@ -187,7 +201,8 @@ class Home extends React.Component {
                 fontFamily: "Helvetica Neue",
                 fontSize: 16.5,
                 alignSelf: "flex-start",
-                paddingLeft: 10
+                paddingLeft: 10,
+                color: "#808080"
               }}
             >
               {e.date.slice(0, 10)}
@@ -248,13 +263,36 @@ class Home extends React.Component {
         : this.formatPosts(this.props.content);
     }
     let tagButtons = this.state.tags.map((e, i) => {
-      return <Button
-      key={i}
-      title={`#${e}`}
-      Style={{height: 50, width: this.state.fullWidth/4, color: 'blue'}}
-      onPress={() => this.handleAll(e)}
-      />
-    })
+      return (
+        <TouchableWithoutFeedback onPress={() => this.handleAll(e)}>
+          <View>
+            <Text
+              key={i}
+              style={{
+                fontSize: 18,
+                color: "#81DAF5",
+                alignSelf: "center",
+                marginTop: 15,
+                color: "#81DAF5"
+              }}
+            >
+              {`#${e} `}
+            </Text>
+          </View>
+        </TouchableWithoutFeedback>
+
+        // <Button
+        //   key={i}
+        //   title={`#${e}`}
+        //   Style={{
+        //     height: 50,
+        //     width: this.state.fullWidth / 4,
+        //     color: "#81DAF5"
+        //   }}
+        //   onPress={() => this.handleAll(e)}
+        // />
+      );
+    });
     return (
       <View style={{ backgroundColor: "white" }}>
         <StatusBar hidden />
@@ -298,7 +336,18 @@ class Home extends React.Component {
             minHeight: this.state.fullHeight - 100
           }}
         >
-          <View style={{flex: 1, flexWrap: 'wrap', justifyContent: 'space-between', height: this.state.fullHeight/6}}>
+          <View
+            style={{
+              width: this.state.fullWidth,
+              paddingHorizontal: 10,
+              flex: 1,
+              flexDirection: "row",
+              flexWrap: "wrap",
+              justifyContent: "space-between",
+              height: this.state.fullHeight / 6.5,
+              alignItems: "center"
+            }}
+          >
             {tagButtons}
           </View>
           {this.state.currentPosts}
@@ -360,6 +409,7 @@ class Home extends React.Component {
                 </Text>
                 <Icon
                   name="close"
+                  color="white"
                   onPress={() => {
                     this.toggleModal();
                   }}
