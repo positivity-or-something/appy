@@ -8,12 +8,12 @@ import {
   Image,
   ScrollView
 } from "react-native";
-import { Actions } from 'react-native-router-flux';
+import { Actions } from "react-native-router-flux";
 import { Icon, Avatar } from "react-native-elements";
 import { connect } from "react-redux";
 import axios from "axios";
 import Comment from "../comment/Comment";
-import moment from 'moment'
+import moment from "moment";
 
 class Content extends Component {
   constructor() {
@@ -31,7 +31,7 @@ class Content extends Component {
       show: false
     };
 
-    this.toggleModal = this.toggleModal.bind(this)
+    this.toggleModal = this.toggleModal.bind(this);
   }
 
   componentDidMount() {
@@ -49,9 +49,9 @@ class Content extends Component {
       .catch(err => console.log(err));
   }
 
-  componentDidUpdate(prevProps, prevState){
-    if(this.state.comments.length !== prevState.comments.length){
-      this.setState({comments: this.state.comments})
+  componentDidUpdate(prevProps, prevState) {
+    if (this.state.comments.length !== prevState.comments.length) {
+      this.setState({ comments: this.state.comments });
     }
   }
 
@@ -104,87 +104,142 @@ class Content extends Component {
       body: this.state.commentInput,
       postId: this.props.postId,
       userId: this.props.userId,
-      date: moment(),
-    }
+      date: moment()
+    };
 
-    axios.post(`http://localhost:3001/api/comment`, body)
-    .then(res => {
-      this.setState({comments: res.data.filter(e => e.content_id === this.state.content.id)})
-    })
-    .catch(err => console.log(err))
-
+    axios
+      .post(`http://localhost:3001/api/comment`, body)
+      .then(res => {
+        this.setState({
+          comments: res.data.filter(e => e.content_id === this.state.content.id)
+        });
+      })
+      .catch(err => console.log(err));
   };
 
   commentHandler = text => {
     this.setState({ commentInput: text });
   };
 
-  toggleModal(){
-    this.setState({show: !this.state.show})
+  toggleModal() {
+    this.setState({ show: !this.state.show });
   }
 
   render() {
-    console.log(this.state)
-    let eachComment = ''
-    if(this.state.comments[0]){
+    console.log(this.state);
+    let eachComment = "";
+    if (this.state.comments[0]) {
       eachComment = this.state.comments.map((comment, i) => {
         return (
-        <View key={i}>
-          <Avatar
-          small
-          rounded
-          source={{ uri: comment.image_url || "URL" }}
-          onPress={() => Actions.profile({ selectedUser: this.props.users.filter(e => e.id === comment.user_id)[0]})}/>
-          <Text>{comment.first_name}</Text>
-          <Text>{`${comment.comment_body}`}</Text>
-        </View>
-        )
-      })
+          <View key={i}>
+            <Avatar
+              small
+              rounded
+              source={{ uri: comment.image_url || "URL" }}
+              onPress={() =>
+                Actions.profile({
+                  selectedUser: this.props.users.filter(
+                    e => e.id === comment.user_id
+                  )[0]
+                })
+              }
+            />
+            <Text>{comment.first_name}</Text>
+            <Text>{`${comment.comment_body}`}</Text>
+          </View>
+        );
+      });
     }
     return (
       <ScrollView>
         <View style={styles.container}>
+          <View
+            style={{
+              alignSelf: "flex-start",
+              flexDirection: "row",
+              padding: 10,
+              alignItems: "center"
+            }}
+          >
             <Avatar
-            small
-            rounded
-            source={{ uri: this.props.userImg || "URL" }}/>
-            <Text>{this.props.userName}</Text>
-          {this.state.content ? 
+              small
+              rounded
+              source={{ uri: this.props.userImg || "URL" }}
+            />
+            <Text
+              style={{
+                fontFamily: "HelveticaNeue-Medium",
+                fontSize: 18,
+                paddingHorizontal: 10,
+                color: "#696969"
+              }}
+            >
+              {this.props.userName}
+            </Text>
+          </View>
+          {this.state.content ? (
             <View style={styles.imageContainer}>
               <Image
                 style={styles.image}
-                source={{ uri: this.state.content.image}}
+                source={{ uri: this.state.content.image }}
               />
-            </View>: null}
-            <Text style={{ marginTop: 25, marginBottom: 25 }}>{`BODY: ${
-              this.state.content.body
-            }`}</Text>
+            </View>
+          ) : null}
 
-            <Icon
-              name="keyboard-arrow-up"
-              color="green"
-              onPress={() => this.vote(true)}
-            />
-            <Text>{`${this.state.rep}`}</Text>
-            <Icon
-              name="keyboard-arrow-down"
-              color="red"
-              onPress={() => this.vote()}
-            />
-            <Button
-              title="Add Comment"
-              onPress={() => this.setState({ show: true })}
-            />
-            {eachComment ?
+          <Text
+            style={{
+              fontWeight: "bold",
+              fontFamily: "HelveticaNeue-Medium",
+              fontSize: 18,
+              alignSelf: "flex-start",
+              paddingHorizontal: 10,
+              marginTop: 10,
+              color: "#696969"
+            }}
+          >
+            {this.state.content.title}
+          </Text>
+          <Text
+            style={{
+              paddingTop: 5,
+              paddingBottom: 5,
+              fontFamily: "Helvetica Neue",
+              fontSize: 18,
+              alignSelf: "flex-start",
+              paddingHorizontal: 10,
+              width: this.state.fullWidth,
+              color: "#808080"
+            }}
+          >
+            {this.state.content.body}
+          </Text>
+
+          <Icon
+            name="keyboard-arrow-up"
+            color="green"
+            onPress={() => this.vote(true)}
+          />
+          <Text>{`${this.state.rep}`}</Text>
+          <Icon
+            name="keyboard-arrow-down"
+            color="red"
+            onPress={() => this.vote()}
+          />
+          <Button
+            title="Add Comment"
+            onPress={() => this.setState({ show: true })}
+          />
+          {eachComment ? (
             <View>
               <Text>{eachComment}</Text>
-            </View> 
-            : null}
-            <Comment
-            addComment={this.addComment} 
+            </View>
+          ) : null}
+          <Comment
+            addComment={this.addComment}
             show={this.state.show}
-            toggleModal={this.toggleModal} 
-            commentHandler={this.commentHandler}/>
+            toggleModal={this.toggleModal}
+            commentHandler={this.commentHandler}
+          />
         </View>
       </ScrollView>
     );
