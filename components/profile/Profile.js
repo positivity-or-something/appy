@@ -9,7 +9,7 @@ import {
   Dimensions
 } from "react-native";
 import { connect } from "react-redux";
-import { Icon } from "react-native-elements";
+import { Icon, Avatar } from "react-native-elements";
 import { Actions } from "react-native-router-flux";
 import { deletePost } from "../../ducks/reducer";
 
@@ -49,6 +49,8 @@ class Profile extends React.Component {
   }
 
   render() {
+    console.log(this.state)
+    console.log(this.props)
     let posts;
     let tags;
     if (this.props.user) {
@@ -76,7 +78,12 @@ class Profile extends React.Component {
           <View
             key={i}
             style={{
-              alignItems: "center"
+              alignItems: "center",
+              position: 'relative',
+              marginBottom: 20,
+              marginTop: 10,
+              borderBottomWidth: 2,
+              borderBottomColor: 'grey',
             }}
           >
             <TouchableOpacity
@@ -91,7 +98,7 @@ class Profile extends React.Component {
               />
               <Text
                 style={{
-                  alignSelf: "left",
+                  alignSelf: "flex-start",
                   fontFamily: "Helvetica Neue",
                   color: "#808080",
                   paddingTop: 5,
@@ -104,27 +111,29 @@ class Profile extends React.Component {
               </Text>
               <Text
                 style={{
-                  alignSelf: "left",
+                  alignSelf: "flex-start",
                   fontFamily: "Helvetica Neue",
                   color: "#808080",
                   paddingTop: 5,
                   paddingBottom: 5,
                   paddingHorizontal: 10,
-                  fontSize: 18
+                  fontSize: 18,
                 }}
               >
                 {e.date.slice(0, 10)}
               </Text>
             </TouchableOpacity>
             {e.user_id === this.props.userId ? (
-              <Icon
+              <View style={{position: 'absolute', bottom: 90, right: 20}}>
+                <Icon
                 raised
                 name="delete"
                 color="red"
                 onPress={() => {
                   this.props.deletePost(e.id);
                 }}
-              />
+                />
+              </View>
             ) : null}
           </View>
         );
@@ -132,7 +141,19 @@ class Profile extends React.Component {
     }
     return (
       <View style={styles.container}>
-        <View style={{ flexDirection: "row" }}> {tags} </View>
+      {this.state.userContent[0] ? 
+        <View style={{paddingTop: 5, width: dime.fullWidth, alignItems: 'center'}}>
+          <Avatar
+          small
+          rounded
+          source={{ uri: this.state.userContent[0].image_url || "URL" }}
+          activeOpacity={0.7}
+         />
+          <View style={{ flexDirection: "row" }}> {tags} </View>
+          <Text style={{marginTop: 5, fontSize: 20}}>{`${this.state.userContent[0].first_name}'s posts`}</Text>
+        </View>
+    : null}
+        
         <ScrollView>{posts}</ScrollView>
       </View>
     );
@@ -153,11 +174,9 @@ const styles = StyleSheet.create({
   container: {
     width: dime.fullWidth,
     flex: 1,
-    marginTop: 15,
     justifyContent: "space-between",
     alignItems: "center",
     backgroundColor: "#fff",
-    alignItems: "center",
     justifyContent: "center"
   },
   header: {

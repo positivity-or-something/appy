@@ -22,8 +22,7 @@ import Footer from "../footer/Footer";
 import axios from "axios";
 import { updateContent } from "../../ducks/reducer";
 import Search from "../search/Search";
-import { myArray } from "../dummydata/dummydata";
-
+import {Font} from 'expo'
 class Home extends React.Component {
   constructor() {
     super();
@@ -31,16 +30,15 @@ class Home extends React.Component {
     this.state = {
       filteredContent: [],
       tags: [
-        "Motivation",
-        "Achievement",
-        "Work",
-        "Inspiration",
-        "Determination",
-        "Lifestyle",
-        "PositiveVibes",
-        "Entrepreneur",
-        "Happy",
-        "Celebration"
+        `Motivation`,
+        `Achievement`,
+        `PositiveVibes`,
+        `Lifestyle  `,
+        `Inspiration `,
+        `Determination`,
+        `Happy   `,
+        `Celebration`,
+        `Entrepreneur`,
       ],
       currentPosts: [],
       user: {},
@@ -58,6 +56,10 @@ class Home extends React.Component {
   }
 
   componentDidMount() {
+    Font.loadAsync({
+      'Lato': require('../../assets/fonts/Merriweather-Regular.ttf'),
+    });
+
     axios(
       "http://api.forismatic.com/api/1.0/?method=getQuote&format=json&lang=en"
     )
@@ -124,11 +126,11 @@ class Home extends React.Component {
         <View
           key={i}
           style={{
-            // borderColor: "gray",
-            // borderWidth: 0.5,
+            borderColor: "black",
+            borderBottomWidth: 2,
             alignItems: "center",
-            padding: 20,
-            marginBottom: 30,
+            paddingBottom: 30,
+            marginBottom: 10,
             width: "90%",
             alignSelf: "center",
             backgroundColor: "white",
@@ -269,11 +271,12 @@ class Home extends React.Component {
             <Text
               key={i}
               style={{
+                alignItems: 'center',
+                width: this.state.fullWidth/3.3,
                 fontSize: 18,
-                color: "#81DAF5",
+                color: "#989898",
                 alignSelf: "center",
-                marginTop: 15,
-                color: "#81DAF5"
+                marginTop: 10
               }}
             >
               {`#${e} `}
@@ -345,7 +348,8 @@ class Home extends React.Component {
               flexWrap: "wrap",
               justifyContent: "space-between",
               height: this.state.fullHeight / 6.5,
-              alignItems: "center"
+              alignItems: "center",
+              marginBottom: 14
             }}
           >
             {tagButtons}
@@ -353,7 +357,7 @@ class Home extends React.Component {
           {this.state.currentPosts}
         </ScrollView>
         <Footer toggleModal={this.toggleModal} />
-        <View style={{ marginTop: 22 }}>
+        <View >
           <Modal
             animationType="slide"
             transparent={false}
@@ -389,20 +393,21 @@ class Home extends React.Component {
                   style={{
                     padding: 10,
                     fontSize: 50,
-                    fontFamily: "Helvetica Neue",
+                    fontFamily: "Lato",
                     color: "white",
                     alignSelf: "center"
                   }}
                 >
-                  Quote of the day:
+                  Appy Quote
                 </Text>
                 <Text
                   style={{
                     marginBottom: 20,
                     padding: 20,
-                    fontSize: 30,
-                    fontFamily: "Helvetica Neue",
-                    color: "white"
+                    fontSize: 25,
+                    fontFamily: 'Lato',
+                    color: "white",
+                    alignSelf: "center"
                   }}
                 >
                   {this.state.quote}

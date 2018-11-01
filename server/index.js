@@ -56,6 +56,9 @@ app.post('/api/comment', postComment)
 app.get('/api/comments/:id', getComments)
 //---------------------SEARCH------------------------
 app.post("/api/words", findWords);
+
+
+
 app.listen(process.env.SERVER_PORT, () =>
   console.log(`listening on port ${process.env.SERVER_PORT}`)
 );

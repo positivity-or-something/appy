@@ -199,17 +199,20 @@ class Register extends Component {
                 </View>
               </View>
             </View>
+            <Text style={{alignSelf: 'center', fontSize: 20, textDecorationLine: 'underline'}}>Pick top interests</Text>
             <ScrollView>
               <View
                 style={{
-                  width: this.state.fullWidth - 50,
-                  flex: 1
+                  width: this.state.fullWidth - 40,
+                  flex: 1,
+                  flexWrap: 'wrap',
+                  flexDirection: 'row'
                 }}
               >
-                <View style={styles.sideBySide}>
                   <CheckBox
-                    center
-                    title="Motivation"
+                    containerStyle={styles.CheckBox}
+                    left
+                    title="#Motivation"
                     iconType="material"
                     checkedIcon="check-box"
                     uncheckedIcon="check-box-outline-blank"
@@ -224,8 +227,9 @@ class Register extends Component {
                     }}
                   />
                   <CheckBox
-                    center
-                    title="Achievement"
+                    containerStyle={styles.CheckBox}
+                    left
+                    title="#Achievement"
                     iconType="material"
                     checkedIcon="check-box"
                     uncheckedIcon="check-box-outline-blank"
@@ -239,11 +243,10 @@ class Register extends Component {
                         : this.setState({ interests: `Achievement` });
                     }}
                   />
-                </View>
-                <View style={styles.sideBySide}>
                   <CheckBox
-                    center
-                    title="Lifestyle"
+                    containerStyle={styles.CheckBox}
+                    left
+                    title="#Lifestyle"
                     iconType="material"
                     checkedIcon="check-box"
                     uncheckedIcon="check-box-outline-blank"
@@ -258,8 +261,9 @@ class Register extends Component {
                     }}
                   />
                   <CheckBox
-                    center
-                    title="Work"
+                    containerStyle={styles.CheckBox}
+                    left
+                    title="#Work"
                     iconType="material"
                     checkedIcon="check-box"
                     uncheckedIcon="check-box-outline-blank"
@@ -273,11 +277,10 @@ class Register extends Component {
                         : this.setState({ interests: `Work` });
                     }}
                   />
-                </View>
-                <View style={styles.sideBySide}>
                   <CheckBox
-                    center
-                    title="Determination"
+                    containerStyle={styles.CheckBox}
+                    left
+                    title="#Determination"
                     iconType="material"
                     checkedIcon="check-box"
                     uncheckedIcon="check-box-outline-blank"
@@ -292,8 +295,9 @@ class Register extends Component {
                     }}
                   />
                   <CheckBox
-                    center
-                    title="Inspiration"
+                    containerStyle={styles.CheckBox}
+                    left
+                    title="#Inspiration"
                     iconType="material"
                     checkedIcon="check-box"
                     uncheckedIcon="check-box-outline-blank"
@@ -307,11 +311,10 @@ class Register extends Component {
                         : this.setState({ interests: `Inspiration` });
                     }}
                   />
-                </View>
-                <View style={styles.sideBySide}>
                   <CheckBox
-                    center
-                    title="PositiveVibes"
+                    containerStyle={styles.CheckBox}
+                    left
+                    title="#PositiveVibes"
                     iconType="material"
                     checkedIcon="check-box"
                     uncheckedIcon="check-box-outline-blank"
@@ -326,8 +329,9 @@ class Register extends Component {
                     }}
                   />
                   <CheckBox
-                    center
-                    title="Entrepreneur"
+                    containerStyle={styles.CheckBox}
+                    left
+                    title="#Entrepreneur"
                     iconType="material"
                     checkedIcon="check-box"
                     uncheckedIcon="check-box-outline-blank"
@@ -341,11 +345,10 @@ class Register extends Component {
                         : this.setState({ interests: `Entrepreneur` });
                     }}
                   />
-                </View>
-                <View style={styles.sideBySide}>
                   <CheckBox
-                    center
-                    title="Happy"
+                    containerStyle={styles.CheckBox}
+                    left
+                    title="#Happy"
                     iconType="material"
                     checkedIcon="check-box"
                     uncheckedIcon="check-box-outline-blank"
@@ -360,8 +363,9 @@ class Register extends Component {
                     }}
                   />
                   <CheckBox
-                    center
-                    title="Celebration"
+                    containerStyle={styles.CheckBox}
+                    left
+                    title="#Celebration"
                     iconType="material"
                     checkedIcon="check-box"
                     uncheckedIcon="check-box-outline-blank"
@@ -375,19 +379,18 @@ class Register extends Component {
                         : this.setState({ interests: `Celebration` });
                     }}
                   />
-                </View>
                 <TouchableWithoutFeedback
                   onPress={() => {
                     this.setUser();
                     Actions.home();
                   }}
                 >
-                  <View>
+                  <View style={{width: dime.fullWidth - 50}}>
                     <Text
                       style={{
                         fontSize: 22,
                         color: "#81DAF5",
-                        alignSelf: "center",
+                        alignSelf: 'center',
                         marginTop: 15
                       }}
                     >
@@ -395,13 +398,6 @@ class Register extends Component {
                     </Text>
                   </View>
                 </TouchableWithoutFeedback>
-                {/* <Button
-                  title="Submit"
-                  onPress={() => {
-                    this.setUser();
-                    Actions.home();
-                  }}
-                /> */}
               </View>
             </ScrollView>
           </View>
@@ -428,7 +424,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
     backgroundColor: "#fff",
     alignItems: "center",
-    justifyContent: "center"
+    justifyContent: "center",
+    paddingTop: 80
   },
   condText: {
     flex: 1
@@ -441,9 +438,9 @@ const styles = StyleSheet.create({
     fontSize: 22,
     color: "#81DAF5"
   },
-  sideBySide: {
-    flex: 1,
-    flexDirection: "row",
-    justifyContent: "space-between"
+  CheckBox: {
+    flex: .5,
+    maxWidth: dime.fullWidth * .4,
+    minWidth: dime.fullWidth * .4
   }
 });
