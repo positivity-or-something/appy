@@ -126,7 +126,6 @@ class Content extends Component {
   }
 
   render() {
-    console.log(this.state);
     let eachComment = "";
     if (this.state.comments[0]) {
       eachComment = this.state.comments.map((comment, i) => {

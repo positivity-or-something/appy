@@ -266,10 +266,9 @@ class Home extends React.Component {
     }
     let tagButtons = this.state.tags.map((e, i) => {
       return (
-        <TouchableWithoutFeedback onPress={() => this.handleAll(e)}>
+        <TouchableWithoutFeedback key={i} onPress={() => this.handleAll(e)}>
           <View>
             <Text
-              key={i}
               style={{
                 alignItems: 'center',
                 width: this.state.fullWidth/3.3,
