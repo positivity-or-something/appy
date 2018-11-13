@@ -23,10 +23,10 @@ class footer extends Component {
         <Icon color='white' name="home" onPress={() => Actions.home()} />
         <Icon
           color='white'
-          name="sentiment-very-satisfied"
+          name="sentiment-satisfied"
           onPress={() => this.props.toggleModal()}
         />
-        <Icon color='white' name="comment" onPress={() => Actions.post()} />
+        <Icon color='white' name="create" onPress={() => Actions.post()} />
       </View>
     );
   }

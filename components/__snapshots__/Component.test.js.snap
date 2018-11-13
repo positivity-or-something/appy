@@ -1,0 +1,559 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders correctly 1`] = `
+<Modal
+  hardwareAccelerated={false}
+  visible={true}
+>
+  <View>
+    <TextInput
+      allowFontScaling={true}
+      multiline={true}
+      onChangeText={[Function]}
+      placeholder="Create a new comment"
+      style={
+        Object {
+          "width": "100%",
+        }
+      }
+    />
+    <View
+      accessibilityComponentType="button"
+      accessibilityTraits={
+        Array [
+          "button",
+        ]
+      }
+      accessible={true}
+      isTVSelectable={true}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        Object {
+          "opacity": 1,
+        }
+      }
+    >
+      <View
+        style={
+          Array [
+            Object {},
+          ]
+        }
+      >
+        <Text
+          accessible={true}
+          allowFontScaling={true}
+          ellipsizeMode="tail"
+          style={
+            Array [
+              Object {
+                "color": "#007AFF",
+                "fontSize": 18,
+                "padding": 8,
+                "textAlign": "center",
+              },
+            ]
+          }
+        >
+          Submit
+        </Text>
+      </View>
+    </View>
+  </View>
+</Modal>
+`;
+
+exports[`renders correctly 2`] = `
+<View
+  style={
+    Object {
+      "alignItems": "flex-end",
+      "backgroundColor": "#81DAF5",
+      "borderColor": "black",
+      "flexDirection": "row",
+      "height": 40,
+      "justifyContent": "space-around",
+      "paddingBottom": 8,
+    }
+  }
+>
+  <View
+    accessible={true}
+    isTVSelectable={true}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      Array [
+        false,
+        false,
+        false,
+        Object {
+          "alignItems": "center",
+          "backgroundColor": "transparent",
+          "justifyContent": "center",
+        },
+        undefined,
+      ]
+    }
+  >
+    <Text
+      accessible={true}
+      allowFontScaling={false}
+      ellipsizeMode="tail"
+      style={
+        Array [
+          Object {
+            "color": "white",
+            "fontSize": 24,
+          },
+          Array [
+            Object {
+              "backgroundColor": "transparent",
+            },
+            undefined,
+          ],
+          Object {
+            "fontFamily": "Material Icons",
+            "fontStyle": "normal",
+            "fontWeight": "normal",
+          },
+        ]
+      }
+    >
+      
+    </Text>
+  </View>
+  <View
+    accessible={true}
+    isTVSelectable={true}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      Array [
+        false,
+        false,
+        false,
+        Object {
+          "alignItems": "center",
+          "backgroundColor": "transparent",
+          "justifyContent": "center",
+        },
+        undefined,
+      ]
+    }
+  >
+    <Text
+      accessible={true}
+      allowFontScaling={false}
+      ellipsizeMode="tail"
+      style={
+        Array [
+          Object {
+            "color": "white",
+            "fontSize": 24,
+          },
+          Array [
+            Object {
+              "backgroundColor": "transparent",
+            },
+            undefined,
+          ],
+          Object {
+            "fontFamily": "Material Icons",
+            "fontStyle": "normal",
+            "fontWeight": "normal",
+          },
+        ]
+      }
+    >
+      
+    </Text>
+  </View>
+  <View
+    accessible={true}
+    isTVSelectable={true}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      Array [
+        false,
+        false,
+        false,
+        Object {
+          "alignItems": "center",
+          "backgroundColor": "transparent",
+          "justifyContent": "center",
+        },
+        undefined,
+      ]
+    }
+  >
+    <Text
+      accessible={true}
+      allowFontScaling={false}
+      ellipsizeMode="tail"
+      style={
+        Array [
+          Object {
+            "color": "white",
+            "fontSize": 24,
+          },
+          Array [
+            Object {
+              "backgroundColor": "transparent",
+            },
+            undefined,
+          ],
+          Object {
+            "fontFamily": "Material Icons",
+            "fontStyle": "normal",
+            "fontWeight": "normal",
+          },
+        ]
+      }
+    >
+      
+    </Text>
+  </View>
+</View>
+`;
+
+exports[`renders correctly 3`] = `
+<View
+  accessibilityComponentType="button"
+  accessibilityTraits={
+    Array [
+      "button",
+    ]
+  }
+  accessible={true}
+  isTVSelectable={true}
+  onResponderGrant={[Function]}
+  onResponderMove={[Function]}
+  onResponderRelease={[Function]}
+  onResponderTerminate={[Function]}
+  onResponderTerminationRequest={[Function]}
+  onStartShouldSetResponder={[Function]}
+  style={
+    Object {
+      "opacity": 1,
+    }
+  }
+>
+  <View
+    style={
+      Array [
+        Object {},
+      ]
+    }
+  >
+    <Text
+      accessible={true}
+      allowFontScaling={true}
+      ellipsizeMode="tail"
+      style={
+        Array [
+          Object {
+            "color": "#007AFF",
+            "fontSize": 18,
+            "padding": 8,
+            "textAlign": "center",
+          },
+          Object {
+            "color": "white",
+          },
+        ]
+      }
+    >
+      Login
+    </Text>
+  </View>
+</View>
+`;
+
+exports[`renders correctly 4`] = `
+<View
+  style={
+    Object {
+      "backgroundColor": "gray",
+      "height": 25,
+      "width": 250,
+    }
+  }
+>
+  <TextInput
+    allowFontScaling={true}
+    color="white"
+    fontSize={20}
+    onChangeText={[Function]}
+    type="text"
+  />
+  <Text
+    accessible={true}
+    allowFontScaling={true}
+    ellipsizeMode="tail"
+  />
+</View>
+`;
+
+exports[`renders correctly1 1`] = `
+<View
+  style={
+    Object {
+      "alignItems": "flex-end",
+      "backgroundColor": "#81DAF5",
+      "borderColor": "black",
+      "flexDirection": "row",
+      "height": 40,
+      "justifyContent": "space-around",
+      "paddingBottom": 8,
+    }
+  }
+>
+  <View
+    accessible={true}
+    isTVSelectable={true}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      Array [
+        false,
+        false,
+        false,
+        Object {
+          "alignItems": "center",
+          "backgroundColor": "transparent",
+          "justifyContent": "center",
+        },
+        undefined,
+      ]
+    }
+  >
+    <Text
+      accessible={true}
+      allowFontScaling={false}
+      ellipsizeMode="tail"
+      style={
+        Array [
+          Object {
+            "color": "white",
+            "fontSize": 24,
+          },
+          Array [
+            Object {
+              "backgroundColor": "transparent",
+            },
+            undefined,
+          ],
+          Object {
+            "fontFamily": "Material Icons",
+            "fontStyle": "normal",
+            "fontWeight": "normal",
+          },
+        ]
+      }
+    >
+      
+    </Text>
+  </View>
+  <View
+    accessible={true}
+    isTVSelectable={true}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      Array [
+        false,
+        false,
+        false,
+        Object {
+          "alignItems": "center",
+          "backgroundColor": "transparent",
+          "justifyContent": "center",
+        },
+        undefined,
+      ]
+    }
+  >
+    <Text
+      accessible={true}
+      allowFontScaling={false}
+      ellipsizeMode="tail"
+      style={
+        Array [
+          Object {
+            "color": "white",
+            "fontSize": 24,
+          },
+          Array [
+            Object {
+              "backgroundColor": "transparent",
+            },
+            undefined,
+          ],
+          Object {
+            "fontFamily": "Material Icons",
+            "fontStyle": "normal",
+            "fontWeight": "normal",
+          },
+        ]
+      }
+    >
+      
+    </Text>
+  </View>
+  <View
+    accessible={true}
+    isTVSelectable={true}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      Array [
+        false,
+        false,
+        false,
+        Object {
+          "alignItems": "center",
+          "backgroundColor": "transparent",
+          "justifyContent": "center",
+        },
+        undefined,
+      ]
+    }
+  >
+    <Text
+      accessible={true}
+      allowFontScaling={false}
+      ellipsizeMode="tail"
+      style={
+        Array [
+          Object {
+            "color": "white",
+            "fontSize": 24,
+          },
+          Array [
+            Object {
+              "backgroundColor": "transparent",
+            },
+            undefined,
+          ],
+          Object {
+            "fontFamily": "Material Icons",
+            "fontStyle": "normal",
+            "fontWeight": "normal",
+          },
+        ]
+      }
+    >
+      
+    </Text>
+  </View>
+</View>
+`;
+
+exports[`renders correctly2 1`] = `
+<View
+  accessibilityComponentType="button"
+  accessibilityTraits={
+    Array [
+      "button",
+    ]
+  }
+  accessible={true}
+  isTVSelectable={true}
+  onResponderGrant={[Function]}
+  onResponderMove={[Function]}
+  onResponderRelease={[Function]}
+  onResponderTerminate={[Function]}
+  onResponderTerminationRequest={[Function]}
+  onStartShouldSetResponder={[Function]}
+  style={
+    Object {
+      "opacity": 1,
+    }
+  }
+>
+  <View
+    style={
+      Array [
+        Object {},
+      ]
+    }
+  >
+    <Text
+      accessible={true}
+      allowFontScaling={true}
+      ellipsizeMode="tail"
+      style={
+        Array [
+          Object {
+            "color": "#007AFF",
+            "fontSize": 18,
+            "padding": 8,
+            "textAlign": "center",
+          },
+          Object {
+            "color": "white",
+          },
+        ]
+      }
+    >
+      Login
+    </Text>
+  </View>
+</View>
+`;
+
+exports[`renders correctly3x 1`] = `
+<View
+  style={
+    Object {
+      "backgroundColor": "gray",
+      "height": 25,
+      "width": 250,
+    }
+  }
+>
+  <TextInput
+    allowFontScaling={true}
+    color="white"
+    fontSize={20}
+    onChangeText={[Function]}
+    type="text"
+  />
+  <Text
+    accessible={true}
+    allowFontScaling={true}
+    ellipsizeMode="tail"
+  />
+</View>
+`;

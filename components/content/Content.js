@@ -126,26 +126,26 @@ class Content extends Component {
   }
 
   render() {
-    console.log(this.state);
     let eachComment = "";
     if (this.state.comments[0]) {
       eachComment = this.state.comments.map((comment, i) => {
         return (
-          <View key={i}>
-            <Avatar
-              small
-              rounded
-              source={{ uri: comment.image_url || "URL" }}
-              onPress={() =>
-                Actions.profile({
-                  selectedUser: this.props.users.filter(
-                    e => e.id === comment.user_id
-                  )[0]
-                })
-              }
-            />
-            <Text>{comment.first_name}</Text>
-            <Text>{`${comment.comment_body}`}</Text>
+          <View key={i} style={{width: dime.fullWidth - 20, borderBottomColor: 'lightgrey', borderBottomWidth: 1, paddingVertical: 10}}>
+            <View style={{width: dime.fullWidth - 20, flexDirection: "row"}}>
+              <Avatar
+                small
+                rounded
+                source={{ uri: comment.image_url || "URL" }}
+                onPress={() =>
+                  Actions.profile({
+                    selectedUser: this.props.users.filter(
+                      e => e.id === comment.user_id)[0]
+                    })
+                  }
+                  />
+              <Text style={{paddingLeft: 10, paddingTop: 7, fontWeight: 'bold'}}>{comment.first_name}</Text>
+              <Text style={{paddingHorizontal: 10, paddingTop: 7}}>{`${comment.comment_body}`}</Text>
+            </View>
           </View>
         );
       });
@@ -185,52 +185,59 @@ class Content extends Component {
               />
             </View>
           ) : null}
-
-          <Text
-            style={{
-              fontWeight: "bold",
-              fontFamily: "HelveticaNeue-Medium",
-              fontSize: 18,
-              alignSelf: "flex-start",
-              paddingHorizontal: 10,
-              marginTop: 10,
-              color: "#696969"
-            }}
-          >
-            {this.state.content.title}
-          </Text>
-          <Text
-            style={{
-              paddingTop: 5,
-              paddingBottom: 5,
-              fontFamily: "Helvetica Neue",
-              fontSize: 18,
-              alignSelf: "flex-start",
-              paddingHorizontal: 10,
-              width: this.state.fullWidth,
-              color: "#808080"
-            }}
-          >
-            {this.state.content.body}
-          </Text>
-
-          <Icon
-            name="keyboard-arrow-up"
-            color="green"
-            onPress={() => this.vote(true)}
-          />
-          <Text>{`${this.state.rep}`}</Text>
-          <Icon
-            name="keyboard-arrow-down"
-            color="red"
-            onPress={() => this.vote()}
-          />
-          <Button
-            title="Add Comment"
-            onPress={() => this.setState({ show: true })}
-          />
+          <View style={{flexWrap: 'wrap', justifyContent: "space-between", flexDirection: 'row', paddingHorizontal: 20}}>
+            <View style={{width: dime.fullWidth * .7}}>
+              <Text
+                style={{
+                  fontWeight: "bold",
+                  fontFamily: "HelveticaNeue-Medium",
+                  fontSize: 18,
+                  alignSelf: "flex-start",
+                  paddingHorizontal: 10,
+                  marginTop: 10,
+                  color: "#696969"
+                }}
+              >
+                {this.state.content.title}
+              </Text>
+              <Text
+                style={{
+                  paddingTop: 5,
+                  paddingBottom: 5,
+                  fontFamily: "Helvetica Neue",
+                  fontSize: 18,
+                  alignSelf: "flex-start",
+                  paddingHorizontal: 10,
+                  width: this.state.fullWidth,
+                  color: "#808080"
+                }}
+              >
+                {this.state.content.body}
+              </Text>
+            </View>
+            <View style={{width: dime.fullWidth * .1}}>
+              <Icon
+                name="keyboard-arrow-up"
+                color="green"
+                onPress={() => this.vote(true)}
+              />
+              <Text style={{paddingLeft: 17}}>{`${this.state.rep}`}</Text>
+              <Icon
+                name="keyboard-arrow-down"
+                color="red"
+                onPress={() => this.vote()}
+              />
+            </View>
+            <View style={{width: dime.fullWidth * .1, paddingTop: 20}}>
+              <Icon
+              name="comment"
+              color="grey"
+              onPress={() => this.setState({ show: true })}
+              />
+            </View>
+          </View>
           {eachComment ? (
-            <View>
+            <View style={{paddingTop: 45}}>
               <Text>{eachComment}</Text>
             </View>
           ) : null}

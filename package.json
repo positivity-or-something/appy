@@ -39,5 +39,8 @@
   "devDependencies": {
     "jest": "^23.6.0",
     "jest-expo": "^30.0.0"
-  }
+  },
+  "rnpm": {
+    "assets": ["./assets/fonts/Lato"]
+ }
 }
