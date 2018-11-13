@@ -10,8 +10,7 @@ import {
   Modal,
   StatusBar,
   Dimensions,
-  TouchableWithoutFeedback,
-  Button
+  TouchableWithoutFeedback
 } from "react-native";
 import { connect } from "react-redux";
 import { getUsers, setUser } from "../../ducks/reducer";
